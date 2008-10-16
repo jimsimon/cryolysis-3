@@ -259,6 +259,76 @@ function module:CreateButtons()
 		lastButton = Cryolysis3BuffButtonIntellect;
 	end
 
+	-- Magic buttons
+	if (Cryolysis3:HasSpell(604) or Cryolysis3:HasSpell(1008)) then
+		-- Dampen/Amplify Magic
+		if (lastButton == nil) then
+			lastButton = Cryolysis3BuffButton;
+		end
+		
+		-- Create the button
+		Cryolysis3:CreateMenuItemButton("BuffButtonMagic",	lastButton,	Cryolysis3.spellCache[604].icon, "BuffButton");
+		
+		-- Update last button added
+		lastButton = Cryolysis3BuffButtonMagic;
+	end
+
+	-- Damage Shields buttons
+	if (Cryolysis3:HasSpell(1463) or Cryolysis3:HasSpell(11426)) then
+		-- Dampen/Amplify Magic
+		if (lastButton == nil) then
+			lastButton = Cryolysis3BuffButton;
+		end
+		
+		-- Create the button
+		Cryolysis3:CreateMenuItemButton("BuffButtonShields",	lastButton,	Cryolysis3.spellCache[1463].icon, "BuffButton");
+		
+		-- Update last button added
+		lastButton = Cryolysis3BuffButtonShields;
+	end
+
+	-- Wards buttons
+	if (Cryolysis3:HasSpell(543) or Cryolysis3:HasSpell(6143)) then
+		-- Fire/Frost Ward
+		if (lastButton == nil) then
+			lastButton = Cryolysis3BuffButton;
+		end
+		
+		-- Create the button
+		Cryolysis3:CreateMenuItemButton("BuffButtonWards",	lastButton,	Cryolysis3.spellCache[543].icon, "BuffButton");
+		
+		-- Update last button added
+		lastButton = Cryolysis3BuffButtonWards;
+	end
+
+	-- Remove Curse buttons
+	if (Cryolysis3:HasSpell(475)) then
+		-- Remove Curse
+		if (lastButton == nil) then
+			lastButton = Cryolysis3BuffButton;
+		end
+		
+		-- Create the button
+		Cryolysis3:CreateMenuItemButton("BuffButtonCurse",	lastButton,	Cryolysis3.spellCache[475].icon, "BuffButton");
+		
+		-- Update last button added
+		lastButton = Cryolysis3BuffButtonCurse;
+	end
+
+	-- Slow Fall buttons
+	if (Cryolysis3:HasSpell(130)) then
+		-- Slow Fall
+		if (lastButton == nil) then
+			lastButton = Cryolysis3BuffButton;
+		end
+		
+		-- Create the button
+		Cryolysis3:CreateMenuItemButton("BuffButtonSlowFall",	lastButton,	Cryolysis3.spellCache[130].icon, "BuffButton");
+		
+		-- Update last button added
+		lastButton = Cryolysis3BuffButtonSlowFall;
+	end
+
 	-- menu defaults to closed
 	Cryolysis3:OpenCloseMenu("BuffButton");
 end
