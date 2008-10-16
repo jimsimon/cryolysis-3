@@ -386,6 +386,23 @@ function Cryolysis3:ChangeMiddleKey()
 end
 
 ------------------------------------------------------------------------------------------------------
+-- Wrapper function to update middle key functionality of all buttons
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:AddMenuItem(menuType, name, icon)
+
+	if (Cryolysis3.lastButton == nil) then
+		Cryolysis3.lastButton = getglobal("Cryolysis3"..menuType);
+	end
+
+	-- Create the button
+	Cryolysis3:CreateMenuItemButton(menuType..name, Cryolysis3.lastButton, icon, menuType);
+
+	-- Update last button added
+	Cryolysis3.lastButton = getglobal("Cryolysis3"..menuType..name);
+end
+
+
+------------------------------------------------------------------------------------------------------
 -- Close 
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:OpenCloseMenu(menu)
