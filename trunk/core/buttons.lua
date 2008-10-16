@@ -54,31 +54,35 @@ end
 ------------------------------------------------------------------------------------------------------
 -- Wrapper function to create a menu item button with less parameters
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:CreateMenuItemButton(name, parentFrame, texture)
+function Cryolysis3:CreateMenuItemButton(name, parentFrame, texture, menuType)
 	-- Create the button frame
 	Cryolysis3:CreateFrame(
 		"Button", name, parentFrame, "SecureActionButtonTemplate", 40, 40, true,
-		texture, 22, 22,
+		texture, 26, 26,
 		"Interface\\AddOns\\Cryolysis3\\textures\\nohighlight",
 		"Interface\\AddOns\\Cryolysis3\\textures\\highlight",
 		false
 	);
 
 
-	if (Cryolysis3.db.char.menuButtons[parentFrame] == nil) then
-		Cryolysis3.db.char.menuButtons[parentFrame] = {};
+	if (Cryolysis3.db.char.menuButtons == nil) then
+		Cryolysis3.db.char.menuButtons = {};
+	end
+
+	if (Cryolysis3.db.char.menuButtons[menuType] == nil) then
+		Cryolysis3.db.char.menuButtons[menuType] = {};
 	end
 
 	local found = false;
-	for k, v in pairs(Cryolysis3.db.char.menuButtons) do
-		if (Cryolysis3.db.char.menuButtons[parentFrame][k] == name) then
+	for k, v in pairs(Cryolysis3.db.char.menuButtons[menuType]) do
+		if (Cryolysis3.db.char.menuButtons[menuType][k] == name) then
 			found = true;
 		end
 	end
 
 	if (not found) then
 		-- Insert the button name in the table of buttons
-		table.insert(Cryolysis3.db.char.menuButtons[parentFrame], name);		
+		table.insert(Cryolysis3.db.char.menuButtons[menuType], name);
 	end
 	
 	-- Register the button for clicks
@@ -378,5 +382,28 @@ function Cryolysis3:ChangeMiddleKey()
 	-- Goes through all buttons we have available and sets their middle attribute
 	for k, v in pairs(Cryolysis3.db.char.buttons) do
 		Cryolysis3:UpdateButton(v, "middle", true);
+	end
+end
+
+------------------------------------------------------------------------------------------------------
+-- Close 
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:OpenCloseMenu(menu)
+	local b;
+
+	if (Cryolysis3.db.char.menuButtons[menu] == nil) then
+		return false;
+	end
+
+	-- Goes through all buttons we have available and sets their middle attribute
+	for k, v in pairs(Cryolysis3.db.char.menuButtons[menu]) do
+		b = getglobal("Cryolysis3"..v);
+		if (b ~= nil) then
+			if (b:IsShown()) then
+				b:Hide();
+			else
+				b:Show();
+			end
+		end
 	end
 end
