@@ -589,6 +589,14 @@ Cryolysis3.options = {
 							values = function() return Cryolysis3.Private.mounts.flying; end,
 							order = 20
 						},
+						movemountbutton = {
+							type = "execute",
+							name = L["Move Clockwise"],
+							desc = L["Move this button one position clockwise."],
+							func = function() Cryolysis3:IncrementButton("MountButton"); end,
+							order = 20
+						},
+						--[[
 						rescanmount = {
 							type = "execute",
 							name = L["Re-scan Mounts"],
@@ -596,6 +604,7 @@ Cryolysis3.options = {
 							func = function() Cryolysis3:FindMounts(true); end,
 							order = 20
 						},
+						]]
 					}
 				},
 			},
