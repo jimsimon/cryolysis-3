@@ -79,6 +79,270 @@ function module:CreateConfigOptions()
 		name = gsub(UnitClass("player"), "^.", function(s) return s:upper() end),
 		desc = L["Adjust various options for this module."],
 		args = {
+			evocationbutton = {
+				type = "group",
+				name = GetSpellInfo(12051),
+				desc = L["Adjust various settings for this button."],
+				order = 30,
+				args = {
+					hideevocationbutton = {
+						type = "toggle",
+						name = L["Hide"],
+						desc = L["Show or hide this button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.hidden["EvocationButton"] end,
+						set = function(info, v)
+							Cryolysis3.db.char.hidden["EvocationButton"] = v;
+							Cryolysis3:UpdateVisibility();
+						end,
+						order = 10
+					},
+					moveevocationbutton = {
+						type = "execute",
+						name = L["Move Clockwise"],
+						desc = L["Move this button one position clockwise."],
+						func = function() Cryolysis3:IncrementButton("EvocationButton"); end,
+						order = 20
+					},
+					scaleevocationbutton = {
+						type = "range",
+						name = L["Scale"],
+						desc = L["Scale the size of this custom button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.scale.button["EvocationButton"]; end,
+						set = function(info, v) 
+							Cryolysis3.db.char.scale.button["EvocationButton"] = v;
+							--Cryolysis3:UpdateAllButtonPositions()
+							--Cryolysis3:UpdateAllButtonSizes()
+						end,
+						min = .5,
+						max = 2,
+						step = .1,
+						isPercent = true,
+						order = 70
+					}
+				}
+			},
+			buffbutton = {
+				type = "group",
+				name = L["Buff Menu"],
+				desc = L["Adjust various settings for this button."],
+				order = 30,
+				args = {
+					hidebuffbutton = {
+						type = "toggle",
+						name = L["Hide"],
+						desc = L["Show or hide this button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.hidden["BuffButton"] end,
+						set = function(info, v)
+							Cryolysis3.db.char.hidden["BuffButton"] = v;
+							Cryolysis3:UpdateVisibility();
+						end,
+						order = 10
+					},
+					movebuffbutton = {
+						type = "execute",
+						name = L["Move Clockwise"],
+						desc = L["Move this button one position clockwise."],
+						func = function() Cryolysis3:IncrementButton("BuffButton"); end,
+						order = 20
+					},
+					scalebuffbutton = {
+						type = "range",
+						name = L["Scale"],
+						desc = L["Scale the size of this custom button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.scale.button["BuffButton"]; end,
+						set = function(info, v) 
+							Cryolysis3.db.char.scale.button["BuffButton"] = v;
+							--Cryolysis3:UpdateAllButtonPositions()
+							--Cryolysis3:UpdateAllButtonSizes()
+						end,
+						min = .5,
+						max = 2,
+						step = .1,
+						isPercent = true,
+						order = 70
+					}
+				}
+			},
+			portalbutton = {
+				type = "group",
+				name = L["Teleport/Portal"],
+				desc = L["Adjust various settings for this button."],
+				order = 30,
+				args = {
+					hideportalbutton = {
+						type = "toggle",
+						name = L["Hide"],
+						desc = L["Show or hide this button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.hidden["PortalButton"] end,
+						set = function(info, v)
+							Cryolysis3.db.char.hidden["PortalButton"] = v;
+							Cryolysis3:UpdateVisibility();
+						end,
+						order = 10
+					},
+					moveportalbutton = {
+						type = "execute",
+						name = L["Move Clockwise"],
+						desc = L["Move this button one position clockwise."],
+						func = function() Cryolysis3:IncrementButton("PortalButton"); end,
+						order = 20
+					},
+					scaleportalbutton = {
+						type = "range",
+						name = L["Scale"],
+						desc = L["Scale the size of this custom button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.scale.button["PortalButton"]; end,
+						set = function(info, v) 
+							Cryolysis3.db.char.scale.button["PortalButton"] = v;
+							--Cryolysis3:UpdateAllButtonPositions()
+							--Cryolysis3:UpdateAllButtonSizes()
+						end,
+						min = .5,
+						max = 2,
+						step = .1,
+						isPercent = true,
+						order = 70
+					}
+				}
+			},
+			foodbutton = {
+				type = "group",
+				name = L["Food Button"],
+				desc = L["Adjust various settings for this button."],
+				order = 30,
+				args = {
+					hidefoodbutton = {
+						type = "toggle",
+						name = L["Hide"],
+						desc = L["Show or hide this button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.hidden["FoodButton"] end,
+						set = function(info, v)
+							Cryolysis3.db.char.hidden["FoodButton"] = v;
+							Cryolysis3:UpdateVisibility();
+						end,
+						order = 10
+					},
+					movefoodbutton = {
+						type = "execute",
+						name = L["Move Clockwise"],
+						desc = L["Move this button one position clockwise."],
+						func = function() Cryolysis3:IncrementButton("FoodButton"); end,
+						order = 20
+					},
+					scalefoodbutton = {
+						type = "range",
+						name = L["Scale"],
+						desc = L["Scale the size of this custom button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.scale.button["FoodButton"]; end,
+						set = function(info, v) 
+							Cryolysis3.db.char.scale.button["FoodButton"] = v;
+							--Cryolysis3:UpdateAllButtonPositions()
+							--Cryolysis3:UpdateAllButtonSizes()
+						end,
+						min = .5,
+						max = 2,
+						step = .1,
+						isPercent = true,
+						order = 70
+					}
+				}
+			},
+			waterbutton = {
+				type = "group",
+				name = L["Water Button"],
+				desc = L["Adjust various settings for this button."],
+				order = 30,
+				args = {
+					hidewaterbutton = {
+						type = "toggle",
+						name = L["Hide"],
+						desc = L["Show or hide this button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.hidden["WaterButton"] end,
+						set = function(info, v)
+							Cryolysis3.db.char.hidden["WaterButton"] = v;
+							Cryolysis3:UpdateVisibility();
+						end,
+						order = 10
+					},
+					movewaterbutton = {
+						type = "execute",
+						name = L["Move Clockwise"],
+						desc = L["Move this button one position clockwise."],
+						func = function() Cryolysis3:IncrementButton("WaterButton"); end,
+						order = 20
+					},
+					scalewaterbutton = {
+						type = "range",
+						name = L["Scale"],
+						desc = L["Scale the size of this custom button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.scale.button["WaterButton"]; end,
+						set = function(info, v) 
+							Cryolysis3.db.char.scale.button["WaterButton"] = v;
+							--Cryolysis3:UpdateAllButtonPositions()
+							--Cryolysis3:UpdateAllButtonSizes()
+						end,
+						min = .5,
+						max = 2,
+						step = .1,
+						isPercent = true,
+						order = 70
+					}
+				}
+			},
+			gembutton = {
+				type = "group",
+				name = L["Gem Button"],
+				desc = L["Adjust various settings for this button."],
+				order = 30,
+				args = {
+					hidegembutton = {
+						type = "toggle",
+						name = L["Hide"],
+						desc = L["Show or hide this button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.hidden["GemButton"] end,
+						set = function(info, v)
+							Cryolysis3.db.char.hidden["GemButton"] = v;
+							Cryolysis3:UpdateVisibility();
+						end,
+						order = 10
+					},
+					movegembutton = {
+						type = "execute",
+						name = L["Move Clockwise"],
+						desc = L["Move this button one position clockwise."],
+						func = function() Cryolysis3:IncrementButton("GemButton"); end,
+						order = 20
+					},
+					scalegembutton = {
+						type = "range",
+						name = L["Scale"],
+						desc = L["Scale the size of this custom button."],
+						width = "full",
+						get = function(info) return Cryolysis3.db.char.scale.button["GemButton"]; end,
+						set = function(info, v) 
+							Cryolysis3.db.char.scale.button["GemButton"] = v;
+							--Cryolysis3:UpdateAllButtonPositions()
+							--Cryolysis3:UpdateAllButtonSizes()
+						end,
+						min = .5,
+						max = 2,
+						step = .1,
+						isPercent = true,
+						order = 70
+					}
+				}
+			},
 		}
 	}
 		
@@ -269,9 +533,9 @@ function module:CreateButtons()
 	Cryolysis3.Private.tooltips["PortalButton"] = {};
 	
 	-- Start adding tooltip data
-	table.insert(Cryolysis3.Private.tooltips["BuffButton"],		L["Buff Button"]);
+	table.insert(Cryolysis3.Private.tooltips["BuffButton"],		L["Buff Menu"]);
 	table.insert(Cryolysis3.Private.tooltips["BuffButton"],		L["Click to open menu."]);
-	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Teleport and Portal Menu"]);
+	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Teleport/Portal"]);
 	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Click to open menu."]);
 	
 	-- Start off with no last button
@@ -443,6 +707,20 @@ function module:CreateButtons()
 			end
 			Cryolysis3:AddMenuItem("PortalButton", "TheExodar", select(3, GetSpellInfo(32271)), tooltip);
 		end
+
+		if (Cryolysis3:HasSpell(49359) or Cryolysis3:HasSpell(49360)) then
+			-- Theramore
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[49359].name);
+			
+			if (Cryolysis3:HasSpell(49359)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[49359].name));
+			end
+			if (Cryolysis3:HasSpell(49360)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[49360].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "Theramore", select(3, GetSpellInfo(49359)), tooltip);
+		end
 		
 		if (Cryolysis3:HasSpell(33690) or Cryolysis3:HasSpell(33691)) then
 			-- Shattrath
@@ -513,6 +791,20 @@ function module:CreateButtons()
 				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[32267].name));
 			end
 			Cryolysis3:AddMenuItem("PortalButton", "SilvermoonCity", select(3, GetSpellInfo(32272)), tooltip);
+		end
+		
+		if (Cryolysis3:HasSpell(49358) or Cryolysis3:HasSpell(49361)) then
+			-- Stonard
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[49358].name);
+			
+			if (Cryolysis3:HasSpell(49358)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[49358].name));
+			end
+			if (Cryolysis3:HasSpell(49361)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[49361].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "Stonard", select(3, GetSpellInfo(49358)), tooltip);
 		end
 		
 		if (Cryolysis3:HasSpell(35715) or Cryolysis3:HasSpell(35717)) then

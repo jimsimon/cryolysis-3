@@ -154,14 +154,17 @@ L["minutes"] = true; -- Mind the capitalisation!
 L["seconds"] = true; -- Mind the capitalisation!
 
 	-- Mage Module Locales
-	L["Buff Button"] = true;
-	L["Teleport and Portal Menu"] = true;
+	L["Buff Menu"] = true;
+	L["Teleport/Portal"] = true;
 	L["Click to open menu."] = true;
 	L["Armor"] = true;
 	L["Intellect"] = true;
 	L["Magic"] = true;
 	L["Damage Shields"] = true;
 	L["Magical Wards"] = true;
+	L["Food Button"] = true;
+	L["Water Button"] = true;
+	L["Gem Button"] = true;
 	
 	-- Message Module Options
 	L["Message"] = true;
