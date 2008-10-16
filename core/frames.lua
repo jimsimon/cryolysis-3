@@ -105,6 +105,12 @@ function Cryolysis3:AddScript(name, frameType, scriptName)
 		item:SetScript(scriptName, function(self) 
 			GameTooltip:Hide();
 		end)
+	elseif scriptName == "OnClick" then
+		if (frameType == "menuButton") then
+			item:SetScript(scriptName, function(self) 
+				Cryolysis3:OpenCloseMenu(name);
+			end)
+		end
 	end
 
 end

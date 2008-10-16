@@ -215,6 +215,10 @@ function module:CreateButtons()
 	Cryolysis3:CreateButton("BuffButton",	UIParent,	"Interface\\Icons\\INV_Staff_13");
 	Cryolysis3:CreateButton("PortalButton", UIParent,	"Interface\\Icons\\Spell_Nature_AstralRecalGroup");
 	
+	-- Add expand/withdraw code to our menus
+	Cryolysis3:AddScript("BuffButton",	"menuButton",	"OnClick");
+	Cryolysis3:AddScript("PortalButton",	"menuButton",	"OnClick");
+
 	-- Start tooltip data
 	Cryolysis3.Private.tooltips["BuffButton"] = {};
 	Cryolysis3.Private.tooltips["PortalButton"] = {};
@@ -235,7 +239,7 @@ function module:CreateButtons()
 		end
 		
 		-- Create the button
-		Cryolysis3:CreateMenuItemButton("BuffButtonArmor",	lastButton,	Cryolysis3.spellCache[7302].icon);
+		Cryolysis3:CreateMenuItemButton("BuffButtonArmor",	lastButton,	Cryolysis3.spellCache[7302].icon, "BuffButton");
 		
 		-- Update last button added
 		lastButton = Cryolysis3BuffButtonArmor;
@@ -249,11 +253,14 @@ function module:CreateButtons()
 		end
 		
 		-- Create the button
-		Cryolysis3:CreateMenuItemButton("BuffButtonIntellect",	lastButton,	Cryolysis3.spellCache[1459].icon);
+		Cryolysis3:CreateMenuItemButton("BuffButtonIntellect",	lastButton,	Cryolysis3.spellCache[1459].icon, "BuffButton");
 		
 		-- Update last button added
 		lastButton = Cryolysis3BuffButtonIntellect;
 	end
+
+	-- menu defaults to closed
+	Cryolysis3:OpenCloseMenu("BuffButton");
 end
 
 ------------------------------------------------------------------------------------------------------
