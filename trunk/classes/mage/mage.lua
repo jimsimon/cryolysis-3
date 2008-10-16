@@ -23,8 +23,10 @@ local function UpdateEvocation()
 		end
 
 		-- Liven up the button
-		--getglobal("Cryolysis3EvocationButton"):GetNormalTexture():SetDesaturated(false);
+		Cryolysis3EvocationButton.texture:SetDesaturated(false);
 
+		-- Remove text from button
+		Cryolysis3EvocationButtonText:SetText("");
 
 		-- Insert tooltip data saying its ready
 		Cryolysis3.Private.tooltips["EvocationButton"][2] = L["Ready"];
@@ -35,7 +37,7 @@ local function UpdateEvocation()
 		end
 		
 		-- Gray out the button
-		--getglobal("Cryolysis3EvocationButton"):GetNormalTexture():SetDesaturated(true);
+		Cryolysis3EvocationButton.texture:SetDesaturated(true);
 		
 		-- Get timer data
 		local timeleft = Cryolysis3:TimerData(start, duration);
@@ -43,9 +45,15 @@ local function UpdateEvocation()
 		if (timeleft.minutes > 0) then
 			-- Insert tooltip data with minutes
 			Cryolysis3.Private.tooltips["EvocationButton"][2] = timeleft.minutes.." "..L["minutes"]..", "..timeleft.seconds.." "..L["seconds"];
+			
+			-- Write remaining time on the button
+			Cryolysis3EvocationButtonText:SetText(timeleft.minutes..":"..timeleft.seconds);
 		else
 			-- Insert tooltip data without minutes
 			Cryolysis3.Private.tooltips["EvocationButton"][2] =  timeleft.seconds.." "..L["seconds"];
+			
+			-- Write remaining time on the button			
+			Cryolysis3EvocationButtonText:SetText(timeleft.seconds);
 		end
 	end
 end
@@ -191,22 +199,60 @@ function module:CreateButtons()
 		-- Start adding tooltip data
 		table.insert(Cryolysis3.Private.tooltips["EvocationButton"], Cryolysis3.spellCache[12051].name);
 		
+		-- Set Evocation button action
+		Cryolysis3.db.char.buttonTypes["EvocationButton"] = "spell";
+		Cryolysis3.db.char.buttonFunctions["EvocationButton"] = {};
+		Cryolysis3.db.char.buttonFunctions["EvocationButton"]["left"] = 12051;
+
+		-- Update all actions
+		Cryolysis3:UpdateButton("EvocationButton", "left");
+
 		-- Update Evocation cooldown
 		UpdateEvocation();
 	end
 	
 	-- Create our needed buttons
-	Cryolysis3:CreateButton("PortalButton", UIParent, "Interface\\Icons\\Spell_Nature_AstralRecalGroup");
-	Cryolysis3:CreateButton("BuffButton", UIParent, "Interface\\Icons\\INV_Staff_13");
-
+	Cryolysis3:CreateButton("BuffButton",	UIParent,	"Interface\\Icons\\INV_Staff_13");
+	Cryolysis3:CreateButton("PortalButton", UIParent,	"Interface\\Icons\\Spell_Nature_AstralRecalGroup");
 	
-	local showBuffMenu = 
-		Cryolysis3:HasSpell(7302)	-- Ice Armor
-		or Cryolysis3:HasSpell(6117)	-- Mage Armor
+	-- Start tooltip data
+	Cryolysis3.Private.tooltips["BuffButton"] = {};
+	Cryolysis3.Private.tooltips["PortalButton"] = {};
+	
+	-- Start adding tooltip data
+	table.insert(Cryolysis3.Private.tooltips["BuffButton"],		L["Buff Button"]);
+	table.insert(Cryolysis3.Private.tooltips["BuffButton"],		L["Click to open menu."]);
+	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Teleport and Portal Menu"]);
+	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Click to open menu."]);
+	
+	local lastButton = nil;
 
-	if (showBuffMenu) then
-		-- We have a buff, create and set up the buff menu button
+	-- Buff menu buttons
+	if (Cryolysis3:HasSpell(7302) or Cryolysis3:HasSpell(6117) or Cryolysis3:HasSpell(30482)) then
+		-- Ice/Mage/Molten Armor
+		if (lastButton == nil) then
+			lastButton = Cryolysis3BuffButton;
+		end
 		
+		-- Create the button
+		Cryolysis3:CreateMenuItemButton("BuffButtonArmor",	lastButton,	Cryolysis3.spellCache[7302].icon);
+		
+		-- Update last button added
+		lastButton = Cryolysis3BuffButtonArmor;
+	end
+
+	-- Intellect buttons
+	if (Cryolysis3:HasSpell(1459) or Cryolysis3:HasSpell(23028)) then
+		-- Arcane Intellect/Brilliance
+		if (lastButton == nil) then
+			lastButton = Cryolysis3BuffButton;
+		end
+		
+		-- Create the button
+		Cryolysis3:CreateMenuItemButton("BuffButtonIntellect",	lastButton,	Cryolysis3.spellCache[1459].icon);
+		
+		-- Update last button added
+		lastButton = Cryolysis3BuffButtonIntellect;
 	end
 end
 
