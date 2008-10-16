@@ -1,0 +1,51 @@
+## Interface: 30000
+
+## Title: Cryolysis 3 |cff7fff7f -Ace3-|r
+## Version: 3.0 Alpha
+## Author: Paene, Belazor
+## Notes: A sphere based spell and buff management tool for all classes. (PRE-ALPHA, DO NOT USE!)
+
+## OptionalDeps: Ace3
+
+## SavedVariables: Cryolysis3DB
+## SavedVariablesPerCharacter: Cryolysis3DBPerChar
+
+-- Load Libraries
+#@no-lib-strip@
+-- Load Libraries
+embeds.xml
+#@end-no-lib-strip@
+
+-- Load Locales
+locales\deDE.lua
+locales\enUS.lua
+locales\esES.lua
+locales\frFR.lua
+locales\koKR.lua
+locales\zhCN.lua
+locales\zhTW.lua
+
+-- Load Main File
+Cryolysis3.lua
+
+-- Load Data
+data\privates.lua
+data\spellcache.lua
+data\defaults.lua
+data\options.lua
+data\mounts.lua
+data\tooltips.lua
+
+-- Load functions
+core\global.lua
+core\frames.lua
+core\buttons.lua
+core\events.lua
+core\module.lua
+core\sphere.lua
+
+-- Load modules
+modules.xml
+
+-- Load Bindings
+Bindings.lua
