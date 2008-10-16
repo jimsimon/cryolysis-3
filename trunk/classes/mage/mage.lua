@@ -215,6 +215,51 @@ function module:CreateButtons()
 	Cryolysis3:CreateButton("BuffButton",	UIParent,	"Interface\\Icons\\INV_Staff_13");
 	Cryolysis3:CreateButton("PortalButton", UIParent,	"Interface\\Icons\\Spell_Nature_AstralRecalGroup");
 	
+	-- Check for highest rank of food
+	local foodID = Cryolysis3:GetHighestRank({33717, 28612, 10145, 10144, 6129, 990, 597, 587});
+
+	-- Check for highest rank of water
+	local waterID = Cryolysis3:GetHighestRank({27090, 37420, 10140, 10139, 10138, 6127, 5506, 5505, 5504});
+
+	-- Check for highest rank of gem
+	local gemID = Cryolysis3:GetHighestRank({42985, 27101, 10054, 10053, 3552, 759});
+
+	if (foodID ~= nil) then
+		Cryolysis3:CreateButton("FoodButton",	UIParent,	select(3, GetSpellInfo(foodID)));
+		Cryolysis3.Private.tooltips["FoodButton"] = {};
+		
+		table.insert(Cryolysis3.Private.tooltips["FoodButton"],	Cryolysis3.spellCache[foodID].name);
+		table.insert(Cryolysis3.Private.tooltips["FoodButton"], string.format(L["%s click to %s: %s"], L["Left"],	L["use"],	Cryolysis3.spellCache[foodID].name));
+		table.insert(Cryolysis3.Private.tooltips["FoodButton"], string.format(L["%s click to %s: %s"], L["Right"],	L["cast"],	Cryolysis3.spellCache[foodID].name));
+		
+		if (Cryolysis3:HasSpell(43987)) then
+			table.insert(Cryolysis3.Private.tooltips["FoodButton"], string.format(L["%s click to %s: %s"], L["Middle"],	L["cast"],	Cryolysis3.spellCache[43987].name));
+		end
+	end
+
+	if (waterID ~= nil) then
+		Cryolysis3:CreateButton("WaterButton",	UIParent,	select(3, GetSpellInfo(waterID)));
+		Cryolysis3.Private.tooltips["WaterButton"] = {};
+
+		table.insert(Cryolysis3.Private.tooltips["WaterButton"], Cryolysis3.spellCache[waterID].name);
+		table.insert(Cryolysis3.Private.tooltips["WaterButton"], string.format(L["%s click to %s: %s"], L["Left"],	L["use"],	Cryolysis3.spellCache[waterID].name));
+		table.insert(Cryolysis3.Private.tooltips["WaterButton"], string.format(L["%s click to %s: %s"], L["Right"],	L["cast"],	Cryolysis3.spellCache[waterID].name));
+		
+		if (Cryolysis3:HasSpell(43987)) then
+			table.insert(Cryolysis3.Private.tooltips["WaterButton"], string.format(L["%s click to %s: %s"], L["Middle"],	L["cast"],	Cryolysis3.spellCache[43987].name));
+		end
+
+	end
+
+	if (gemID ~= nil) then
+		Cryolysis3:CreateButton("GemButton",	UIParent,	select(3, GetSpellInfo(gemID)));
+		Cryolysis3.Private.tooltips["GemButton"] = {};
+
+		table.insert(Cryolysis3.Private.tooltips["GemButton"], Cryolysis3.spellCache[gemID].name);
+		table.insert(Cryolysis3.Private.tooltips["GemButton"], string.format(L["%s click to %s: %s"], L["Left"],	L["use"],	Cryolysis3.spellCache[gemID].name));
+		table.insert(Cryolysis3.Private.tooltips["GemButton"], string.format(L["%s click to %s: %s"], L["Right"],	L["cast"],	Cryolysis3.spellCache[gemID].name));
+	end
+
 	-- Add expand/withdraw code to our menus
 	Cryolysis3:AddScript("BuffButton",	"menuButton",	"OnClick");
 	Cryolysis3:AddScript("PortalButton",	"menuButton",	"OnClick");
@@ -231,51 +276,262 @@ function module:CreateButtons()
 	
 	-- Start off with no last button
 	Cryolysis3.lastButton = nil;
-	
+	local tooltip = {};
+
 	-- Buff menu buttons
 	if (Cryolysis3:HasSpell(7302) or Cryolysis3:HasSpell(6117) or Cryolysis3:HasSpell(30482)) then
 		-- Ice/Mage/Molten Armor
-		Cryolysis3:AddMenuItem("BuffButton", "Armor", Cryolysis3.spellCache[7302].icon);
+		tooltip = {};
+		table.insert(tooltip, L["Armor"]);
+		
+		if (Cryolysis3:HasSpell(7302)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[7302].name));
+		end
+		
+		if (Cryolysis3:HasSpell(6117)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"],	L["cast"], Cryolysis3.spellCache[6117].name));
+		end
+		
+		if (Cryolysis3:HasSpell(30482)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Middle"],	L["cast"], Cryolysis3.spellCache[30482].name));
+		end
+		
+		Cryolysis3:AddMenuItem("BuffButton", "Armor", select(3, GetSpellInfo(7302)), tooltip);
 	end
 
 	-- Intellect buttons
 	if (Cryolysis3:HasSpell(1459) or Cryolysis3:HasSpell(23028)) then
 		-- Arcane Intellect/Brilliance
-		Cryolysis3:AddMenuItem("BuffButton", "Intellect", Cryolysis3.spellCache[1459].icon);
+		tooltip = {};
+		table.insert(tooltip, L["Intellect"]);
+		
+		if (Cryolysis3:HasSpell(1459)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[1459].name));
+		end
+		
+		if (Cryolysis3:HasSpell(23028)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"],	L["cast"], Cryolysis3.spellCache[23028].name));
+		end
+		Cryolysis3:AddMenuItem("BuffButton", "Intellect", select(3, GetSpellInfo(1459)), tooltip);
 	end
 
 	-- Magic buttons
 	if (Cryolysis3:HasSpell(604) or Cryolysis3:HasSpell(1008)) then
 		-- Dampen/Amplify Magic
-		Cryolysis3:AddMenuItem("BuffButton", "Magic", Cryolysis3.spellCache[604].icon);
+		tooltip = {};
+		table.insert(tooltip, L["Magic"]);
+		
+		if (Cryolysis3:HasSpell(604)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[604].name));
+		end
+		
+		if (Cryolysis3:HasSpell(1008)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"],	L["cast"], Cryolysis3.spellCache[1008].name));
+		end
+		Cryolysis3:AddMenuItem("BuffButton", "Magic", select(3, GetSpellInfo(604)), tooltip);
 	end
 
 	-- Damage Shields buttons
 	if (Cryolysis3:HasSpell(1463) or Cryolysis3:HasSpell(11426)) then
-		-- Dampen/Amplify Magic
-		Cryolysis3:AddMenuItem("BuffButton", "Shields", Cryolysis3.spellCache[1463].icon);
+		-- Mana Shield/Ice Barrier
+		tooltip = {};
+		table.insert(tooltip, L["Armor"]);
+		
+		if (Cryolysis3:HasSpell(1463)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[1463].name));
+		end
+		
+		if (Cryolysis3:HasSpell(11426)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"],	L["cast"], Cryolysis3.spellCache[11426].name));
+		end
+		Cryolysis3:AddMenuItem("BuffButton", "Shields", select(3, GetSpellInfo(1463)), tooltip);
 	end
 
 	-- Wards buttons
 	if (Cryolysis3:HasSpell(543) or Cryolysis3:HasSpell(6143)) then
 		-- Fire/Frost Ward
-		Cryolysis3:AddMenuItem("BuffButton", "Wards", Cryolysis3.spellCache[543].icon);
+		tooltip = {};
+		table.insert(tooltip, L["Magical Wards"]);
+		
+		if (Cryolysis3:HasSpell(543)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[543].name));
+		end
+		
+		if (Cryolysis3:HasSpell(6143)) then
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"],	L["cast"], Cryolysis3.spellCache[6143].name));
+		end
+		Cryolysis3:AddMenuItem("BuffButton", "Wards", select(3, GetSpellInfo(543)), tooltip);
 	end
 
 	-- Remove Curse buttons
 	if (Cryolysis3:HasSpell(475)) then
 		-- Remove Curse
-		Cryolysis3:AddMenuItem("BuffButton", "Curse", Cryolysis3.spellCache[475].icon);
+		tooltip = {};
+		table.insert(tooltip, Cryolysis3.spellCache[475].name);
+		table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[475].name));
+		Cryolysis3:AddMenuItem("BuffButton", "Curse", select(3, GetSpellInfo(475)), tooltip);
 	end
 
 	-- Slow Fall buttons
 	if (Cryolysis3:HasSpell(130)) then
 		-- Slow Fall
-		Cryolysis3:AddMenuItem("BuffButton", "SlowFall", Cryolysis3.spellCache[130].icon);
+		tooltip = {};
+		table.insert(tooltip, Cryolysis3.spellCache[130].name);
+		table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[130].name));
+		Cryolysis3:AddMenuItem("BuffButton", "SlowFall", select(3, GetSpellInfo(130)), tooltip);
 	end
 
 	-- menu defaults to closed
 	Cryolysis3:OpenCloseMenu("BuffButton");
+
+	-- Start off with no last button
+	Cryolysis3.lastButton = nil;
+
+	if (Cryolysis3.Private.englishFaction == "Alliance") then
+		if (Cryolysis3:HasSpell(3562) or Cryolysis3:HasSpell(11416)) then
+			-- Ironforge
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[3562].name);
+			
+			if (Cryolysis3:HasSpell(3562)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[3562].name));
+			end
+			if (Cryolysis3:HasSpell(11416)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[11416].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "Ironforge", select(3, GetSpellInfo(3562)), tooltip);
+		end
+		
+		if (Cryolysis3:HasSpell(3561) or Cryolysis3:HasSpell(10059)) then
+			-- Stormwind
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[3561].name);
+			
+			if (Cryolysis3:HasSpell(3561)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[3561].name));
+			end
+			if (Cryolysis3:HasSpell(10059)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[10059].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "Stormwind", select(3, GetSpellInfo(3561)), tooltip);
+		end
+		
+		if (Cryolysis3:HasSpell(3565) or Cryolysis3:HasSpell(11419)) then
+			-- Darnassus
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[3565].name);
+			
+			if (Cryolysis3:HasSpell(3565)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[3565].name));
+			end
+			if (Cryolysis3:HasSpell(11416)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[11416].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "Darnassus", select(3, GetSpellInfo(3565)), tooltip);
+		end
+
+		if (Cryolysis3:HasSpell(32271) or Cryolysis3:HasSpell(32266)) then
+			-- The Exodar
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[32271].name);
+			
+			if (Cryolysis3:HasSpell(32271)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[32271].name));
+			end
+			if (Cryolysis3:HasSpell(32266)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[32266].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "TheExodar", select(3, GetSpellInfo(32271)), tooltip);
+		end
+		
+		if (Cryolysis3:HasSpell(33690) or Cryolysis3:HasSpell(33691)) then
+			-- Shattrath
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[33690].name);
+			
+			if (Cryolysis3:HasSpell(33690)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[33690].name));
+			end
+			if (Cryolysis3:HasSpell(33691)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[33691].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "ShattrathCity", select(3, GetSpellInfo(33690)), tooltip);
+		end
+	else
+		-- Hoard
+		if (Cryolysis3:HasSpell(3567) or Cryolysis3:HasSpell(11417)) then
+			-- Orgrimmar
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[3567].name);
+			
+			if (Cryolysis3:HasSpell(3567)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[3567].name));
+			end
+			if (Cryolysis3:HasSpell(11417)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[11417].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "Orgrimmar", select(3, GetSpellInfo(3567)), tooltip);
+		end
+		
+		if (Cryolysis3:HasSpell(3563) or Cryolysis3:HasSpell(11418)) then
+			-- Undercity
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[3563].name);
+			
+			if (Cryolysis3:HasSpell(3563)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[3563].name));
+			end
+			if (Cryolysis3:HasSpell(11418)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[11418].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "Undercity", select(3, GetSpellInfo(3563)), tooltip);
+		end
+		
+		if (Cryolysis3:HasSpell(3566) or Cryolysis3:HasSpell(11420)) then
+			-- Thunder Bluff
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[3566].name);
+			
+			if (Cryolysis3:HasSpell(3566)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[3566].name));
+			end
+			if (Cryolysis3:HasSpell(11420)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[11420].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "ThunderBluff", select(3, GetSpellInfo(3566)), tooltip);
+		end
+		
+		if (Cryolysis3:HasSpell(32272) or Cryolysis3:HasSpell(32267)) then
+			-- Silvermoon City
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[32272].name);
+			
+			if (Cryolysis3:HasSpell(32272)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[32272].name));
+			end
+			if (Cryolysis3:HasSpell(32267)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[32267].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "SilvermoonCity", select(3, GetSpellInfo(32272)), tooltip);
+		end
+		
+		if (Cryolysis3:HasSpell(35715) or Cryolysis3:HasSpell(35717)) then
+			-- Shattrath
+			tooltip = {};
+			table.insert(tooltip, Cryolysis3.spellCache[35715].name);
+			
+			if (Cryolysis3:HasSpell(35715)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	L["cast"], Cryolysis3.spellCache[35715].name));
+			end
+			if (Cryolysis3:HasSpell(35717)) then
+				table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], L["cast"], Cryolysis3.spellCache[35717].name));
+			end
+			Cryolysis3:AddMenuItem("PortalButton", "ShattrathCity", select(3, GetSpellInfo(35715)), tooltip);
+		end
+	end
+
+	-- menu defaults to closed
+	Cryolysis3:OpenCloseMenu("PortalButton");
 end
 
 ------------------------------------------------------------------------------------------------------

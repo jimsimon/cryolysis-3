@@ -16,7 +16,7 @@ Cryolysis3.defaults = {
 		lockButtons		= true,			-- Lock the buttons to the main sphere. (Keep them around the outside of the sphere.)
 		RestockConfirm		= true,			-- Ask for confirmation before restocking reagents
 		restockOverflow		= true,			-- Buy one extra stack when reagents are sold in stacks and missing < stack size.
-		MsgChannel		= "SAY",		-- What channel to put our messages in by default
+		MsgChannel		= "GROUP",		-- What channel to put our messages in by default
 		outerSphere		= 3,			-- Functionality of the Outer Sphere. 1 = None, 2 = HP, 3 = Mana/Rage/Energy
 		skin			= "Blue",		-- The default skin to use
 		quietMode		= false,		-- Hide the information messages on load/disable

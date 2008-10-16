@@ -125,7 +125,7 @@ function Cryolysis3:HasSpell(spellID)
 				ID = {
 					11416,	-- Ironforge
 					10059,	-- Stormwind
-					11416,	-- Darnassus
+					11419,	-- Darnassus
 					32266,	-- The Exodar
 					33691,	-- Shattrath City
 				};

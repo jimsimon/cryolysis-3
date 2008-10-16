@@ -388,7 +388,7 @@ end
 ------------------------------------------------------------------------------------------------------
 -- Wrapper function to update middle key functionality of all buttons
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:AddMenuItem(menuType, name, icon)
+function Cryolysis3:AddMenuItem(menuType, name, icon, tooltip)
 
 	if (Cryolysis3.lastButton == nil) then
 		Cryolysis3.lastButton = getglobal("Cryolysis3"..menuType);
@@ -399,6 +399,29 @@ function Cryolysis3:AddMenuItem(menuType, name, icon)
 
 	-- Update last button added
 	Cryolysis3.lastButton = getglobal("Cryolysis3"..menuType..name);
+
+	if (tooltip == nil) then
+		return false;
+	end
+	
+	-- Add the tooltip for this button
+	Cryolysis3.Private.tooltips[menuType..name] = {};
+
+	if (tooltip[1] ~= nil) then
+		table.insert(Cryolysis3.Private.tooltips[menuType..name],	tooltip[1]);
+	end
+
+	if (tooltip[2] ~= nil) then
+		table.insert(Cryolysis3.Private.tooltips[menuType..name],	tooltip[2]);
+	end
+
+	if (tooltip[3] ~= nil) then
+		table.insert(Cryolysis3.Private.tooltips[menuType..name],	tooltip[3]);
+	end
+
+	if (tooltip[4] ~= nil) then
+		table.insert(Cryolysis3.Private.tooltips[menuType..name],	tooltip[4]);
+	end
 end
 
 

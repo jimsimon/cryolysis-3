@@ -150,3 +150,16 @@ function Cryolysis3:UpdateVisibility()
 		end
 	end
 end
+
+------------------------------------------------------------------------------------------------------
+-- Update visibility of things
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:GetHighestRank(spells)
+	for i = 1, #(spells), 1 do
+		if (Cryolysis3:HasSpell(spells[i])) then
+			return spells[i];
+		end
+	end
+
+	return nil;
+end

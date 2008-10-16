@@ -157,6 +157,11 @@ L["seconds"] = true; -- Mind the capitalisation!
 	L["Buff Button"] = true;
 	L["Teleport and Portal Menu"] = true;
 	L["Click to open menu."] = true;
+	L["Armor"] = true;
+	L["Intellect"] = true;
+	L["Magic"] = true;
+	L["Damage Shields"] = true;
+	L["Magical Wards"] = true;
 	
 	-- Message Module Options
 	L["Message"] = true;
