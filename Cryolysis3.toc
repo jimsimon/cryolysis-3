@@ -1,7 +1,7 @@
 ## Interface: 30000
 
 ## Title: Cryolysis 3 |cff7fff7f -Ace3-|r
-## Version: 3.0 Alpha
+## Version: @project-version@
 ## Author: Paene, Belazor
 ## Notes: A sphere based spell and buff management tool for all classes. (PRE-ALPHA, DO NOT USE!)
 
