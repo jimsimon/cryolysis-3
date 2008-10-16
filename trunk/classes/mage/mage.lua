@@ -229,104 +229,49 @@ function module:CreateButtons()
 	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Teleport and Portal Menu"]);
 	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Click to open menu."]);
 	
-	local lastButton = nil;
-
+	-- Start off with no last button
+	Cryolysis3.lastButton = nil;
+	
 	-- Buff menu buttons
 	if (Cryolysis3:HasSpell(7302) or Cryolysis3:HasSpell(6117) or Cryolysis3:HasSpell(30482)) then
 		-- Ice/Mage/Molten Armor
-		if (lastButton == nil) then
-			lastButton = Cryolysis3BuffButton;
-		end
-		
-		-- Create the button
-		Cryolysis3:CreateMenuItemButton("BuffButtonArmor",	lastButton,	Cryolysis3.spellCache[7302].icon, "BuffButton");
-		
-		-- Update last button added
-		lastButton = Cryolysis3BuffButtonArmor;
+		Cryolysis3:AddMenuItem("BuffButton", "Armor", Cryolysis3.spellCache[7302].icon);
 	end
 
 	-- Intellect buttons
 	if (Cryolysis3:HasSpell(1459) or Cryolysis3:HasSpell(23028)) then
 		-- Arcane Intellect/Brilliance
-		if (lastButton == nil) then
-			lastButton = Cryolysis3BuffButton;
-		end
-		
-		-- Create the button
-		Cryolysis3:CreateMenuItemButton("BuffButtonIntellect",	lastButton,	Cryolysis3.spellCache[1459].icon, "BuffButton");
-		
-		-- Update last button added
-		lastButton = Cryolysis3BuffButtonIntellect;
+		Cryolysis3:AddMenuItem("BuffButton", "Intellect", Cryolysis3.spellCache[1459].icon);
 	end
 
 	-- Magic buttons
 	if (Cryolysis3:HasSpell(604) or Cryolysis3:HasSpell(1008)) then
 		-- Dampen/Amplify Magic
-		if (lastButton == nil) then
-			lastButton = Cryolysis3BuffButton;
-		end
-		
-		-- Create the button
-		Cryolysis3:CreateMenuItemButton("BuffButtonMagic",	lastButton,	Cryolysis3.spellCache[604].icon, "BuffButton");
-		
-		-- Update last button added
-		lastButton = Cryolysis3BuffButtonMagic;
+		Cryolysis3:AddMenuItem("BuffButton", "Magic", Cryolysis3.spellCache[604].icon);
 	end
 
 	-- Damage Shields buttons
 	if (Cryolysis3:HasSpell(1463) or Cryolysis3:HasSpell(11426)) then
 		-- Dampen/Amplify Magic
-		if (lastButton == nil) then
-			lastButton = Cryolysis3BuffButton;
-		end
-		
-		-- Create the button
-		Cryolysis3:CreateMenuItemButton("BuffButtonShields",	lastButton,	Cryolysis3.spellCache[1463].icon, "BuffButton");
-		
-		-- Update last button added
-		lastButton = Cryolysis3BuffButtonShields;
+		Cryolysis3:AddMenuItem("BuffButton", "Shields", Cryolysis3.spellCache[1463].icon);
 	end
 
 	-- Wards buttons
 	if (Cryolysis3:HasSpell(543) or Cryolysis3:HasSpell(6143)) then
 		-- Fire/Frost Ward
-		if (lastButton == nil) then
-			lastButton = Cryolysis3BuffButton;
-		end
-		
-		-- Create the button
-		Cryolysis3:CreateMenuItemButton("BuffButtonWards",	lastButton,	Cryolysis3.spellCache[543].icon, "BuffButton");
-		
-		-- Update last button added
-		lastButton = Cryolysis3BuffButtonWards;
+		Cryolysis3:AddMenuItem("BuffButton", "Wards", Cryolysis3.spellCache[543].icon);
 	end
 
 	-- Remove Curse buttons
 	if (Cryolysis3:HasSpell(475)) then
 		-- Remove Curse
-		if (lastButton == nil) then
-			lastButton = Cryolysis3BuffButton;
-		end
-		
-		-- Create the button
-		Cryolysis3:CreateMenuItemButton("BuffButtonCurse",	lastButton,	Cryolysis3.spellCache[475].icon, "BuffButton");
-		
-		-- Update last button added
-		lastButton = Cryolysis3BuffButtonCurse;
+		Cryolysis3:AddMenuItem("BuffButton", "Curse", Cryolysis3.spellCache[475].icon);
 	end
 
 	-- Slow Fall buttons
 	if (Cryolysis3:HasSpell(130)) then
 		-- Slow Fall
-		if (lastButton == nil) then
-			lastButton = Cryolysis3BuffButton;
-		end
-		
-		-- Create the button
-		Cryolysis3:CreateMenuItemButton("BuffButtonSlowFall",	lastButton,	Cryolysis3.spellCache[130].icon, "BuffButton");
-		
-		-- Update last button added
-		lastButton = Cryolysis3BuffButtonSlowFall;
+		Cryolysis3:AddMenuItem("BuffButton", "SlowFall", Cryolysis3.spellCache[130].icon);
 	end
 
 	-- menu defaults to closed
