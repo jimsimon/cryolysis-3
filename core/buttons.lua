@@ -52,6 +52,61 @@ function Cryolysis3:CreateButton(name, parentFrame, texture)
 end
 
 ------------------------------------------------------------------------------------------------------
+-- Wrapper function to create a menu item button with less parameters
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:CreateMenuItemButton(name, parentFrame, texture)
+	-- Create the button frame
+	Cryolysis3:CreateFrame(
+		"Button", name, parentFrame, "SecureActionButtonTemplate", 40, 40, true,
+		texture, 22, 22,
+		"Interface\\AddOns\\Cryolysis3\\textures\\nohighlight",
+		"Interface\\AddOns\\Cryolysis3\\textures\\highlight",
+		false
+	);
+
+
+	if (Cryolysis3.db.char.menuButtons[parentFrame] == nil) then
+		Cryolysis3.db.char.menuButtons[parentFrame] = {};
+	end
+
+	local found = false;
+	for k, v in pairs(Cryolysis3.db.char.menuButtons) do
+		if (Cryolysis3.db.char.menuButtons[parentFrame][k] == name) then
+			found = true;
+		end
+	end
+
+	if (not found) then
+		-- Insert the button name in the table of buttons
+		table.insert(Cryolysis3.db.char.menuButtons[parentFrame], name);		
+	end
+	
+	-- Register the button for clicks
+	local button = getglobal("Cryolysis3"..name);
+	button:RegisterForDrag("LeftButton");
+	button:RegisterForClicks("LeftButtonUp", "RightButtonUp", "MiddleButtonUp");
+
+	if (Cryolysis3.db.char.hidden[name] == true) then
+		-- This button is supposed to be hidden
+		button:Hide();
+	end
+
+	if (not Cryolysis3.db.char.lockSphere and not Cryolysis3.db.char.lockButtons) then
+		-- Add the Drag Start and Drag Stop scripts (temp disabled)
+		Cryolysis3:AddScript(name, "button", "OnDragStart");
+		Cryolysis3:AddScript(name, "button", "OnDragStop")
+	end
+
+	-- Handle button tooltip
+	Cryolysis3:AddScript(name, "button", "OnEnter");
+	Cryolysis3:AddScript(name, "button", "OnLeave");
+	
+	-- Try this :p
+	button:ClearAllPoints();
+	button:SetPoint("CENTER", parentFrame, "CENTER", 33, 0);
+end
+
+------------------------------------------------------------------------------------------------------
 -- Create the three custom buttons if we have them enabled
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:CreateCustomButtons()
@@ -285,9 +340,6 @@ function Cryolysis3:SetAttribute(button, modifier, click, actionType, action)
 		local actionName	= action;
 		local texture		= nil;
 		
-
-
-				
 		if (actionType == "spell") then
 			actionName, _, texture = GetSpellInfo(action);			
 			

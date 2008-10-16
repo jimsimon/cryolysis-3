@@ -32,6 +32,7 @@ Cryolysis3.defaults = {
 		scale			= {},			-- Scale of the frames and buttons
 		hidden			= {},			-- What frames are supposed to be hidden
 		buttons			= {},			-- Table of buttons
+		menuButtons		= {},			-- Table of menu buttons
 		RestockQuantity		= {},			-- All the reagents we want to restock
 		modules			= {			-- The modules enabled by default
 			["messages"]		= true,		-- Information messages

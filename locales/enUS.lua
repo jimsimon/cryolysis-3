@@ -154,7 +154,9 @@ L["minutes"] = true; -- Mind the capitalisation!
 L["seconds"] = true; -- Mind the capitalisation!
 
 	-- Mage Module Locales
-	
+	L["Buff Button"] = true;
+	L["Teleport and Portal Menu"] = true;
+	L["Click to open menu."] = true;
 	
 	-- Message Module Options
 	L["Message"] = true;

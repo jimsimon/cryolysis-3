@@ -24,12 +24,11 @@ function Cryolysis3:CreateFrame(...) -- See Cryolysis3.lua for a demo :)
 	frame:SetHeight(height);
 	
 	if texturePath ~= nil then
-		local texture = frame:CreateTexture(nil, "BACKGROUND");
-		texture:SetTexture(texturePath);
-		texture:SetWidth(textureWidth);
-		texture:SetHeight(textureHeight);
-		texture:SetPoint("CENTER");
-		frame.texture = texture;
+		frame.texture = frame:CreateTexture(nil, "BACKGROUND");
+		frame.texture:SetTexture(texturePath);
+		frame.texture:SetWidth(textureWidth);
+		frame.texture:SetHeight(textureHeight);
+		frame.texture:SetPoint("CENTER");
 	end
 	
 	frame:SetMovable(movable);
@@ -51,12 +50,6 @@ function Cryolysis3:CreateFrame(...) -- See Cryolysis3.lua for a demo :)
 	if name == "Sphere" then
 		-- We're altering the main sphere
 		frameType = "frame";
-		
-		-- Create the font string of the frame
-		local fontstring = frame:CreateFontString(frameName.."Text", frame, "GameFontNormal");
-		fontstring:SetPoint("CENTER", frame, "CENTER");
-		fontstring:Show();
-
 	else
 		-- We're altering a button
 		frameType = "button";
@@ -68,11 +61,18 @@ function Cryolysis3:CreateFrame(...) -- See Cryolysis3.lua for a demo :)
 		texture:SetPoint("CENTER", frame, "CENTER")
 	end
 
-	-- Load this frame's position
-	Cryolysis3:LoadAnchorPosition(frameType, name);
+	-- Create the font string of the frame
+	local fontstring = frame:CreateFontString(frameName.."Text", frame, "GameFontNormal");
+	fontstring:SetPoint("CENTER", frame, "CENTER");
+	fontstring:Show();
 
-	-- Save this frame's position
-	Cryolysis3:SaveAnchorPosition(frameType, name);
+	if (parentFrame == UIParent) then
+		-- Load this frame's position
+		Cryolysis3:LoadAnchorPosition(frameType, name);
+		
+		-- Save this frame's position
+		Cryolysis3:SaveAnchorPosition(frameType, name);
+	end
 end
 
 
