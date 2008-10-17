@@ -263,6 +263,14 @@ function Cryolysis3:UpdateButton(button, click)
 		Cryolysis3:SetAttribute(button, "shift",	click, actionType, "");
 		Cryolysis3:SetAttribute(button, "ctrl",		click, actionType, "");
 	end
+
+	if ( Cryolysis3.db.char.buttonFunctions[button] == nil) then
+		return false;
+	end
+
+	if (Cryolysis3.db.char.buttonFunctions[button][click] == nil) then
+		return false;
+	end
 	
 	-- Set the true middle click key to the true action
 	Cryolysis3:SetAttribute(button, Cryolysis3.db.char.middleKey, click, actionType, Cryolysis3.db.char.buttonFunctions[button][click]);
@@ -386,6 +394,63 @@ function Cryolysis3:ChangeMiddleKey()
 end
 
 ------------------------------------------------------------------------------------------------------
+-- Builds tooltip and button functions
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:PrepareButton(menuType, name, buttonType, title, left, right, middle)
+	local tooltip = {};
+	local action;
+
+	if (type(title) == "number") then
+		title = Cryolysis3.spellCache[title].name
+	end
+	table.insert(tooltip, title);
+
+	-- Set button functions
+	Cryolysis3.db.char.buttonFunctions[menuType..name] = {};
+	Cryolysis3.db.char.buttonTypes[menuType..name] = buttonType;
+
+	if (buttonType == "spell") then
+		-- We're casting a spell
+		action = L["cast"];
+
+		if (Cryolysis3:HasSpell(left)) then
+			Cryolysis3.db.char.buttonFunctions[menuType..name].left = left;
+			
+			if (type(left) == "number") then
+				left = Cryolysis3.spellCache[left].name;
+			end
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Left"],	action, left));
+		end
+		
+		if (Cryolysis3:HasSpell(right)) then
+			Cryolysis3.db.char.buttonFunctions[menuType..name].right = right;
+			
+			if (type(right) == "number") then
+				right = Cryolysis3.spellCache[right].name;
+			end
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Right"], action, right));
+		end
+		
+		if (Cryolysis3:HasSpell(middle)) then
+			Cryolysis3.db.char.buttonFunctions[menuType..name].middle = middle;
+			
+			if (type(middle) == "number") then
+				middle = Cryolysis3.spellCache[middle].name;
+			end
+			table.insert(tooltip, string.format(L["%s click to %s: %s"], L["Middle"], action, middle));
+		end
+	else
+		-- We're using an item
+		action = L["use"];
+
+		-- Code for checking if item exists in inventory goes here
+	end
+	
+
+	return tooltip;
+end
+
+------------------------------------------------------------------------------------------------------
 -- Wrapper function to update middle key functionality of all buttons
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:AddMenuItem(menuType, name, icon, tooltip)
@@ -406,27 +471,26 @@ function Cryolysis3:AddMenuItem(menuType, name, icon, tooltip)
 	
 	-- Add the tooltip for this button
 	Cryolysis3.Private.tooltips[menuType..name] = {};
+	
+	for i = 1, #(tooltip), 1 do
+		-- Add the tooltip to the array
+		table.insert(Cryolysis3.Private.tooltips[menuType..name],	tooltip[i]);
 
-	if (tooltip[1] ~= nil) then
-		table.insert(Cryolysis3.Private.tooltips[menuType..name],	tooltip[1]);
-	end
-
-	if (tooltip[2] ~= nil) then
-		table.insert(Cryolysis3.Private.tooltips[menuType..name],	tooltip[2]);
-	end
-
-	if (tooltip[3] ~= nil) then
-		table.insert(Cryolysis3.Private.tooltips[menuType..name],	tooltip[3]);
-	end
-
-	if (tooltip[4] ~= nil) then
-		table.insert(Cryolysis3.Private.tooltips[menuType..name],	tooltip[4]);
+		if (i == 2) then
+			-- Add left click functionality
+			Cryolysis3:UpdateButton(menuType..name, "left");
+		elseif (i == 3) then
+			-- Add right click functionality
+			Cryolysis3:UpdateButton(menuType..name, "right");
+		elseif (i == 4) then
+			-- Add middle click functionality
+			Cryolysis3:UpdateButton(menuType..name, "middle");
+		end
 	end
 end
 
-
 ------------------------------------------------------------------------------------------------------
--- Close 
+-- Open/Close menu 
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:OpenCloseMenu(menu)
 	local b;
