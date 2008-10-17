@@ -768,10 +768,13 @@ end
 -- Casting.... casting.... YUS! Done!
 ------------------------------------------------------------------------------------------------------
 function module:UNIT_SPELLCAST_SUCCEEDED(info, unit, name, rank)
-	if (name == Cryolysis3.spellCache[12051].name) then
-		-- Evocation cooldown started
-		handle = Cryolysis3:ScheduleRepeatingTimer(UpdateEvocation, 1);
+	if (Cryolysis3.spellCache[12051] ~= nil) then
+		if (name == Cryolysis3.spellCache[12051].name) then
+			-- Evocation cooldown started
+			handle = Cryolysis3:ScheduleRepeatingTimer(UpdateEvocation, 1);
+		end
 	end
+
 end
 
 ------------------------------------------------------------------------------------------------------
