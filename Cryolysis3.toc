@@ -1,7 +1,7 @@
 ## Interface: 30000
 
 ## Title: Cryolysis 3 |cff7fff7f -Ace3-|r
-## Version: v3.0-beta2
+## Version: @project-version@
 ## Author: Paene, Belazor
 ## Notes: A sphere based spell and buff management tool for all classes. (PRE-ALPHA, DO NOT USE!)
 
@@ -10,8 +10,8 @@
 ## SavedVariables: Cryolysis3DB
 ## SavedVariablesPerCharacter: Cryolysis3DBPerChar
 
--- Load Libraries
 #@no-lib-strip@
+
 -- Load Libraries
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
@@ -27,6 +27,7 @@ libs\AceTimer-3.0\AceTimer-3.0.xml
 libs\LibPeriodicTable-3.1\LibPeriodicTable-3.1.lua
 libs\LibPeriodicTable-3.1-ClassSpell\LibPeriodicTable-3.1-ClassSpell.lua
 libs\LibPeriodicTable-3.1-Misc\LibPeriodicTable-3.1-Misc.lua
+
 #@end-no-lib-strip@
 
 -- Load Locales
