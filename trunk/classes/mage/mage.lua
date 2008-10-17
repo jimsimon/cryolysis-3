@@ -602,9 +602,14 @@ function module:CreateButtons()
 	local tooltip = {};
 
 	-- Buff menu buttons
-	if (Cryolysis3:HasSpell(7302) or Cryolysis3:HasSpell(6117) or Cryolysis3:HasSpell(30482)) then
-		-- Ice/Mage/Molten Armor
-		tooltip = Cryolysis3:PrepareButton("BuffButton", "Armor", "spell", L["Armor"], 7302, 6117, 30482);
+	if (Cryolysis3:HasSpell(168) or Cryolysis3:HasSpell(7302) or Cryolysis3:HasSpell(6117) or Cryolysis3:HasSpell(30482)) then
+		-- (Frost/Ice)/Mage/Molten Armor
+		local frostIce = 7302;
+		if (Cryolysis3:HasSpell(168) and not Cryolysis3:HasSpell(7302)) then
+			-- We have Frost Armor but not Ice Armor
+			frostIce = 168;
+		end
+		tooltip = Cryolysis3:PrepareButton("BuffButton", "Armor", "spell", L["Armor"], frostIce, 6117, 30482);
 		Cryolysis3:AddMenuItem("BuffButton", "Armor", select(3, GetSpellInfo(7302)), tooltip);
 	end
 
