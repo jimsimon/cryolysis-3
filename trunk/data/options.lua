@@ -574,7 +574,7 @@ Cryolysis3.options = {
 								Cryolysis3.db.char.chosenMount.normal = v;
 								Cryolysis3:UpdateMountButtonMacro();
 							end,
-							values = function() return Cryolysis3.Private.mounts.normal; end,
+							values = function() return Cryolysis3.Private.mounts; end,
 							order = 10
 						},
 						right = {
@@ -586,7 +586,7 @@ Cryolysis3.options = {
 								Cryolysis3.db.char.chosenMount.flying = v;
 								Cryolysis3:UpdateMountButtonMacro();
 							end,
-							values = function() return Cryolysis3.Private.mounts.flying; end,
+							values = function() return Cryolysis3.Private.mounts; end,
 							order = 20
 						},
 						movemountbutton = {
@@ -596,7 +596,6 @@ Cryolysis3.options = {
 							func = function() Cryolysis3:IncrementButton("MountButton"); end,
 							order = 20
 						},
-						--[[
 						rescanmount = {
 							type = "execute",
 							name = L["Re-scan Mounts"],
@@ -604,7 +603,6 @@ Cryolysis3.options = {
 							func = function() Cryolysis3:FindMounts(true); end,
 							order = 20
 						},
-						]]
 					}
 				},
 			},
