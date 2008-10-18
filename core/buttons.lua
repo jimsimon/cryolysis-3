@@ -8,15 +8,50 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Cryolysis3");
 ------------------------------------------------------------------------------------------------------
 -- Wrapper function to create a button with less parameters
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:CreateButton(name, parentFrame, texture)
+function Cryolysis3:CreateButton(name, parentFrame, texture, buttonType)
+	local template;
+	if (buttonType == "menuButton") then
+		template = "SecureHandlerClickTemplate";
+	else
+		template = "SecureActionButtonTemplate";
+	end
 	-- Create the button frame
-	Cryolysis3:CreateFrame(
-		"Button", name, parentFrame, "SecureActionButtonTemplate", 34, 34, true,
+	local frame = Cryolysis3:CreateFrame(
+		"Button", name, parentFrame, template, 34, 34, true,
 		texture, 22, 22,
 		"Interface\\AddOns\\Cryolysis3\\textures\\nohighlight",
 		"Interface\\AddOns\\Cryolysis3\\textures\\highlight",
 		false
 	);
+
+	if (buttonType == "menuButton") then
+		local button;
+		local j = 33
+		for i, buttonName in ipairs(Cryolysis3.db.char.menuButtons[name]) do
+			button = getglobal("Cryolysis3"..buttonName);
+			if (button ~= nil) then
+				button:SetParent(frame);
+				button:ClearAllPoints();
+				button:SetPoint("CENTER", frame, "CENTER", j, 0);
+				j = j + 33;
+			end
+		end
+
+		frame:Execute( [[MenuButtons = table.new(self:GetChildren())]] )
+		frame:SetAttribute("_onclick", [[
+			if menuOpen then
+				menuOpen = false
+				for i, child in ipairs(MenuButtons) do
+				       child:Hide()
+				  end
+			else
+				menuOpen = true;
+				for i, child in ipairs(MenuButtons) do
+					child:Show()
+				end
+			end]]
+		);
+	end
 	
 	local found = false;
 	for k, v in pairs(Cryolysis3.db.char.buttons) do
@@ -61,9 +96,9 @@ function Cryolysis3:CreateMenuItemButton(name, parentFrame, texture, menuType)
 		texture, 26, 26,
 		"Interface\\AddOns\\Cryolysis3\\textures\\nohighlight",
 		"Interface\\AddOns\\Cryolysis3\\textures\\highlight",
-		false
+		true
 	);
-
+	
 
 	if (Cryolysis3.db.char.menuButtons == nil) then
 		Cryolysis3.db.char.menuButtons = {};
@@ -153,6 +188,11 @@ function Cryolysis3:IncrementButton(button)
 			buttonIndex = i;
 			break;
 		end
+	end
+
+	if (buttonIndex == nil) then
+		-- Dunno how the hell this would happen, but meh
+		buttonIndex = #(Cryolysis3.db.char.buttons);
 	end
 	
 	if (buttonIndex < #(Cryolysis3.db.char.buttons)) then
@@ -454,16 +494,8 @@ end
 -- Wrapper function to update middle key functionality of all buttons
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:AddMenuItem(menuType, name, icon, tooltip)
-
-	if (Cryolysis3.lastButton == nil) then
-		Cryolysis3.lastButton = getglobal("Cryolysis3"..menuType);
-	end
-
 	-- Create the button
-	Cryolysis3:CreateMenuItemButton(menuType..name, Cryolysis3.lastButton, icon, menuType);
-
-	-- Update last button added
-	Cryolysis3.lastButton = getglobal("Cryolysis3"..menuType..name);
+	Cryolysis3:CreateMenuItemButton(menuType..name, UIParent, icon, menuType);
 
 	if (tooltip == nil) then
 		return false;
@@ -485,29 +517,6 @@ function Cryolysis3:AddMenuItem(menuType, name, icon, tooltip)
 		elseif (i == 4) then
 			-- Add middle click functionality
 			Cryolysis3:UpdateButton(menuType..name, "middle");
-		end
-	end
-end
-
-------------------------------------------------------------------------------------------------------
--- Open/Close menu 
-------------------------------------------------------------------------------------------------------
-function Cryolysis3:OpenCloseMenu(menu)
-	local b;
-
-	if (Cryolysis3.db.char.menuButtons[menu] == nil) then
-		return false;
-	end
-
-	-- Goes through all buttons we have available and sets their middle attribute
-	for k, v in pairs(Cryolysis3.db.char.menuButtons[menu]) do
-		b = getglobal("Cryolysis3"..v);
-		if (b ~= nil) then
-			if (b:IsShown()) then
-				b:Hide();
-			else
-				b:Show();
-			end
 		end
 	end
 end

@@ -73,6 +73,8 @@ function Cryolysis3:CreateFrame(...) -- See Cryolysis3.lua for a demo :)
 		-- Save this frame's position
 		Cryolysis3:SaveAnchorPosition(frameType, name);
 	end
+
+	return frame;
 end
 
 
@@ -107,7 +109,7 @@ function Cryolysis3:AddScript(name, frameType, scriptName)
 		end)
 	elseif scriptName == "OnClick" then
 		if (frameType == "menuButton") then
-			item:SetScript(scriptName, function(self) 
+			item:SetScript("_"..scriptName, function(self)
 				Cryolysis3:OpenCloseMenu(name);
 			end)
 		end
