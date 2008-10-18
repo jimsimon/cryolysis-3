@@ -475,10 +475,6 @@ function module:CreateButtons()
 		UpdateEvocation();
 	end
 	
-	-- Create our needed buttons
-	Cryolysis3:CreateButton("BuffButton",	UIParent,	"Interface\\Icons\\INV_Staff_13");
-	Cryolysis3:CreateButton("PortalButton", UIParent,	"Interface\\Icons\\Spell_Nature_AstralRecalGroup");
-	
 	-- Check for highest rank of food
 	local foodID = Cryolysis3:GetHighestRank({33717, 28612, 10145, 10144, 6129, 990, 597, 587});
 
@@ -583,9 +579,6 @@ function module:CreateButtons()
 		Cryolysis3:UpdateAllButtonAttributes("GemButton");
 	end
 
-	-- Add expand/withdraw code to our menus
-	Cryolysis3:AddScript("BuffButton",	"menuButton",	"OnClick");
-	Cryolysis3:AddScript("PortalButton",	"menuButton",	"OnClick");
 
 	-- Start tooltip data
 	Cryolysis3.Private.tooltips["BuffButton"] = {};
@@ -597,8 +590,6 @@ function module:CreateButtons()
 	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Teleport/Portal"]);
 	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Click to open menu."]);
 	
-	-- Start off with no last button
-	Cryolysis3.lastButton = nil;
 	local tooltip = {};
 
 	-- Buff menu buttons
@@ -655,12 +646,6 @@ function module:CreateButtons()
 		Cryolysis3:AddMenuItem("BuffButton", "SlowFall", select(3, GetSpellInfo(130)), tooltip);
 	end
 
-	-- menu defaults to closed
-	Cryolysis3:OpenCloseMenu("BuffButton");
-
-	-- Start off with no last button
-	Cryolysis3.lastButton = nil;
-	
 	if (Cryolysis3.Private.englishFaction == "Alliance") then
 		if (Cryolysis3:HasSpell(3562) or Cryolysis3:HasSpell(11416)) then
 			-- Ironforge
@@ -736,8 +721,9 @@ function module:CreateButtons()
 		end
 	end
 
-	-- menu defaults to closed
-	Cryolysis3:OpenCloseMenu("PortalButton");
+	-- Create our needed buttons
+	Cryolysis3:CreateButton("BuffButton",	UIParent,	"Interface\\Icons\\INV_Staff_13", "menuButton");
+	Cryolysis3:CreateButton("PortalButton", UIParent,	"Interface\\Icons\\Spell_Nature_AstralRecalGroup", "menuButton");
 end
 
 ------------------------------------------------------------------------------------------------------
