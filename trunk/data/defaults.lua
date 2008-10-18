@@ -2,6 +2,7 @@
 -- Local variables
 ------------------------------------------------------------------------------------------------------
 local Cryolysis3 = Cryolysis3;
+local L = LibStub("AceLocale-3.0"):GetLocale("Cryolysis3");
 
 
 ------------------------------------------------------------------------------------------------------
@@ -64,6 +65,9 @@ Cryolysis3.defaults = {
 		chosenMount		= {
 			["normal"]			= nil,
 			["flying"]			= nil
-		}
+		},
+		mountBehavior 		= 2,
+		leftMountText		= L["Left Click Mount"],
+		rightMountText 		= L["Right Click Mount"],
 	}
 }

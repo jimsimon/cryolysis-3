@@ -33,8 +33,10 @@ L["Mount"] = true;
 	-- Mount button locales
 	L["Left click to Hearthstone to "] = true;
 	L["Left click to use "] = true;
+	L["Right click to use "] = true;
 	L["You are not in a flyable area and you have no selected ground mount."] = true;
 	L["Right click to Hearthstone to "] = true;
+	L["Middle click to Hearthstone to "] = true;
 
 L["Custom Button"] = true;
 	-- Custom button locales
@@ -135,8 +137,13 @@ L["Ctrl"] = true;
 
 	-- Mount Button locales
 	L["Mount Button"] = true;
-	L["Normal Mount Options"] = true;
-	L["Flying Mount Options"] = true;
+	L["Button Behavior"] = true;
+	L["Manual"] = true;
+	L["Flying First"] = true;
+	L["Ground Mount"] = true;
+	L["Flying Mount"] = true;
+	L["Left Click Mount"] = true;
+	L["Right Click Mount"] = true;
 	L["Re-scan Mounts"] = true;
 	L["Click this when you've added new mounts to your bags."] = true;
 
