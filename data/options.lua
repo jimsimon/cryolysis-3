@@ -565,9 +565,31 @@ Cryolysis3.options = {
 							end,
 							order = 5
 						},
+						mode = {
+							type = "select",
+							name = L["Button Behavior"],
+							width = "full",
+							get = function(info) return Cryolysis3.db.char.mountBehavior; end,
+							set = function(info, v)
+								Cryolysis3.db.char.mountBehavior = v;
+								if v == 1 then
+									Cryolysis3.options.args.graphicalsettings.args.mount.args.left.name = L["Left Click Mount"];
+									Cryolysis3.db.char.leftMountText = L["Left Click Mount"];
+									Cryolysis3.options.args.graphicalsettings.args.mount.args.right.name = L["Right Click Mount"];
+									Cryolysis3.db.char.rightMountText = L["Right Click Mount"];
+								else
+									Cryolysis3.options.args.graphicalsettings.args.mount.args.left.name = L["Ground Mount"];
+									Cryolysis3.db.char.leftMountText = L["Ground Mount"];
+									Cryolysis3.options.args.graphicalsettings.args.mount.args.right.name = L["Flying Mount"];
+									Cryolysis3.db.char.rightMountText = L["Right Click Mount"];
+								end
+							end,
+							values = {L["Manual"], L["Flying First"]},
+							order = 7
+						},
 						left = {
 							type = "select",
-							name = L["Normal Mount Options"],
+							name = function() return Cryolysis3.db.char.leftMountText end,
 							width = "full",							
 							get = function(info) return Cryolysis3.db.char.chosenMount.normal; end,
 							set = function(info, v)
@@ -579,7 +601,7 @@ Cryolysis3.options = {
 						},
 						right = {
 							type = "select",
-							name = L["Flying Mount Options"],
+							name = function() return Cryolysis3.db.char.rightMountText end,
 							width = "full",
 							get = function(info) return Cryolysis3.db.char.chosenMount.flying; end,
 							set = function(info, v)
@@ -587,7 +609,7 @@ Cryolysis3.options = {
 								Cryolysis3:UpdateMountButtonMacro();
 							end,
 							values = function() return Cryolysis3.Private.mounts; end,
-							order = 20
+							order = 15
 						},
 						movemountbutton = {
 							type = "execute",
@@ -601,7 +623,7 @@ Cryolysis3.options = {
 							name = L["Re-scan Mounts"],
 							desc = L["Click this when you've added new mounts to your bags."],
 							func = function() Cryolysis3:FindMounts(true); end,
-							order = 20
+							order = 25
 						},
 					}
 				},

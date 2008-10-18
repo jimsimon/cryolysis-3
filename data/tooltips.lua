@@ -16,36 +16,52 @@ function Cryolysis3:BuildTooltip(name)
 		-- Dynamically generated tooltip
 		if (name == "MountButton") then
 			GameTooltip:SetText(L["Mount"], 1, 1, 1, 1);
-			if (Cryolysis3.db.char.chosenMount["normal"] == nil) then
-				-- We have no normal mount
-				if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
-					-- We have no flying mount either
-					GameTooltip:AddLine(L["Left click to Hearthstone to "]..GetBindLocation());
-				else
-					-- We have only flying mount
-					if (IsFlyableArea()) then
-						GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
+			if (Cryolysis3.db.char.mountBehavior == 2) then
+				if (Cryolysis3.db.char.chosenMount["normal"] == nil) then
+					-- We have no normal mount
+					if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
+						-- We have no flying mount either
+						GameTooltip:AddLine(L["Left click to Hearthstone to "]..GetBindLocation());
 					else
-						GameTooltip:AddLine(L["You are not in a flyable area and you have no selected ground mount."]);
+						-- We have only flying mount
+						if (IsFlyableArea()) then
+							GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
+						else
+							GameTooltip:AddLine(L["You are not in a flyable area and you have no selected ground mount."]);
+						end
+					end
+				else
+					-- We have a ground mount
+					if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
+						-- We have only ground mount
+						GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["normal"]);
+					else
+						-- We have both ground mount and flying mount
+						if (IsFlyableArea()) then
+							GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
+						else
+							GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["normal"]);
+						end
 					end
 				end
+				-- Right click functionality
+				GameTooltip:AddLine(L["Right click to Hearthstone to "]..GetBindLocation());
 			else
-				-- We have a ground mount
-				if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
-					-- We have only ground mount
+				if Cryolysis3.db.char.chosenMount["normal"] ~= nil and Cryolysis3.db.char.chosenMount["flying"] ~= nil then
 					GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["normal"]);
+					GameTooltip:AddLine(L["Right click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
+					GameTooltip:AddLine(L["Middle click to Hearthstone to "]..GetBindLocation());
+				elseif (Cryolysis3.db.char.chosenMount["normal"] ~= nil and Cryolysis3.db.char.chosenMount["flying"] == nil) then
+					GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["normal"]);
+					GameTooltip:AddLine(L["Right click to Hearthstone to "]..GetBindLocation());
+				elseif (Cryolysis3.db.char.chosenMount["normal"] == nil and Cryolysis3.db.char.chosenMount["flying"] ~= nil) then
+					GameTooltip:AddLine(L["Left click to Hearthstone to "]..GetBindLocation());
+					GameTooltip:AddLine(L["Right click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
 				else
-					-- We have both ground mount and flying mount
-					if (IsFlyableArea()) then
-						GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
-					else
-						GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["normal"]);
-					end
+					GameTooltip:AddLine(L["Click to Hearthstone to "]..GetBindLocation());
 				end
 			end
 			
-			-- Right click functionality
-			GameTooltip:AddLine(L["Right click to Hearthstone to "]..GetBindLocation());
 		elseif (name == "CustomButton1" or name == "CustomButton2" or name == "CustomButton3") then
 			local hasFunc = false;
 			local buttonType = false;
