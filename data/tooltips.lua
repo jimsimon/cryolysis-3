@@ -21,47 +21,47 @@ function Cryolysis3:BuildTooltip(name)
 					-- We have no normal mount
 					if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
 						-- We have no flying mount either
-						GameTooltip:AddLine(L["Click to Hearthstone to "]..GetBindLocation());
+						GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Left"], GetItemInfo(6948), GetBindLocation()));
 					else
 						-- We have only flying mount
 						if (IsFlyableArea()) then
-							GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
-							GameTooltip:AddLine(L["Middle click to Hearthstone to "]..GetBindLocation());
+							GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Left"], L["use"], Cryolysis3.db.char.chosenMount["flying"]));
 						else
 							GameTooltip:AddLine(L["You are not in a flyable area and you have no selected ground mount."]);
-							GameTooltip:AddLine(L["Middle click to Hearthstone to "]..GetBindLocation());
 						end
+						GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Right"], GetItemInfo(6948), GetBindLocation()));
 					end
 				else
 					-- We have a ground mount
 					if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
 						-- We have only ground mount
-						GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["normal"]);
-						GameTooltip:AddLine(L["Middle click to Hearthstone to "]..GetBindLocation());
+						GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Left"], L["use"], Cryolysis3.db.char.chosenMount["normal"]));
+						GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Middle"], GetItemInfo(6948), GetBindLocation()));
 					else
 						-- We have both ground mount and flying mount
 						if (IsFlyableArea()) then
-							GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
-							GameTooltip:AddLine(L["Middle click to Hearthstone to "]..GetBindLocation());
+							GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Left"], L["use"], Cryolysis3.db.char.chosenMount["flying"]));
 						else
-							GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["normal"]);
-							GameTooltip:AddLine(L["Middle click to Hearthstone to "]..GetBindLocation());
+							GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Left"], L["use"], Cryolysis3.db.char.chosenMount["normal"]));
 						end
+						GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Right"], GetItemInfo(6948), GetBindLocation()));
 					end
 				end
 			else
-				if Cryolysis3.db.char.chosenMount["normal"] ~= nil and Cryolysis3.db.char.chosenMount["flying"] ~= nil then
-					GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["normal"]);
-					GameTooltip:AddLine(L["Right click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
-					GameTooltip:AddLine(L["Middle click to Hearthstone to "]..GetBindLocation());
+				if (Cryolysis3.db.char.chosenMount["normal"] ~= nil and Cryolysis3.db.char.chosenMount["flying"] ~= nil) then
+					GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Left"], L["use"], Cryolysis3.db.char.chosenMount["normal"]));
+					GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Right"], L["use"], Cryolysis3.db.char.chosenMount["flying"]));
+					GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Middle"], GetItemInfo(6948), GetBindLocation()));
+
 				elseif (Cryolysis3.db.char.chosenMount["normal"] ~= nil and Cryolysis3.db.char.chosenMount["flying"] == nil) then
-					GameTooltip:AddLine(L["Left click to use "]..Cryolysis3.db.char.chosenMount["normal"]);
-					GameTooltip:AddLine(L["Right click to Hearthstone to "]..GetBindLocation());
+					GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Left"], L["use"], Cryolysis3.db.char.chosenMount["normal"]));
+					GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Right"], GetItemInfo(6948), GetBindLocation()));
+
 				elseif (Cryolysis3.db.char.chosenMount["normal"] == nil and Cryolysis3.db.char.chosenMount["flying"] ~= nil) then
-					GameTooltip:AddLine(L["Left click to Hearthstone to "]..GetBindLocation());
-					GameTooltip:AddLine(L["Right click to use "]..Cryolysis3.db.char.chosenMount["flying"]);
+					GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Left"], GetItemInfo(6948), GetBindLocation()));
+					GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Right"], L["use"], Cryolysis3.db.char.chosenMount["flying"]));
 				else
-					GameTooltip:AddLine(L["Click to Hearthstone to "]..GetBindLocation());
+					GameTooltip:AddLine(string.format(L["%s click to %s: %s"], L["Left"], GetItemInfo(6948), GetBindLocation()));
 				end
 			end
 			

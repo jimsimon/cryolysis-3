@@ -581,10 +581,11 @@ Cryolysis3.options = {
 									Cryolysis3.options.args.graphicalsettings.args.mount.args.left.name = L["Ground Mount"];
 									Cryolysis3.db.char.leftMountText = L["Ground Mount"];
 									Cryolysis3.options.args.graphicalsettings.args.mount.args.right.name = L["Flying Mount"];
-									Cryolysis3.db.char.rightMountText = L["Right Click Mount"];
+									Cryolysis3.db.char.rightMountText = L["Flying Mount"];
 								end
+								Cryolysis3:UpdateMountButtonMacro();
 							end,
-							values = {L["Manual"], L["Flying First"]},
+							values = {L["Manual"], L["Automatic"]},
 							order = 7
 						},
 						left = {
