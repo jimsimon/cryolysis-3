@@ -159,6 +159,8 @@ L["Adjust various options for this module."] = true;
 L["Ready"] = true;
 L["minutes"] = true; -- Mind the capitalisation!
 L["seconds"] = true; -- Mind the capitalisation!
+L["Show Cooldown"] = true;
+L["Display the cooldown timer on this button"] = true;
 
 	-- Mage Module Locales
 	L["Buff Menu"] = true;

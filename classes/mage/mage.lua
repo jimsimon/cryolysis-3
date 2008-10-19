@@ -10,7 +10,7 @@ local handle = nil;
 ------------------------------------------------------------------------------------------------------
 -- Function to update the cooldown on Evocation
 ------------------------------------------------------------------------------------------------------
-local function UpdateEvocation()
+function UpdateEvocation()
 	-- Get cooldown data
 	local start, duration, enabled = GetSpellCooldown(Cryolysis3.spellCache[12051].name);
 		
@@ -46,14 +46,26 @@ local function UpdateEvocation()
 			-- Insert tooltip data with minutes
 			Cryolysis3.Private.tooltips["EvocationButton"][2] = timeleft.minutes.." "..L["minutes"]..", "..timeleft.seconds.." "..L["seconds"];
 			
-			-- Write remaining time on the button
-			Cryolysis3EvocationButtonText:SetText(timeleft.minutes..":"..timeleft.seconds);
+			--If show cooldown is enabled
+			if Cryolysis3.db.char.buttonText["EvocationButton"]  then
+				-- Write remaining time on the button
+				Cryolysis3EvocationButtonText:SetText(timeleft.minutes..":"..timeleft.seconds);
+			else
+				--Blank out the text
+				Cryolysis3EvocationButtonText:SetText("");
+			end
 		else
 			-- Insert tooltip data without minutes
 			Cryolysis3.Private.tooltips["EvocationButton"][2] =  timeleft.seconds.." "..L["seconds"];
 			
-			-- Write remaining time on the button			
-			Cryolysis3EvocationButtonText:SetText(timeleft.seconds);
+			--If show cooldown is enabled
+			if Cryolysis3.db.char.buttonText["EvocationButton"] then
+				-- Write remaining time on the button			
+				Cryolysis3EvocationButtonText:SetText(timeleft.seconds);
+			else
+				--Blank out the text
+				Cryolysis3EvocationButtonText:SetText("");
+			end
 		end
 	end
 end
@@ -96,6 +108,15 @@ function module:CreateConfigOptions()
 							Cryolysis3:UpdateVisibility();
 						end,
 						order = 10
+					},
+					showcooldown = {
+						type = "toggle",
+						name = L["Show Cooldown"],
+						desc = L["Display the cooldown timer on this button"],
+						get = function(info) return Cryolysis3.db.char.buttonText["EvocationButton"] end,
+						set = function(info, v) Cryolysis3.db.char.buttonText["EvocationButton"] = v end,
+						width = "full",
+						order = 15
 					},
 					moveevocationbutton = {
 						type = "execute",
@@ -800,7 +821,12 @@ end
 -- We all loves the manas!
 ------------------------------------------------------------------------------------------------------
 function module:UNIT_MANA(event, unitId)
-	if (tonumber(Cryolysis3.db.char.outerSphere) == 3 and unitId == "player") then
-		Cryolysis3:UpdateSphere("outerSphere");
+	if (unitId == "player") then
+		if (tonumber(Cryolysis3.db.char.outerSphere) == 3) then
+			Cryolysis3:UpdateSphere("outerSphere");
+		end
+		if (tonumber(Cryolysis3.db.char.sphereText) == 4 or tonumber(Cryolysis3.db.char.sphereText) == 5) then
+			Cryolysis3:UpdateSphere("sphereText");
+		end
 	end
 end
