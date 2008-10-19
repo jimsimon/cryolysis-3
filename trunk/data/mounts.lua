@@ -52,9 +52,9 @@ function Cryolysis3:FindMounts(hasLoaded)
 	
 	-- There hsould be a shaman check here, they like Astral Recall more than HS.
 	local hs = GetItemInfo(6948);	-- Hearthstone
-	if (Cryolysis3.db.char.buttonFunctions["MountButton"].right == nil) then
+	if (Cryolysis3.db.char.buttonFunctions["MountButton"].middle == nil) then
 		-- Set the default right button to the Hearthstone
-		Cryolysis3.db.char.buttonFunctions["MountButton"].right = "/cast "..hs;
+		Cryolysis3.db.char.buttonFunctions["MountButton"].middle = "/cast "..hs;
 	end
 	
 	if (hasLoaded == nil) then
@@ -97,26 +97,47 @@ end
 -- Function to find what mounts we carry/can summon
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:UpdateMountButtonMacro()
+
 	local macro = "";
 	local hs = GetItemInfo(6948);
 
-	if (Cryolysis3.db.char.chosenMount["normal"] == nil) then
-		-- We have no normal mount
-		if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
-			-- We have neither ground mount nor flying, just set this to use HS
-			macro = macro.."/cast "..hs;
+	if (Cryolysis3.db.char.mountBehavior == 2) then
+
+		if (Cryolysis3.db.char.chosenMount["normal"] == nil) then
+			-- We have no normal mount
+			if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
+				-- We have neither ground mount nor flying, just set this to use HS
+				macro = macro.."/cast "..hs;
+			else
+				-- We have no ground, but we do have a flying mount
+				macro = macro.."/cast [noflyable] "..hs.."; "..Cryolysis3.db.char.chosenMount["flying"];
+			end
 		else
-			-- We have no ground, but we do have a flying mount
-			macro = macro.."/cast [noflyable] "..hs.."; "..Cryolysis3.db.char.chosenMount["flying"];
+			if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
+				-- We have only ground mount
+				macro = macro.."/cast "..Cryolysis3.db.char.chosenMount["normal"];
+			else
+				-- We have both ground and flying
+				macro = macro.."/cast [flyable] "..Cryolysis3.db.char.chosenMount["flying"].."; "..Cryolysis3.db.char.chosenMount["normal"];
+			end
 		end
+		
 	else
-		if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
-			-- We have only ground mount
-			macro = macro.."/cast "..Cryolysis3.db.char.chosenMount["normal"];
+		
+		if (Cryolysis3.db.char.chosenMount["normal"] ~= nil and Cryolysis3.db.char.chosenMount["flying"] ~= nil) then
+			-- We have both mounts
+			macro = macro.."/cast [button:1] "..Cryolysis3.db.char.chosenMount["normal"].."; "..Cryolysis3.db.char.chosenMount["flying"];
+		elseif (Cryolysis3.db.char.chosenMount["normal"] == nil and Cryolysis3.db.char.chosenMount["flying"] ~= nil) then
+			-- We have no left mount set, but we do have a right mount set
+			macro = macro.."/cast [button:2] "..hs.."; "..Cryolysis3.db.char.chosenMount["flying"];
+		elseif (Cryolysis3.db.char.chosenMount["normal"] ~= nil and Cryolysis3.db.char.chosenMount["flying"] == nil) then
+			-- We have no right mount set, but we do have a left mount set
+			macro = macro.."/cast [button:1] "..hs.."; "..Cryolysis3.db.char.chosenMount["normal"];
 		else
-			-- We have both ground and flying
-			macro = macro.."/cast [flyable] "..Cryolysis3.db.char.chosenMount["flying"].."; "..Cryolysis3.db.char.chosenMount["normal"];
+			-- We have no mount, just use the hearthstone (or something went terribly wrong)
+			macro = macro.."/cast "..hs;
 		end
+		
 	end
 	
 	local MacroParameters = {
@@ -138,6 +159,8 @@ function Cryolysis3:UpdateMountButtonMacro()
 	-- Now finally set left button to this macro
 	Cryolysis3.db.char.buttonFunctions["MountButton"].left = macro;
 	Cryolysis3:UpdateButton("MountButton", "left");
+	Cryolysis3.db.char.buttonFunctions["MountButton"].right = macro;
+	Cryolysis3:UpdateButton("MountButton", "right");
 
 	-- We have to do it this way to support doing this when we change zones
 	Cryolysis3:UpdateMountButtonTexture();
