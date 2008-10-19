@@ -50,13 +50,6 @@ function Cryolysis3:FindMounts(hasLoaded)
 		Cryolysis3.db.char.buttonFunctions.MountButton = {};
 	end
 	
-	-- There hsould be a shaman check here, they like Astral Recall more than HS.
-	local hs = GetItemInfo(6948);	-- Hearthstone
-	if (Cryolysis3.db.char.buttonFunctions["MountButton"].middle == nil) then
-		-- Set the default right button to the Hearthstone
-		Cryolysis3.db.char.buttonFunctions["MountButton"].middle = "/cast "..hs;
-	end
-	
 	if (hasLoaded == nil) then
 		-- Create the mount button
 		Cryolysis3:CreateButton("MountButton", UIParent);
@@ -102,7 +95,6 @@ function Cryolysis3:UpdateMountButtonMacro()
 	local hs = GetItemInfo(6948);
 
 	if (Cryolysis3.db.char.mountBehavior == 2) then
-
 		if (Cryolysis3.db.char.chosenMount["normal"] == nil) then
 			-- We have no normal mount
 			if (Cryolysis3.db.char.chosenMount["flying"] == nil) then
@@ -158,9 +150,17 @@ function Cryolysis3:UpdateMountButtonMacro()
 
 	-- Now finally set left button to this macro
 	Cryolysis3.db.char.buttonFunctions["MountButton"].left = macro;
-	Cryolysis3:UpdateButton("MountButton", "left");
-	Cryolysis3.db.char.buttonFunctions["MountButton"].right = macro;
-	Cryolysis3:UpdateButton("MountButton", "right");
+	if (Cryolysis3.db.char.mountBehavior == 1) then
+		Cryolysis3.db.char.buttonFunctions["MountButton"].right = macro;
+	else
+		Cryolysis3.db.char.buttonFunctions["MountButton"].right = "/cast "..hs;
+	end
+
+	-- Set the default right button to the Hearthstone
+	Cryolysis3.db.char.buttonFunctions["MountButton"].middle = "/cast "..hs;
+	
+	-- Now update all attributes
+	Cryolysis3:UpdateAllButtonAttributes("MountButton");
 
 	-- We have to do it this way to support doing this when we change zones
 	Cryolysis3:UpdateMountButtonTexture();
