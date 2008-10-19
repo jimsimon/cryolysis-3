@@ -83,6 +83,12 @@ L["Fast"] = true;
 -- Button Options
 L["Button Settings"] = true;
 L["Adjust various settings for each button."] = true;
+L["Up"] = true;
+L["Right"] = true;
+L["Down"] = true;
+L["Left"] = true;
+L["Growth Direction"] = true;
+L["Adjust which way this menu grows"] = true;
 
 -- Middle Click functionality
 L["Middle-Click Key"] = true;

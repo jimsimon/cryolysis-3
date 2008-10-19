@@ -162,6 +162,18 @@ function module:CreateConfigOptions()
 						end,
 						order = 10
 					},
+					growth = {
+						type = "select",
+						name = L["Growth Direction"],
+						desc = L["Adjust which way this menu grows"],
+						get = function(info) return Cryolysis3.db.char.menuButtonGrowth["BuffButton"] end,
+						set = function(info, v) 
+							Cryolysis3.db.char.menuButtonGrowth["BuffButton"] = v
+							Cryolysis3:PositionMenuItems("BuffButton", v)
+						end,
+						values = {L["Up"], L["Right"], L["Down"], L["Left"]},
+						order = 15
+					},
 					movebuffbutton = {
 						type = "execute",
 						name = L["Move Clockwise"],
