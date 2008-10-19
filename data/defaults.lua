@@ -35,6 +35,7 @@ Cryolysis3.defaults = {
 		buttons			= {},			-- Table of buttons
 		buttonText		= {},			-- Table of true/false values to determine displaying of button text
 		menuButtons		= {},			-- Table of menu buttons
+		menuButtonGrowth	= {};			-- Table to track which direction each menu should grow
 		RestockQuantity		= {},			-- All the reagents we want to restock
 		modules			= {			-- The modules enabled by default
 			["messages"]		= true,		-- Information messages

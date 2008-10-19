@@ -23,20 +23,11 @@ function Cryolysis3:CreateButton(name, parentFrame, texture, buttonType)
 		"Interface\\AddOns\\Cryolysis3\\textures\\highlight",
 		false
 	);
-
+	
 	if (buttonType == "menuButton") then
-		local button;
-		local j = 33
-		for i, buttonName in ipairs(Cryolysis3.db.char.menuButtons[name]) do
-			button = getglobal("Cryolysis3"..buttonName);
-			if (button ~= nil) then
-				button:SetParent(frame);
-				button:ClearAllPoints();
-				button:SetPoint("CENTER", frame, "CENTER", j, 0);
-				j = j + 33;
-			end
-		end
 
+		Cryolysis3:PositionMenuItems(name, Cryolysis3.db.char.menuButtonGrowth[name])
+	
 		frame:Execute( [[MenuButtons = table.new(self:GetChildren())]] )
 		frame:SetAttribute("_onclick", [[
 			if menuOpen then
@@ -82,6 +73,53 @@ function Cryolysis3:CreateButton(name, parentFrame, texture, buttonType)
 	-- Handle button tooltip
 	Cryolysis3:AddScript(name, "button", "OnEnter");
 	Cryolysis3:AddScript(name, "button", "OnLeave");
+end
+
+function Cryolysis3:PositionMenuItems(name, direction)
+
+	-- direction values represent compass values, starting at north and going clockwise
+	-- If direction is nil, set it to right.
+	if direction == nil then
+		direction = 2;
+		Cryolysis3.db.char.menuButtonGrowth[name] = 2;
+	end
+
+	local button;
+	local x,y, xOffset, yOffset;
+	
+	if direction == 1 then
+		x = 0;
+		y = -33;
+		xOffset = 0;
+		yOffset = -33;
+	elseif direction == 2 then
+		x = 33;
+		y = 0;
+		xOffset = 33;
+		yOffset = 0;
+	elseif direction == 3 then
+		x = 0;
+		y = 33;
+		xOffset = 0;
+		yOffset = 33;
+	else
+		x = -33;
+		y = 0;
+		xOffset = -33;
+		yOffset = 0;
+	end
+
+	for i, buttonName in ipairs(Cryolysis3.db.char.menuButtons[name]) do
+		button = getglobal("Cryolysis3"..buttonName);
+		if (button ~= nil) then
+			button:SetParent(frame);
+			button:ClearAllPoints();
+			button:SetPoint("CENTER", frame, "CENTER", x, y);
+			x = x + xOffset;
+			y = y + yOffset;
+		end
+	end
+
 end
 
 ------------------------------------------------------------------------------------------------------
