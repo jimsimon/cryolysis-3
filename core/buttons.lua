@@ -75,11 +75,9 @@ function Cryolysis3:CreateButton(name, parentFrame, texture, buttonType)
 		button:Hide();
 	end
 
-	if (not Cryolysis3.db.char.lockSphere and not Cryolysis3.db.char.lockButtons) then
-		-- Add the Drag Start and Drag Stop scripts (temp disabled)
-		Cryolysis3:AddScript(name, "button", "OnDragStart");
-		Cryolysis3:AddScript(name, "button", "OnDragStop")
-	end
+	-- Add the Drag Start and Drag Stop scripts (temp disabled)
+	Cryolysis3:AddScript(name, "button", "OnDragStart");
+	Cryolysis3:AddScript(name, "button", "OnDragStop")
 
 	-- Handle button tooltip
 	Cryolysis3:AddScript(name, "button", "OnEnter");
@@ -130,11 +128,9 @@ function Cryolysis3:CreateMenuItemButton(name, parentFrame, texture, menuType)
 		button:Hide();
 	end
 
-	if (not Cryolysis3.db.char.lockSphere and not Cryolysis3.db.char.lockButtons) then
-		-- Add the Drag Start and Drag Stop scripts (temp disabled)
-		Cryolysis3:AddScript(name, "button", "OnDragStart");
-		Cryolysis3:AddScript(name, "button", "OnDragStop")
-	end
+	-- Add the Drag Start and Drag Stop scripts (temp disabled)
+	Cryolysis3:AddScript(name, "button", "OnDragStart");
+	Cryolysis3:AddScript(name, "button", "OnDragStop")
 
 	-- Handle button tooltip
 	Cryolysis3:AddScript(name, "button", "OnEnter");
