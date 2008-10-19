@@ -173,7 +173,7 @@ function Cryolysis3:UpdateMountButtonTexture()
 	-- Get the texture and the icon object
 	local texture = select(2, GetMacroInfo(GetMacroIndexByName(Cryolysis3.Private.macroName)));
 	local t = getglobal("Cryolysis3MountButtonIcon");
-
+	
 	if (t ~= nil) then
 		-- Set the texture
 		t:SetTexture(texture);
