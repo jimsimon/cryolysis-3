@@ -66,7 +66,7 @@ Cryolysis3.defaults = {
 			["normal"]			= nil,
 			["flying"]			= nil
 		},
-		mountBehavior 		= 2,
+		mountBehavior 		= 1,
 		leftMountText		= L["Left Click Mount"],
 		rightMountText 		= L["Right Click Mount"],
 	}
