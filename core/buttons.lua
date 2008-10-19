@@ -289,7 +289,8 @@ function Cryolysis3:UpdateAllButtonPositions()
 	for k, v in pairs(Cryolysis3.db.char.buttons) do
 		local f = getglobal("Cryolysis3"..v);
 		if (f ~= nil) then
-			if (Cryolysis3.db.char.lockButtons) then
+			Cryolysis3:LoadAnchorPosition("button", v);
+			if (Cryolysis3.db.char.LockButtons) then
 				f:ClearAllPoints();
 				f:SetPoint(
 					"CENTER", "Cryolysis3Sphere", "CENTER", 
