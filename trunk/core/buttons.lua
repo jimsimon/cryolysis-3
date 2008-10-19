@@ -25,7 +25,7 @@ function Cryolysis3:CreateButton(name, parentFrame, texture, buttonType)
 	);
 	
 	if (buttonType == "menuButton") then
-
+		-- Do growth positioning
 		Cryolysis3:PositionMenuItems(name, Cryolysis3.db.char.menuButtonGrowth[name])
 	
 		frame:Execute( [[MenuButtons = table.new(self:GetChildren())]] )
@@ -75,6 +75,9 @@ function Cryolysis3:CreateButton(name, parentFrame, texture, buttonType)
 	Cryolysis3:AddScript(name, "button", "OnLeave");
 end
 
+------------------------------------------------------------------------------------------------------
+-- Function to determine menu button position
+------------------------------------------------------------------------------------------------------
 function Cryolysis3:PositionMenuItems(name, direction)
 
 	-- direction values represent compass values, starting at north and going clockwise
@@ -85,13 +88,14 @@ function Cryolysis3:PositionMenuItems(name, direction)
 	end
 
 	local button;
+	local frame = getglobal("Cryolysis3"..name);
 	local x,y, xOffset, yOffset;
 	
 	if direction == 1 then
 		x = 0;
-		y = -33;
+		y = 33;
 		xOffset = 0;
-		yOffset = -33;
+		yOffset = 33;
 	elseif direction == 2 then
 		x = 33;
 		y = 0;
@@ -99,9 +103,9 @@ function Cryolysis3:PositionMenuItems(name, direction)
 		yOffset = 0;
 	elseif direction == 3 then
 		x = 0;
-		y = 33;
+		y = -33;
 		xOffset = 0;
-		yOffset = 33;
+		yOffset = -33;
 	else
 		x = -33;
 		y = 0;
