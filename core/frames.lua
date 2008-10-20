@@ -93,9 +93,9 @@ function Cryolysis3:AddScript(name, frameType, scriptName)
 	if scriptName == "OnDragStart" then
 		item:SetScript(scriptName, function(self)
 			if self:GetParent() == UIParent then
-				if (not Cryolysis3.db.char.LockSphere) then
+				if (not Cryolysis3.db.char.lockSphere) then
 					if frameType == "button" then
-						if not Cryolysis3.db.char.LockButtons then
+						if not Cryolysis3.db.char.lockButtons then
 							self:StartMoving(); 
 						end				
 					else

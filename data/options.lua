@@ -41,8 +41,8 @@ Cryolysis3.options = {
 					name = L["Lock Sphere and Buttons"],
 					desc = L["Lock the main sphere and buttons so they can't be moved."],
 					width = "full",
-					get = function(info) return Cryolysis3.db.char.LockSphere; end,
-					set = function(info, v) Cryolysis3.db.char.LockSphere = v; end,
+					get = function(info) return Cryolysis3.db.char.lockSphere; end,
+					set = function(info, v) Cryolysis3.db.char.lockSphere = v; end,
 					order = 10
 				},
 				constrict = {
@@ -50,9 +50,9 @@ Cryolysis3.options = {
 					name = L["Constrict Buttons to Sphere"],
 					desc = L["Lock the buttons in place around the main sphere."],
 					width = "full",
-					get = function(info) return Cryolysis3.db.char.LockButtons end,
+					get = function(info) return Cryolysis3.db.char.lockButtons end,
 					set = function(info, v) 
-						Cryolysis3.db.char.LockButtons = v;
+						Cryolysis3.db.char.lockButtons = v;
 						Cryolysis3:UpdateAllButtonPositions();
 					end,
 					order = 20
