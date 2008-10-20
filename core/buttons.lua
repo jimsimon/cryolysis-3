@@ -297,6 +297,7 @@ function Cryolysis3:UpdateAllButtonPositions()
 					((40 * NBRScale) * cos(Cryolysis3.db.char.angle - indexScale)),
 					((40 * NBRScale) * sin(Cryolysis3.db.char.angle - indexScale))
 				);
+				Cryolysis3:SaveAnchorPosition("button", v)
 			end
 			
 			-- Set the scale of the buttons if not saved
