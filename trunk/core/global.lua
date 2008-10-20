@@ -163,3 +163,19 @@ function Cryolysis3:GetHighestRank(spells)
 
 	return nil;
 end
+
+------------------------------------------------------------------------------------------------------
+-- Cache an item
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:CacheItem(item)
+
+	if (GetItemInfo(item) ~= nil) then
+		return
+	else
+		GameTooltip:SetOwner(UIParent, "CENTER")
+		GameTooltip:SetHyperlink("item:"..item..":0:0:0:0:0:0:0")
+		GameTooltip:Hide()
+		Cryolysis3:ScheduleTimer("CacheItem", .5, tonumber(item))
+	end
+	
+end
