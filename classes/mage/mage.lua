@@ -218,6 +218,18 @@ function module:CreateConfigOptions()
 						end,
 						order = 10
 					},
+					growth = {
+						type = "select",
+						name = L["Growth Direction"],
+						desc = L["Adjust which way this menu grows"],
+						get = function(info) return Cryolysis3.db.char.menuButtonGrowth["PortalButton"] end,
+						set = function(info, v) 
+							Cryolysis3.db.char.menuButtonGrowth["PortalButton"] = v
+							Cryolysis3:PositionMenuItems("PortalButton", v)
+						end,
+						values = {L["Up"], L["Right"], L["Down"], L["Left"]},
+						order = 15
+					},
 					moveportalbutton = {
 						type = "execute",
 						name = L["Move Clockwise"],
