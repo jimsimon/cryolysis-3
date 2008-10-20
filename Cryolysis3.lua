@@ -66,13 +66,11 @@ function Cryolysis3:OnEnable()
 	Cryolysis3Sphere:SetAttribute("type2", "Menu")
 	Cryolysis3Sphere.Menu = function() LibStub("AceConfigDialog-3.0"):Open("Cryolysis3") end
 	
-	if not Cryolysis3.db.char.lockSphere then
-		-- Handle main sphere drag start
-		Cryolysis3:AddScript("Sphere", "frame", "OnDragStart");
-		
-		-- Handle main sphere drag stop
-		Cryolysis3:AddScript("Sphere", "frame", "OnDragStop")
-	end
+	-- Handle main sphere drag start
+	Cryolysis3:AddScript("Sphere", "frame", "OnDragStart");
+	
+	-- Handle main sphere drag stop
+	Cryolysis3:AddScript("Sphere", "frame", "OnDragStop")
 
 	-- Set mount region thingy
 	Cryolysis3.Private.mountRegion = IsFlyableArea();

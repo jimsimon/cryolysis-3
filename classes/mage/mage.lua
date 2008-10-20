@@ -408,7 +408,7 @@ end
 function module:OnEnable()	
 	-- And we're live!
 	
-	-- Create a list of the paladin's spells to be cached
+	-- Create a list of the mage's spells to be cached
 	Cryolysis3.spellList = {};
 	
 	-- Local table of the LPT sets we will be using
