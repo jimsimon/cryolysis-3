@@ -10,7 +10,7 @@ local handle = nil;
 ------------------------------------------------------------------------------------------------------
 -- Function to update the cooldown on Evocation
 ------------------------------------------------------------------------------------------------------
-function UpdateEvocation()
+local function UpdateEvocation()
 	-- Get cooldown data
 	local start, duration, enabled = GetSpellCooldown(Cryolysis3.spellCache[12051].name);
 		
@@ -561,6 +561,8 @@ function module:CreateButtons()
 	};
 
 	if (foodID ~= nil) then
+		Cryolysis3:CacheItem(foodID)
+		
 		Cryolysis3:CreateButton("FoodButton",	UIParent,	select(3, GetSpellInfo(foodID)));
 		Cryolysis3.Private.tooltips["FoodButton"] = {};
 		
@@ -584,6 +586,8 @@ function module:CreateButtons()
 	end
 
 	if (waterID ~= nil) then
+		Cryolysis3:CacheItem(waterID)
+		
 		Cryolysis3:CreateButton("WaterButton",	UIParent,	select(3, GetSpellInfo(waterID)));
 		Cryolysis3.Private.tooltips["WaterButton"] = {};
 		
@@ -607,6 +611,8 @@ function module:CreateButtons()
 	end
 
 	if (gemID ~= nil) then
+		Cryolysis3:CacheItem(gemID)
+	
 		Cryolysis3:CreateButton("GemButton",	UIParent,	select(3, GetSpellInfo(gemID)));
 		Cryolysis3.Private.tooltips["GemButton"] = {};
 		
