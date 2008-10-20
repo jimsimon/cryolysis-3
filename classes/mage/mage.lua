@@ -636,6 +636,8 @@ function module:CreateButtons()
 	table.insert(Cryolysis3.Private.tooltips["PortalButton"],	L["Click to open menu."]);
 	
 	local tooltip = {};
+	local hasBuff = false;
+	local hasTelePort = false;
 
 	-- Buff menu buttons
 	if (Cryolysis3:HasSpell(168) or Cryolysis3:HasSpell(7302) or Cryolysis3:HasSpell(6117) or Cryolysis3:HasSpell(30482)) then
@@ -647,6 +649,8 @@ function module:CreateButtons()
 		end
 		tooltip = Cryolysis3:PrepareButton("BuffButton", "Armor", "spell", L["Armor"], frostIce, 6117, 30482);
 		Cryolysis3:AddMenuItem("BuffButton", "Armor", select(3, GetSpellInfo(7302)), tooltip);
+
+		hasBuff = true;
 	end
 
 	-- Intellect buttons
@@ -654,6 +658,8 @@ function module:CreateButtons()
 		-- Arcane Intellect/Brilliance
 		tooltip = Cryolysis3:PrepareButton("BuffButton", "Intellect", "spell", L["Intellect"], 1459, 23028);
 		Cryolysis3:AddMenuItem("BuffButton", "Intellect", select(3, GetSpellInfo(1459)), tooltip);
+
+		hasBuff = true;
 	end
 
 	-- Magic buttons
@@ -661,6 +667,8 @@ function module:CreateButtons()
 		-- Dampen/Amplify Magic
 		tooltip = Cryolysis3:PrepareButton("BuffButton", "Magic", "spell", L["Magic"], 604, 1008);
 		Cryolysis3:AddMenuItem("BuffButton", "Magic", select(3, GetSpellInfo(604)), tooltip);
+
+		hasBuff = true;
 	end
 
 	-- Damage Shields buttons
@@ -668,6 +676,8 @@ function module:CreateButtons()
 		-- Mana Shield/Ice Barrier
 		tooltip = Cryolysis3:PrepareButton("BuffButton", "Shields", "spell", L["Damage Shields"], 1463, 11426);
 		Cryolysis3:AddMenuItem("BuffButton", "Shields", select(3, GetSpellInfo(1463)), tooltip);
+
+		hasBuff = true;
 	end
 
 	-- Wards buttons
@@ -675,6 +685,8 @@ function module:CreateButtons()
 		-- Fire/Frost Ward
 		tooltip = Cryolysis3:PrepareButton("BuffButton", "Wards", "spell", L["Magical Wards"], 543, 6143);
 		Cryolysis3:AddMenuItem("BuffButton", "Wards", select(3, GetSpellInfo(543)), tooltip);
+
+		hasBuff = true;
 	end
 
 	-- Remove Curse buttons
@@ -682,6 +694,8 @@ function module:CreateButtons()
 		-- Remove Curse
 		tooltip = Cryolysis3:PrepareButton("BuffButton", "Curse", "spell", 475, 475);
 		Cryolysis3:AddMenuItem("BuffButton", "Curse", select(3, GetSpellInfo(475)), tooltip);
+
+		hasBuff = true;
 	end
 
 	-- Slow Fall buttons
@@ -689,6 +703,8 @@ function module:CreateButtons()
 		-- Slow Fall
 		tooltip = Cryolysis3:PrepareButton("BuffButton", "SlowFall", "spell", 130, 130);
 		Cryolysis3:AddMenuItem("BuffButton", "SlowFall", select(3, GetSpellInfo(130)), tooltip);
+
+		hasBuff = true;
 	end
 
 	if (Cryolysis3.Private.englishFaction == "Alliance") then
@@ -696,36 +712,48 @@ function module:CreateButtons()
 			-- Ironforge
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "Ironforge", "spell", 3562, 3562, 11416);
 			Cryolysis3:AddMenuItem("PortalButton", "Ironforge", select(3, GetSpellInfo(3562)), tooltip);
+
+			hasTelePort = true;
 		end
 		
 		if (Cryolysis3:HasSpell(3561) or Cryolysis3:HasSpell(10059)) then
 			-- Stormwind
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "Stormwind", "spell", 3561, 3561, 10059);
 			Cryolysis3:AddMenuItem("PortalButton", "Stormwind", select(3, GetSpellInfo(3561)), tooltip);
+
+			hasTelePort = true;
 		end
 		
 		if (Cryolysis3:HasSpell(3565) or Cryolysis3:HasSpell(11419)) then
 			-- Darnassus
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "Darnassus", "spell", 3565, 3565, 11419);
 			Cryolysis3:AddMenuItem("PortalButton", "Darnassus", select(3, GetSpellInfo(3565)), tooltip);
+
+			hasTelePort = true;
 		end
 
 		if (Cryolysis3:HasSpell(32271) or Cryolysis3:HasSpell(32266)) then
 			-- The Exodar
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "TheExodar", "spell", 32271, 32271, 32266);
 			Cryolysis3:AddMenuItem("PortalButton", "TheExodar", select(3, GetSpellInfo(32271)), tooltip);
+
+			hasTelePort = true;
 		end
 
 		if (Cryolysis3:HasSpell(49359) or Cryolysis3:HasSpell(49360)) then
 			-- Theramore
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "Theramore", "spell", 49359, 49359, 49360);
 			Cryolysis3:AddMenuItem("PortalButton", "Theramore", select(3, GetSpellInfo(49359)), tooltip);
+
+			hasTelePort = true;
 		end
 		
 		if (Cryolysis3:HasSpell(33690) or Cryolysis3:HasSpell(33691)) then
 			-- Shattrath
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "ShattrathCity", "spell", 33690, 33690, 33691);
 			Cryolysis3:AddMenuItem("PortalButton", "ShattrathCity", select(3, GetSpellInfo(33690)), tooltip);
+
+			hasTelePort = true;
 		end
 	else
 		-- Hoard
@@ -733,42 +761,58 @@ function module:CreateButtons()
 			-- Orgrimmar
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "Orgrimmar", "spell", 3567, 3567, 11417);
 			Cryolysis3:AddMenuItem("PortalButton", "Orgrimmar", select(3, GetSpellInfo(3567)), tooltip);
+
+			hasTelePort = true;
 		end
 		
 		if (Cryolysis3:HasSpell(3563) or Cryolysis3:HasSpell(11418)) then
 			-- Undercity
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "Undercity", "spell", 3563, 3563, 11418);
 			Cryolysis3:AddMenuItem("PortalButton", "Undercity", select(3, GetSpellInfo(3563)), tooltip);
+
+			hasTelePort = true;
 		end
 		
 		if (Cryolysis3:HasSpell(3566) or Cryolysis3:HasSpell(11420)) then
 			-- Thunder Bluff
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "ThunderBluff", "spell", 3566, 3566, 11420);
 			Cryolysis3:AddMenuItem("PortalButton", "ThunderBluff", select(3, GetSpellInfo(3566)), tooltip);
+
+			hasTelePort = true;
 		end
 		
 		if (Cryolysis3:HasSpell(32272) or Cryolysis3:HasSpell(32267)) then
 			-- Silvermoon City
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "SilvermoonCity", "spell", 32272, 32272, 32267);
 			Cryolysis3:AddMenuItem("PortalButton", "SilvermoonCity", select(3, GetSpellInfo(32272)), tooltip);
+
+			hasTelePort = true;
 		end
 		
 		if (Cryolysis3:HasSpell(49358) or Cryolysis3:HasSpell(49361)) then
 			-- Stonard
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "Stonard", "spell", 49358, 49358, 49361);
 			Cryolysis3:AddMenuItem("PortalButton", "Stonard", select(3, GetSpellInfo(49358)), tooltip);
+
+			hasTelePort = true;
 		end
 		
 		if (Cryolysis3:HasSpell(35715) or Cryolysis3:HasSpell(35717)) then
 			-- Shattrath
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "ShattrathCity", "spell", 35715, 35715, 35717);
 			Cryolysis3:AddMenuItem("PortalButton", "ShattrathCity", select(3, GetSpellInfo(35715)), tooltip);
+
+			hasTelePort = true;
 		end
 	end
 
 	-- Create our needed buttons
-	Cryolysis3:CreateButton("BuffButton",	UIParent,	"Interface\\Icons\\INV_Staff_13", "menuButton");
-	Cryolysis3:CreateButton("PortalButton", UIParent,	"Interface\\Icons\\Spell_Nature_AstralRecalGroup", "menuButton");
+	if (hasBuff) then
+		Cryolysis3:CreateButton("BuffButton",	UIParent,	"Interface\\Icons\\INV_Staff_13", "menuButton");
+	end
+	if (hasTelePort) then
+		Cryolysis3:CreateButton("PortalButton", UIParent,	"Interface\\Icons\\Spell_Nature_AstralRecalGroup", "menuButton");
+	end
 end
 
 ------------------------------------------------------------------------------------------------------
