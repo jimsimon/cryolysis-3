@@ -42,7 +42,9 @@ function Cryolysis3:OnEnable()
 	
 	-- Load all enabled modules
 	Cryolysis3:LoadModules();
-	
+end
+
+function Cryolysis3:startup()
 	--Cryolysis3:RegisterChatCommand("cryo", "ChatCommand")  --See function Cryolysis3:ChatCommand for details
 	--Cryolysis3:RegisterChatCommand("cryolysis", "ChatCommand")
 	Cryolysis3:RegisterChatCommand("cryo3", "ChatCommand")
@@ -142,30 +144,58 @@ function Cryolysis3:LoadModule(name)
 	return true;
 end
 
+
+function Cryolysis3:CacheItems(itemList)
+
+	for k, item in pairs(itemList) do
+		Cryolysis3:Print("Attempting item "..item);
+		GameTooltip:SetOwner(UIParent, "CENTER")
+		GameTooltip:SetHyperlink("item:"..item..":0:0:0:0:0:0:0")
+		GameTooltip:Hide()
+		
+		if (GetItemInfo(item) == nil) then
+			return false
+		end
+		
+	end
+	
+	return true
+	
+end
+
 ------------------------------------------------------------------------------------------------------
 -- Load all enabled modules
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:LoadModules()
-	-- Detect what class we are playing and return English value, then load it
-	local classLoaded = Cryolysis3:LoadModule(Cryolysis3.className);
-	
-	if (not Cryolysis3.db.char.silentMode and classLoaded == true) then
-		-- Only print this if we're not in silent mode
-		local classname = gsub(UnitClass("player"), "^.", function(s) return s:upper() end)
-		Cryolysis3:Print(classname.." "..L["Module"].." "..L["Loaded"]);
-	end
 
-	-- Cache here, since before this we don't have a spellList
-	Cryolysis3:CacheSpells();
+	if Cryolysis3:CacheItems(Cryolysis3.Private.cacheList) then
 
-	-- Create reagent list for the mage
-	Cryolysis3.GetClassModule():CreateReagentList();
-	
-	for k, v in pairs(Cryolysis3.db.char.modules) do
-		if (Cryolysis3.db.char.modules[k]) then
-			-- Load the module if it's enabled in the config
-			Cryolysis3:LoadModule(k);
+		-- Detect what class we are playing and return English value, then load it
+		local classLoaded = Cryolysis3:LoadModule(Cryolysis3.className);
+		
+		if (not Cryolysis3.db.char.silentMode and classLoaded == true) then
+			-- Only print this if we're not in silent mode
+			local classname = gsub(UnitClass("player"), "^.", function(s) return s:upper() end)
+			Cryolysis3:Print(classname.." "..L["Module"].." "..L["Loaded"]);
 		end
+
+		-- Cache here, since before this we don't have a spellList
+		Cryolysis3:CacheSpells();
+
+		-- Create reagent list for the mage
+		Cryolysis3.GetClassModule():CreateReagentList();
+		
+		for k, v in pairs(Cryolysis3.db.char.modules) do
+			if (Cryolysis3.db.char.modules[k]) then
+				-- Load the module if it's enabled in the config
+				Cryolysis3:LoadModule(k);
+			end
+		end
+		
+		Cryolysis3:startup()
+		
+	else
+		Cryolysis3:ScheduleTimer("LoadModules", .5)
 	end
 end
 
