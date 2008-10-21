@@ -167,15 +167,20 @@ end
 ------------------------------------------------------------------------------------------------------
 -- Cache an item
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:CacheItem(item)
+function Cryolysis3:CacheItems(itemList)
 
-	if (GetItemInfo(item) ~= nil) then
-		return
-	else
+	for k, item in pairs(itemList) do
+		Cryolysis3:Print("Attempting item "..item);
 		GameTooltip:SetOwner(UIParent, "CENTER")
 		GameTooltip:SetHyperlink("item:"..item..":0:0:0:0:0:0:0")
 		GameTooltip:Hide()
-		Cryolysis3:ScheduleTimer("CacheItem", .5, tonumber(item))
+		
+		if (GetItemInfo(item) == nil) then
+			return false
+		end
+		
 	end
+	
+	return true
 	
 end
