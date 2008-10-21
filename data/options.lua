@@ -227,11 +227,12 @@ Cryolysis3.options = {
 							name = L["Scale"],
 							desc = L["Scale the size of the main sphere."],
 							width = "full",
-							get = function(info) return Cryolysis3.db.char.mainSphereScale end,
+							get = function(info) return Cryolysis3.db.char.scale.frame["Sphere"] end,
 							set = function(info, v) 
 								Cryolysis3.db.char.mainSphereScale = v;
-								Cryolysis3:UpdateAllButtonPositions();
-								Cryolysis3:UpdateAllButtonSizes();
+								Cryolysis3:UpdateScale("Sphere", v)
+								--Cryolysis3:UpdateAllButtonPositions();
+								--Cryolysis3:UpdateAllButtonSizes();
 							end,
 							min = .5,
 							max = 2,
@@ -255,8 +256,7 @@ Cryolysis3.options = {
 							step = .1,
 							isPercent = true,
 							order = 70
-						}
-						]]
+						}						]]
 					}
 				},
 				custom1 = {
@@ -339,11 +339,12 @@ Cryolysis3.options = {
 						scalecustom1 = {
 							type = "range",
 							name = L["Scale"],
-							desc = L["Scale the size of this custom button."],
+							desc = L["Scale the size of this button."],
 							width = "full",
 							get = function(info) return Cryolysis3.db.char.scale.button["CustomButton1"]; end,
 							set = function(info, v) 
 								Cryolysis3.db.char.scale.button["CustomButton1"] = v;
+								Cryolysis3:UpdateScale("CustomButton1", v)
 								--Cryolysis3:UpdateAllButtonPositions()
 								--Cryolysis3:UpdateAllButtonSizes()
 							end,
@@ -435,11 +436,12 @@ Cryolysis3.options = {
 						scalecustom2 = {
 							type = "range",
 							name = L["Scale"],
-							desc = L["Scale the size of this custom button."],
+							desc = L["Scale the size of this button."],
 							width = "full",
 							get = function(info) return Cryolysis3.db.char.scale.button["CustomButton2"]; end,
 							set = function(info, v) 
 								Cryolysis3.db.char.scale.button["CustomButton2"] = v;
+								Cryolysis3:UpdateScale("CustomButton2", v)
 								--Cryolysis3:UpdateAllButtonPositions()
 								--Cryolysis3:UpdateAllButtonSizes()
 							end,
@@ -531,11 +533,12 @@ Cryolysis3.options = {
 						scalecustom3 = {
 							type = "range",
 							name = L["Scale"],
-							desc = L["Scale the size of this custom button."],
+							desc = L["Scale the size of this button."],
 							width = "full",
 							get = function(info) return Cryolysis3.db.char.scale.button["CustomButton3"]; end,
 							set = function(info, v) 
 								Cryolysis3.db.char.scale.button["CustomButton3"] = v;
+								Cryolysis3:UpdateScale("CustomButton3", v)
 								--Cryolysis3:UpdateAllButtonPositions()
 								--Cryolysis3:UpdateAllButtonSizes()
 							end,
@@ -626,6 +629,24 @@ Cryolysis3.options = {
 							func = function() Cryolysis3:FindMounts(true); end,
 							order = 25
 						},
+						scalebuffbutton = {
+							type = "range",
+							name = L["Scale"],
+							desc = L["Scale the size of this button."],
+							width = "full",
+							get = function(info) return Cryolysis3.db.char.scale.button["MountButton"]; end,
+							set = function(info, v) 
+								Cryolysis3.db.char.scale.button["MountButton"] = v;
+								Cryolysis3:UpdateScale("MountButton", v)
+								--Cryolysis3:UpdateAllButtonPositions()
+								--Cryolysis3:UpdateAllButtonSizes()
+							end,
+							min = .5,
+							max = 2,
+							step = .1,
+							isPercent = true,
+							order = 70
+						}
 					}
 				},
 			},
