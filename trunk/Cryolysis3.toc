@@ -12,7 +12,7 @@
 
 #@no-lib-strip@
 
--- Load Libraries
+## Load Libraries
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
 libs\AceGUI-3.0\AceGUI-3.0.xml
@@ -26,11 +26,9 @@ libs\AceLocale-3.0\AceLocale-3.0.xml
 libs\AceTimer-3.0\AceTimer-3.0.xml
 libs\LibPeriodicTable-3.1\LibPeriodicTable-3.1.lua
 libs\LibPeriodicTable-3.1-ClassSpell\LibPeriodicTable-3.1-ClassSpell.lua
-libs\LibPeriodicTable-3.1-Misc\LibPeriodicTable-3.1-Misc.lua
 
 #@end-no-lib-strip@
 
--- Load Locales
 locales\deDE.lua
 locales\enUS.lua
 locales\esES.lua
@@ -39,10 +37,8 @@ locales\koKR.lua
 locales\zhCN.lua
 locales\zhTW.lua
 
--- Load Main File
 Cryolysis3.lua
 
--- Load Data
 data\privates.lua
 data\spellcache.lua
 data\defaults.lua
@@ -50,7 +46,6 @@ data\options.lua
 data\mounts.lua
 data\tooltips.lua
 
--- Load functions
 core\global.lua
 core\frames.lua
 core\buttons.lua
@@ -58,8 +53,4 @@ core\events.lua
 core\module.lua
 core\sphere.lua
 
--- Load modules
 modules.xml
-
--- Load Bindings
-Bindings.lua
