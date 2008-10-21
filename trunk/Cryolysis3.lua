@@ -40,6 +40,14 @@ function Cryolysis3:OnEnable()
 	-- Register for some common events used by all modules
 	Cryolysis3:RegisterCommonEvents();
 	
+	-- Create the popup dialogue
+	StaticPopupDialogs["ITEM_CACHE_WARNING"] = {
+		text = L["Cryolysis 3 is currently adding items to your game's item cache.  The addon should finish loading and this dialog box should disappear once this is complete."],
+		timeout = 0,
+		whileDead = 1,
+		hideOnEscape = 1
+	}
+	
 	-- Load all enabled modules
 	Cryolysis3:LoadModules();
 end
@@ -146,20 +154,27 @@ end
 
 
 function Cryolysis3:CacheItems(itemList)
-
+	
+	local checkAgain = false;
+	
 	for k, item in pairs(itemList) do
-		Cryolysis3:Print("Attempting item "..item);
-		GameTooltip:SetOwner(UIParent, "CENTER")
-		GameTooltip:SetHyperlink("item:"..item..":0:0:0:0:0:0:0")
-		GameTooltip:Hide()
 		
 		if (GetItemInfo(item) == nil) then
-			return false
+			StaticPopup_Show("ITEM_CACHE_WARNING");
+			GameTooltip:SetOwner(UIParent, "CENTER")
+			GameTooltip:SetHyperlink("item:"..item..":0:0:0:0:0:0:0")
+			GameTooltip:Hide()
+			checkAgain = true;
 		end
 		
 	end
 	
-	return true
+	if checkAgain then
+		return false
+	else
+		StaticPopup_Hide("ITEM_CACHE_WARNING");
+		return true
+	end
 	
 end
 

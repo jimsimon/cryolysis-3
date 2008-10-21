@@ -407,7 +407,7 @@ function module:OnInitialize()
 	-- Register our options with the global array
 	--module:RegisterOptions(options);
 	
-	Cryolysis3.Private.cacheList = {17020, 17031, 17032}
+	Cryolysis3.Private.cacheList = {17020, 17031, 17032, 22019, 22895, 8076, 8075, 1487, 1114, 1113, 5349, 22018, 30703, 8079, 8078, 8077, 3772, 2136, 2288, 5350, 33312, 22044, 8008, 8007, 5513, 5514}
 	
 end
 
