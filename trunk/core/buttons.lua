@@ -265,13 +265,13 @@ function Cryolysis3:UpdateAllButtonPositions()
 		Cryolysis3.db.char.scale.button = {};
 	end
 	
-	if Cryolysis3.db.char.scale.frame.Sphere == nil then
+	if Cryolysis3.db.char.scale.frame["Sphere"] == nil then
 		-- Set the scale of the sphere
-		Cryolysis3.db.char.scale.frame.Sphere = 1;
+		Cryolysis3.db.char.scale.frame["Sphere"] = 1;
 	end
 	
 	-- Set the scale locals
-	local sphereScale = Cryolysis3.db.char.scale.frame.Sphere;
+	local sphereScale = Cryolysis3.db.char.scale.frame["Sphere"];
 	local indexScale = -18;
 	local NBRScale = 1.1 --(1 + (sphereScale - .85))
 	
@@ -559,4 +559,14 @@ function Cryolysis3:AddMenuItem(menuType, name, icon, tooltip)
 			Cryolysis3:UpdateButton(menuType..name, "middle");
 		end
 	end
+end
+
+------------------------------------------------------------------------------------------------------
+-- Function to update the scale of a button or frame
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:UpdateScale(name, value)
+
+	local f = getglobal("Cryolysis3"..name)
+	f:SetScale(value)
+
 end

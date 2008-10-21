@@ -128,11 +128,12 @@ function module:CreateConfigOptions()
 					scaleevocationbutton = {
 						type = "range",
 						name = L["Scale"],
-						desc = L["Scale the size of this custom button."],
+						desc = L["Scale the size of this button."],
 						width = "full",
 						get = function(info) return Cryolysis3.db.char.scale.button["EvocationButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["EvocationButton"] = v;
+							Cryolysis3:UpdateScale("EvocationButton", v)
 							--Cryolysis3:UpdateAllButtonPositions()
 							--Cryolysis3:UpdateAllButtonSizes()
 						end,
@@ -184,11 +185,12 @@ function module:CreateConfigOptions()
 					scalebuffbutton = {
 						type = "range",
 						name = L["Scale"],
-						desc = L["Scale the size of this custom button."],
+						desc = L["Scale the size of this button."],
 						width = "full",
 						get = function(info) return Cryolysis3.db.char.scale.button["BuffButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["BuffButton"] = v;
+							Cryolysis3:UpdateScale("BuffButton", v)
 							--Cryolysis3:UpdateAllButtonPositions()
 							--Cryolysis3:UpdateAllButtonSizes()
 						end,
@@ -240,11 +242,12 @@ function module:CreateConfigOptions()
 					scaleportalbutton = {
 						type = "range",
 						name = L["Scale"],
-						desc = L["Scale the size of this custom button."],
+						desc = L["Scale the size of this button."],
 						width = "full",
 						get = function(info) return Cryolysis3.db.char.scale.button["PortalButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["PortalButton"] = v;
+							Cryolysis3:UpdateScale("PortalButton", v)
 							--Cryolysis3:UpdateAllButtonPositions()
 							--Cryolysis3:UpdateAllButtonSizes()
 						end,
@@ -284,11 +287,12 @@ function module:CreateConfigOptions()
 					scalefoodbutton = {
 						type = "range",
 						name = L["Scale"],
-						desc = L["Scale the size of this custom button."],
+						desc = L["Scale the size of this button."],
 						width = "full",
 						get = function(info) return Cryolysis3.db.char.scale.button["FoodButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["FoodButton"] = v;
+							Cryolysis3:UpdateScale("FoodButton", v)
 							--Cryolysis3:UpdateAllButtonPositions()
 							--Cryolysis3:UpdateAllButtonSizes()
 						end,
@@ -328,11 +332,12 @@ function module:CreateConfigOptions()
 					scalewaterbutton = {
 						type = "range",
 						name = L["Scale"],
-						desc = L["Scale the size of this custom button."],
+						desc = L["Scale the size of this button."],
 						width = "full",
 						get = function(info) return Cryolysis3.db.char.scale.button["WaterButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["WaterButton"] = v;
+							Cryolysis3:UpdateScale("WaterButton", v)
 							--Cryolysis3:UpdateAllButtonPositions()
 							--Cryolysis3:UpdateAllButtonSizes()
 						end,
@@ -372,11 +377,12 @@ function module:CreateConfigOptions()
 					scalegembutton = {
 						type = "range",
 						name = L["Scale"],
-						desc = L["Scale the size of this custom button."],
+						desc = L["Scale the size of this button."],
 						width = "full",
 						get = function(info) return Cryolysis3.db.char.scale.button["GemButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["GemButton"] = v;
+							Cryolysis3:UpdateScale("GemButton", v)
 							--Cryolysis3:UpdateAllButtonPositions()
 							--Cryolysis3:UpdateAllButtonSizes()
 						end,
