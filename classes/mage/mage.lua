@@ -406,6 +406,9 @@ end
 function module:OnInitialize()
 	-- Register our options with the global array
 	--module:RegisterOptions(options);
+	
+	Cryolysis3.Private.cacheList = {17020, 17031, 17032}
+	
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -438,12 +441,6 @@ end
 -- What happens when the module is disabled
 ------------------------------------------------------------------------------------------------------
 function module:OnDisable()
-
-end
-
-function module:CacheItems()
-
-	return Cryolysis3:CacheItems({17020, 17031, 17032})
 
 end
 
