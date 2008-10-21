@@ -221,7 +221,7 @@ Cryolysis3.options = {
 							max = 360,
 							step = 18,
 							order = 50
-						},
+						},						]]
 						scalems = {
 							type = "range",
 							name = L["Scale"],
@@ -240,23 +240,23 @@ Cryolysis3.options = {
 							isPercent = true,
 							order = 60
 						},
-						scalebuttons = {
-							type = "range",
-							name = L["Scale All Buttons"],
-							desc = L["Scale the size of all of the buttons at once."],
-							width = "full",
-							get = function(info) return Cryolysis3.db.char.buttonScale end,
-							set = function(info, v) 
-								Cryolysis3.db.char.buttonScale = v;
-								Cryolysis3:UpdateAllButtonPositions();
-								Cryolysis3:UpdateAllButtonSizes();
-							end,
-							min = .5,
-							max = 2,
-							step = .1,
-							isPercent = true,
-							order = 70
-						}						]]
+--~ 						scalebuttons = {
+--~ 							type = "range",
+--~ 							name = L["Scale All Buttons"],
+--~ 							desc = L["Scale the size of all of the buttons at once."],
+--~ 							width = "full",
+--~ 							get = function(info) return Cryolysis3.db.char.buttonScale end,
+--~ 							set = function(info, v) 
+--~ 								Cryolysis3.db.char.buttonScale = v;
+--~ 								Cryolysis3:UpdateAllButtonPositions();
+--~ 								Cryolysis3:UpdateAllButtonSizes();
+--~ 							end,
+--~ 							min = .5,
+--~ 							max = 2,
+--~ 							step = .1,
+--~ 							isPercent = true,
+--~ 							order = 70
+--~ 						}
 					}
 				},
 				custom1 = {

@@ -568,5 +568,8 @@ function Cryolysis3:UpdateScale(name, value)
 
 	local f = getglobal("Cryolysis3"..name)
 	f:SetScale(value)
+	if name == "Sphere" then
+		Cryolysis3:LoadAnchorPosition("frame", "Sphere");
+	end
 
 end
