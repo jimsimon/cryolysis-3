@@ -187,8 +187,7 @@ Cryolysis3.options = {
 								L["Health"],
 								L["Mana"],
 							},
-							order = 30
-						},
+							order = 25						},
 						--[[
 						spheremb = {
 							type = "select",
@@ -238,6 +237,58 @@ Cryolysis3.options = {
 							max = 2,
 							step = .1,
 							isPercent = true,
+							order = 90
+						},
+						buttontype = {
+							type = "select",
+							name = L["Button Type"],
+							desc = L["Choose whether this button casts a spell, uses a macro, or uses an item."],
+							width = "full",
+							get = function(info) return Cryolysis3.db.char.buttonTypes["Sphere"] end,
+							set = function(info, v) 
+								Cryolysis3.db.char.buttonTypes["Sphere"] = v;
+							end,
+							values = {
+								["spell"] = L["Spell"], 
+								["macro"] = L["Macro"], 
+								["item"] = L["Item"]
+							},
+							order = 30
+						},
+						leftclick = {
+							type = "input",
+							name = L["Left Click Action"],
+							desc = L["Type in the name of the action that will be cast when left clicking this button."],
+							usage = L["Enter a spell, macro, or item name and PRESS ENTER. Capitalization matters."],
+							get = function(info) return Cryolysis3.db.char.buttonFunctions["Sphere"].left; end,
+							set = function(info, v) 
+								Cryolysis3.db.char.buttonFunctions["Sphere"].left = v;
+								Cryolysis3:UpdateButton("Sphere", "left");
+							end,
+							order = 40
+						},
+--~ 						rightclick = {
+--~ 							type = "input",
+--~ 							name = L["Right Click Action"],
+--~ 							desc = L["Type in the name of the action that will be cast when right clicking this button."],
+--~ 							usage = L["Enter a spell, macro, or item name and PRESS ENTER. Capitalization matters."],
+--~ 							get = function(info) return Cryolysis3.db.char.buttonFunctions["Sphere"].right; end,
+--~ 							set = function(info, v) 
+--~ 								Cryolysis3.db.char.buttonFunctions["Sphere"].right = v;
+--~ 								Cryolysis3:UpdateButton("Sphere", "right");
+--~ 							end,
+--~ 							order = 50
+--~ 						},
+						middleclick = {
+							type = "input",
+							name = L["Middle Click Action"],
+							desc = L["Type in the name of the action that will be cast when middle clicking this button."],
+							usage = L["Enter a spell, macro, or item name and PRESS ENTER. Capitalization matters."],
+							get = function(info) return Cryolysis3.db.char.buttonFunctions["Sphere"].middle; end,
+							set = function(info, v) 
+								Cryolysis3.db.char.buttonFunctions["Sphere"].middle = v;
+								Cryolysis3:UpdateButton("Sphere", "middle");
+							end,
 							order = 60
 						},
 --~ 						scalebuttons = {

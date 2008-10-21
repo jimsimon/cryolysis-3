@@ -419,9 +419,11 @@ function Cryolysis3:SetAttribute(button, modifier, click, actionType, action)
 
 	
 	if (action == nil or action == "") then
-		if (tonumber(click) == 1) then
-			-- Blank texture
-			t:SetTexture(nil);
+		if (button ~= "Sphere") then
+			if (tonumber(click) == 1) then
+				-- Blank texture
+				t:SetTexture(nil);
+			end
 		end
 		
 		-- Set the attribute for regular click
@@ -452,9 +454,11 @@ function Cryolysis3:SetAttribute(button, modifier, click, actionType, action)
 			return false;
 		end
 		
-		if (tonumber(click) == 1) then
-			-- Left click dictates texture
-			t:SetTexture(texture);
+		if (button ~= "Sphere") then
+			if (tonumber(click) == 1) then
+				-- Left click dictates texture
+				t:SetTexture(texture);
+			end
 		end
 		
 		-- Set our attributes
