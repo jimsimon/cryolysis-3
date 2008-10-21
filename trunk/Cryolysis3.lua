@@ -91,6 +91,7 @@ function Cryolysis3:OnEnable()
 	Cryolysis3:UpdateSphere("outerSphere");
 	Cryolysis3:UpdateSphere("sphereText");
 	Cryolysis3:UpdateSphere("sphereAttribute");
+	
 end
 
 ------------------------------------------------------------------------------------------------------
