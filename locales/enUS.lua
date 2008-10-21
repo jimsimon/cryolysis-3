@@ -16,6 +16,7 @@ L["Cryolysis 3 cannot load the module:"] = true;
 L["The module is flagged as Disabled in the Blizzard AddOn interface."] = true;
 L["The module is missing. Please close the game and install it."] = true;
 L["The module is too old. Please close the game and update it."] = true;
+L["Cryolysis 3 is currently adding items to your game's item cache.  The addon should finish loading and this dialog box should disappear once this is complete."] = true;
 
 L["Okay"] = true;
 
@@ -101,6 +102,7 @@ L["Ctrl"] = true;
 	L["Main Sphere"] = true;
 	L["Adjust various settings for the main sphere."] = true;
 	L["Show or hide the main sphere."] = true;
+	L["Scale the size of the main sphere."] = true;
 	
 	-- Sphere Text
 	L["Sphere Text"] = true;
