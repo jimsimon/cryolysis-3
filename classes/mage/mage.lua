@@ -277,6 +277,18 @@ function module:CreateConfigOptions()
 						end,
 						order = 10
 					},
+					itemcount = {
+						type = "toggle",
+						name = L["Show Item Count"],
+						desc = L["Display the item count on this button"],
+						get = function(info) return Cryolysis3.db.char.buttonText["FoodButton"] end,
+						set = function(info, v) 
+							Cryolysis3.db.char.buttonText["FoodButton"] = v 
+							module:UpdateItemCount("food");
+						end,
+						width = "full",
+						order = 15
+					},
 					movefoodbutton = {
 						type = "execute",
 						name = L["Move Clockwise"],
@@ -321,6 +333,18 @@ function module:CreateConfigOptions()
 							Cryolysis3:UpdateVisibility();
 						end,
 						order = 10
+					},
+					itemcount = {
+						type = "toggle",
+						name = L["Show Item Count"],
+						desc = L["Display the item count on this button"],
+						get = function(info) return Cryolysis3.db.char.buttonText["WaterButton"] end,
+						set = function(info, v) 
+							Cryolysis3.db.char.buttonText["WaterButton"] = v 
+							module:UpdateItemCount("water");
+						end,
+						width = "full",
+						order = 15
 					},
 					movewaterbutton = {
 						type = "execute",
@@ -831,6 +855,102 @@ function module:CreateButtons()
 end
 
 ------------------------------------------------------------------------------------------------------
+-- Function to update item counts on buttons
+------------------------------------------------------------------------------------------------------
+function module:UpdateItemCount(name)
+	
+	-- Lookup table for conjure spell id -> item id
+	local foodLookupTable = {
+		[33717]	= 22019,
+		[28612]	= 22895,
+		[10145]	= 8076,
+		[10144]	= 8075,
+		[6129]	= 1487,
+		[990]	= 1114,
+		[597]	= 1113,
+		[587]	= 5349,
+	};
+	local waterLookupTable = {
+		[27090]	= 22018,
+		[37420]	= 30703,
+		[10140]	= 8079,
+		[10139]	= 8078,
+		[10138]	= 8077,
+		[6127]	= 3772,
+		[5506]	= 2136,
+		[5505]	= 2288,
+		[5504]	= 5350,
+	};
+	local gemLookupTable = {
+		[42985]	= 33312,
+		[27101]	= 22044,
+		[10054]	= 8008,
+		[10053]	= 8007,
+		[3552]	= 5513,
+		[759]	= 5514,
+	};
+	
+	if name == "water" then
+		for k, v in pairs(waterLookupTable) do
+			if Cryolysis3:HasSpell(k) then
+				local temp = GetItemCount(v)
+				if temp > 0 then
+					Cryolysis3WaterButton.texture:SetDesaturated(nil)
+					if Cryolysis3.db.char.buttonText["WaterButton"] then
+						Cryolysis3WaterButtonText:SetText(temp)
+					else
+						Cryolysis3WaterButtonText:SetText("")
+					end
+					return
+				else
+					Cryolysis3WaterButtonText:SetText("")
+					Cryolysis3WaterButton.texture:SetDesaturated(1)
+				end
+			end
+		end
+	elseif name == "food" then
+		for k, v in pairs(foodLookupTable) do
+			if Cryolysis3:HasSpell(k) then
+				local temp = GetItemCount(v)
+				if temp > 0 then
+					Cryolysis3FoodButton.texture:SetDesaturated(nil)
+					if Cryolysis3.db.char.buttonText["FoodButton"] then
+						Cryolysis3FoodButtonText:SetText(temp)
+					else
+						Cryolysis3FoodButtonText:SetText("")
+					end
+					return
+				else
+					Cryolysis3FoodButtonText:SetText("")
+					Cryolysis3FoodButton.texture:SetDesaturated(1)
+				end
+			end
+		end
+	elseif name == "gem" then  --This should be changed to show the number of charges available for mana emerald
+		for k, v in pairs(gemLookupTable) do
+			if Cryolysis3:HasSpell(k) then
+				local temp = GetItemCount(v)
+				if temp > 0 then
+					Cryolysis3GemButton.texture:SetDesaturated(nil)
+					if Cryolysis3.db.char.buttonText["GemButton"] then
+						Cryolysis3GemButtonText:SetText(temp)
+					else
+						Cryolysis3GemButtonText:SetText("")
+					end
+					return
+				else
+					Cryolysis3GemButtonText:SetText("")
+					Cryolysis3GemButton.texture:SetDesaturated(1)
+				end
+			end
+		end
+	else
+	
+	end
+	
+end
+
+------------------------------------------------------------------------------------------------------
 -- Register for our needed events
 ------------------------------------------------------------------------------------------------------
 function module:RegisterClassEvents()
@@ -856,6 +976,9 @@ end
 -- Whenever something changes in our bags
 ------------------------------------------------------------------------------------------------------
 function module:BAG_UPDATE()
+
+	module:UpdateItemCount("food")
+	module:UpdateItemCount("water")
 
 end
 

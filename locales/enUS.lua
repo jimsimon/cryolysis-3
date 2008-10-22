@@ -90,6 +90,8 @@ L["Down"] = true;
 L["Left"] = true;
 L["Growth Direction"] = true;
 L["Adjust which way this menu grows"] = true;
+L["Show Item Count"] = true;
+L["Display the item count on this button"] = true;
 
 -- Middle Click functionality
 L["Middle-Click Key"] = true;
