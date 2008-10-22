@@ -187,7 +187,8 @@ Cryolysis3.options = {
 								L["Health"],
 								L["Mana"],
 							},
-							order = 25						},
+							order = 25
+						},
 						--[[
 						spheremb = {
 							type = "select",
