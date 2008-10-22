@@ -229,7 +229,7 @@ Cryolysis3.options = {
 							width = "full",
 							get = function(info) return Cryolysis3.db.char.scale.frame["Sphere"] end,
 							set = function(info, v) 
-								Cryolysis3.db.char.mainSphereScale = v;
+								Cryolysis3.db.char.scale.frame["Sphere"] = v;
 								Cryolysis3:UpdateScale("Sphere", v)
 								--Cryolysis3:UpdateAllButtonPositions();
 								--Cryolysis3:UpdateAllButtonSizes();

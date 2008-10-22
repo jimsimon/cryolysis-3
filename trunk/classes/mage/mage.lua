@@ -926,7 +926,7 @@ function module:UpdateItemCount(name)
 				end
 			end
 		end
-	elseif name == "gem" then  --This should be changed to show the number of charges available for mana emerald
+	elseif name == "gem" then  --This should be changed to show the number of charges available for mana emerald, but we have to wait for Blizz to add the ItemChargeCount function...:(
 		for k, v in pairs(gemLookupTable) do
 			if Cryolysis3:HasSpell(k) then
 				local temp = GetItemCount(v)
