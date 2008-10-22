@@ -444,13 +444,14 @@ function Cryolysis3:SetAttribute(button, modifier, click, actionType, action)
 			ID = GetMacroIndexByName(action);
 			if (ID > 0) then
 				-- Grab the texture and set the name
-				_, texture = select(2, GetMacroInfo(ID));
+				texture = select(2, GetMacroInfo(ID));
 				actionName = action;
+			else
+				Cryolysis3:Print(L["Invalid name, please check your spelling and try again!"]);
 			end
 		end
 		
 		if (actionName == nil) then
-			Cryolysis3:Print(L["Invalid name, please check your spelling and try again!"]);
 			return false;
 		end
 		
