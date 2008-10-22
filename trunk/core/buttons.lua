@@ -73,6 +73,12 @@ function Cryolysis3:CreateButton(name, parentFrame, texture, buttonType)
 	-- Handle button tooltip
 	Cryolysis3:AddScript(name, "button", "OnEnter");
 	Cryolysis3:AddScript(name, "button", "OnLeave");
+	
+	-- Initialize button text if it's nil
+	if Cryolysis3.db.char.buttonText[name] == nil then
+		Cryolysis3.db.char.buttonText[name] = ""
+	end
+	
 end
 
 ------------------------------------------------------------------------------------------------------
