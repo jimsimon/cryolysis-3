@@ -46,26 +46,26 @@ Cryolysis3.defaults = {
 			["CustomButton1"]	= "spell",
 			["CustomButton2"]	= "spell",
 			["CustomButton3"]	= "spell",
-			["Sphere"]			= "spell"
+			["Sphere"]		= "spell"
 		},
 		buttonFunctions		= {			-- What the 3 buttons do
 			["CustomButton1"]	= {
-				left				= "",
+				left			= "",
 				right			= "",
 				middle			= ""
 			},
 			["CustomButton2"] = {
-				left				= "",
+				left			= "",
 				right			= "",
 				middle			= ""
 			},
 			["CustomButton3"] = {
-				left				= "",
+				left			= "",
 				right			= "",
 				middle			= ""
 			},
 			["Sphere"] = {
-				left				= "",
+				left			= "",
 				right			= "",
 				middle			= ""
 			}
