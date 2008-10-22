@@ -135,8 +135,7 @@ function Cryolysis3:UpdateMountButtonMacro()
 	local MacroParameters = {
 		"Cryo3",
 		1,
-		string.format("#showtooltip\n%s", macro),
-		1
+		string.format("#showtooltip\n%s", macro)
 	};
 
 	if (GetMacroIndexByName(Cryolysis3.Private.macroName) ~= 0) then
@@ -174,7 +173,7 @@ function Cryolysis3:UpdateMountButtonTexture()
 	local texture = select(2, GetMacroInfo(GetMacroIndexByName(Cryolysis3.Private.macroName)));
 	local t = getglobal("Cryolysis3MountButtonIcon");
 	
-	if (t ~= nil) then
+	if (t ~= nil and texture ~= nil) then
 		-- Set the texture
 		t:SetTexture(texture);
 	end
