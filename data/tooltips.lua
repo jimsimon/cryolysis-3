@@ -9,6 +9,11 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Cryolysis3");
 -- Outputs a tooltip either dynamically or based on table data (module button tooltips)
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:BuildTooltip(name)
+
+	if Cryolysis3.db.char.HideTooltips then
+		return
+	end
+
 	-- Begin setting tooltip owner
 	GameTooltip:SetOwner(getglobal("Cryolysis3"..name), "ANCHOR_LEFT");
 	

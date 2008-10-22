@@ -87,6 +87,10 @@ function Cryolysis3:startup()
 	-- Start tooltip data
 	Cryolysis3.Private.tooltips["Sphere"] = {};
 	
+	-- Setup custom clicks, right left out cuz it's for the menu
+	Cryolysis3:UpdateButton("Sphere", "left");
+	Cryolysis3:UpdateButton("Sphere", "middle");
+	
 	-- Start adding tooltip data
 	table.insert(Cryolysis3.Private.tooltips["Sphere"],		L["Cryolysis"]);
 
