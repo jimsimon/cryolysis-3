@@ -76,6 +76,10 @@ function Cryolysis3:startup()
 	Cryolysis3Sphere:SetAttribute("type2", "Menu")
 	Cryolysis3Sphere.Menu = function() LibStub("AceConfigDialog-3.0"):Open("Cryolysis3") end
 	
+	-- Set the left and middle click actions
+	Cryolysis3:UpdateButton("Sphere", "left")
+	Cryolysis3:UpdateButton("Sphere", "middle")
+	
 	-- Handle main sphere drag start
 	Cryolysis3:AddScript("Sphere", "frame", "OnDragStart");
 	
