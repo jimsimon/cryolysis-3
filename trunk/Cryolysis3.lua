@@ -73,18 +73,22 @@ function Cryolysis3:startup()
 	Cryolysis3Sphere:RegisterForClicks("LeftButtonUp", "RightButtonUp", "MiddleButtonUp");
 	
 	-- Open the config menu when right-clicking the main sphere
-	Cryolysis3Sphere:SetAttribute("type2", "Menu")
-	Cryolysis3Sphere.Menu = function() LibStub("AceConfigDialog-3.0"):Open("Cryolysis3") end
+	Cryolysis3Sphere:SetAttribute("type2", "Menu");
+	Cryolysis3Sphere.Menu = function() LibStub("AceConfigDialog-3.0"):Open("Cryolysis3"); end
 	
-	-- Set the left and middle click actions
-	Cryolysis3:UpdateButton("Sphere", "left")
-	Cryolysis3:UpdateButton("Sphere", "middle")
-	
-	-- Handle main sphere drag start
+	-- Handle main sphere dragging
 	Cryolysis3:AddScript("Sphere", "frame", "OnDragStart");
+	Cryolysis3:AddScript("Sphere", "frame", "OnDragStop");
 	
-	-- Handle main sphere drag stop
-	Cryolysis3:AddScript("Sphere", "frame", "OnDragStop")
+	-- Handle main sphere tooltip
+	Cryolysis3:AddScript("Sphere", "frame", "OnEnter");
+	Cryolysis3:AddScript("Sphere", "frame", "OnLeave");
+
+	-- Start tooltip data
+	Cryolysis3.Private.tooltips["Sphere"] = {};
+	
+	-- Start adding tooltip data
+	table.insert(Cryolysis3.Private.tooltips["Sphere"],		L["Cryolysis"]);
 
 	-- Set mount region thingy
 	Cryolysis3.Private.mountRegion = IsFlyableArea();
@@ -156,7 +160,9 @@ function Cryolysis3:LoadModule(name)
 	return true;
 end
 
-
+------------------------------------------------------------------------------------------------------
+-- Check if items need to be cached and if so, display a warning.
+------------------------------------------------------------------------------------------------------
 function Cryolysis3:CacheItems(itemList)
 	
 	local checkAgain = false;
