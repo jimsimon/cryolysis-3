@@ -163,3 +163,31 @@ function Cryolysis3:GetHighestRank(spells)
 
 	return nil;
 end
+
+------------------------------------------------------------------------------------------------------
+-- Function to update item counts on buttons
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:UpdateItemCount(buttonName, lookupTable)
+	local button = getglobal("Cryolysis3"..buttonName);
+	local buttonText = getglobal("Cryolysis3"..buttonName.."Text");
+
+	for k, v in pairs(lookupTable) do
+		if Cryolysis3:HasSpell(k) then
+			local temp = GetItemCount(v);
+			if temp > 0 then
+				button.texture:SetDesaturated(nil);
+
+				if (Cryolysis3.db.char.buttonText[buttonName] ~= "") then
+					buttonText:SetText(temp);
+				else
+					buttonText:SetText(nil);
+				end
+
+				return
+			else
+				buttonText:SetText(nil);
+				button.texture:SetDesaturated(true);
+			end
+		end
+	end
+end

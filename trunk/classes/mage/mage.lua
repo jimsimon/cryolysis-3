@@ -134,8 +134,6 @@ function module:CreateConfigOptions()
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["EvocationButton"] = v;
 							Cryolysis3:UpdateScale("EvocationButton", v)
-							--Cryolysis3:UpdateAllButtonPositions()
-							--Cryolysis3:UpdateAllButtonSizes()
 						end,
 						min = .5,
 						max = 2,
@@ -191,8 +189,6 @@ function module:CreateConfigOptions()
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["BuffButton"] = v;
 							Cryolysis3:UpdateScale("BuffButton", v)
-							--Cryolysis3:UpdateAllButtonPositions()
-							--Cryolysis3:UpdateAllButtonSizes()
 						end,
 						min = .5,
 						max = 2,
@@ -248,8 +244,6 @@ function module:CreateConfigOptions()
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["PortalButton"] = v;
 							Cryolysis3:UpdateScale("PortalButton", v)
-							--Cryolysis3:UpdateAllButtonPositions()
-							--Cryolysis3:UpdateAllButtonSizes()
 						end,
 						min = .5,
 						max = 2,
@@ -283,8 +277,8 @@ function module:CreateConfigOptions()
 						desc = L["Display the item count on this button"],
 						get = function(info) return Cryolysis3.db.char.buttonText["FoodButton"] end,
 						set = function(info, v) 
-							Cryolysis3.db.char.buttonText["FoodButton"] = v 
-							module:UpdateItemCount("food");
+							Cryolysis3.db.char.buttonText["FoodButton"] = v;
+							Cryolysis3:UpdateItemCount("FoodButton",	module:GetLookupTable("food"));
 						end,
 						width = "full",
 						order = 15
@@ -305,8 +299,6 @@ function module:CreateConfigOptions()
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["FoodButton"] = v;
 							Cryolysis3:UpdateScale("FoodButton", v)
-							--Cryolysis3:UpdateAllButtonPositions()
-							--Cryolysis3:UpdateAllButtonSizes()
 						end,
 						min = .5,
 						max = 2,
@@ -340,8 +332,8 @@ function module:CreateConfigOptions()
 						desc = L["Display the item count on this button"],
 						get = function(info) return Cryolysis3.db.char.buttonText["WaterButton"] end,
 						set = function(info, v) 
-							Cryolysis3.db.char.buttonText["WaterButton"] = v 
-							module:UpdateItemCount("water");
+							Cryolysis3.db.char.buttonText["WaterButton"] = v;
+							Cryolysis3:UpdateItemCount("WaterButton",	module:GetLookupTable("water"));
 						end,
 						width = "full",
 						order = 15
@@ -362,8 +354,6 @@ function module:CreateConfigOptions()
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["WaterButton"] = v;
 							Cryolysis3:UpdateScale("WaterButton", v)
-							--Cryolysis3:UpdateAllButtonPositions()
-							--Cryolysis3:UpdateAllButtonSizes()
 						end,
 						min = .5,
 						max = 2,
@@ -407,8 +397,6 @@ function module:CreateConfigOptions()
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["GemButton"] = v;
 							Cryolysis3:UpdateScale("GemButton", v)
-							--Cryolysis3:UpdateAllButtonPositions()
-							--Cryolysis3:UpdateAllButtonSizes()
 						end,
 						min = .5,
 						max = 2,
@@ -563,35 +551,9 @@ function module:CreateButtons()
 	local gemID = Cryolysis3:GetHighestRank({42985, 27101, 10054, 10053, 3552, 759});
 	
 	-- Lookup table for conjure spell id -> item id
-	local foodLookupTable = {
-		[33717]	= 22019,
-		[28612]	= 22895,
-		[10145]	= 8076,
-		[10144]	= 8075,
-		[6129]	= 1487,
-		[990]	= 1114,
-		[597]	= 1113,
-		[587]	= 5349,
-	};
-	local waterLookupTable = {
-		[27090]	= 22018,
-		[37420]	= 30703,
-		[10140]	= 8079,
-		[10139]	= 8078,
-		[10138]	= 8077,
-		[6127]	= 3772,
-		[5506]	= 2136,
-		[5505]	= 2288,
-		[5504]	= 5350,
-	};
-	local gemLookupTable = {
-		[42985]	= 33312,
-		[27101]	= 22044,
-		[10054]	= 8008,
-		[10053]	= 8007,
-		[3552]	= 5513,
-		[759]	= 5514,
-	};
+	local foodLookupTable = module:GetLookupTable("food");
+	local waterLookupTable = module:GetLookupTable("water");
+	local gemLookupTable = module:GetLookupTable("gem");
 
 	if (foodID ~= nil) then
 		--Cryolysis3:CacheItem(foodID)
@@ -855,99 +817,45 @@ function module:CreateButtons()
 end
 
 ------------------------------------------------------------------------------------------------------
--- Function to update item counts on buttons
+-- Function to fetch lookup table to be used in :UpdateItemCount
 ------------------------------------------------------------------------------------------------------
-function module:UpdateItemCount(name)
+function module:GetLookupTable(name)
 	
 	-- Lookup table for conjure spell id -> item id
-	local foodLookupTable = {
-		[33717]	= 22019,
-		[28612]	= 22895,
-		[10145]	= 8076,
-		[10144]	= 8075,
-		[6129]	= 1487,
-		[990]	= 1114,
-		[597]	= 1113,
-		[587]	= 5349,
-	};
-	local waterLookupTable = {
-		[27090]	= 22018,
-		[37420]	= 30703,
-		[10140]	= 8079,
-		[10139]	= 8078,
-		[10138]	= 8077,
-		[6127]	= 3772,
-		[5506]	= 2136,
-		[5505]	= 2288,
-		[5504]	= 5350,
-	};
-	local gemLookupTable = {
-		[42985]	= 33312,
-		[27101]	= 22044,
-		[10054]	= 8008,
-		[10053]	= 8007,
-		[3552]	= 5513,
-		[759]	= 5514,
-	};
 	
 	if name == "water" then
-		for k, v in pairs(waterLookupTable) do
-			if Cryolysis3:HasSpell(k) then
-				local temp = GetItemCount(v)
-				if temp > 0 then
-					Cryolysis3WaterButton.texture:SetDesaturated(nil)
-					if Cryolysis3.db.char.buttonText["WaterButton"] then
-						Cryolysis3WaterButtonText:SetText(temp)
-					else
-						Cryolysis3WaterButtonText:SetText("")
-					end
-					return
-				else
-					Cryolysis3WaterButtonText:SetText("")
-					Cryolysis3WaterButton.texture:SetDesaturated(1)
-				end
-			end
-		end
+		return {
+			[27090]	= 22018,
+			[37420]	= 30703,
+			[10140]	= 8079,
+			[10139]	= 8078,
+			[10138]	= 8077,
+			[6127]	= 3772,
+			[5506]	= 2136,
+			[5505]	= 2288,
+			[5504]	= 5350,
+		};
 	elseif name == "food" then
-		for k, v in pairs(foodLookupTable) do
-			if Cryolysis3:HasSpell(k) then
-				local temp = GetItemCount(v)
-				if temp > 0 then
-					Cryolysis3FoodButton.texture:SetDesaturated(nil)
-					if Cryolysis3.db.char.buttonText["FoodButton"] then
-						Cryolysis3FoodButtonText:SetText(temp)
-					else
-						Cryolysis3FoodButtonText:SetText("")
-					end
-					return
-				else
-					Cryolysis3FoodButtonText:SetText("")
-					Cryolysis3FoodButton.texture:SetDesaturated(1)
-				end
-			end
-		end
+		return {
+			[33717]	= 22019,
+			[28612]	= 22895,
+			[10145]	= 8076,
+			[10144]	= 8075,
+			[6129]	= 1487,
+			[990]	= 1114,
+			[597]	= 1113,
+			[587]	= 5349,
+		};
 	elseif name == "gem" then  --This should be changed to show the number of charges available for mana emerald, but we have to wait for Blizz to add the ItemChargeCount function...:(
-		for k, v in pairs(gemLookupTable) do
-			if Cryolysis3:HasSpell(k) then
-				local temp = GetItemCount(v)
-				if temp > 0 then
-					Cryolysis3GemButton.texture:SetDesaturated(nil)
-					if Cryolysis3.db.char.buttonText["GemButton"] then
-						Cryolysis3GemButtonText:SetText(temp)
-					else
-						Cryolysis3GemButtonText:SetText("")
-					end
-					return
-				else
-					Cryolysis3GemButtonText:SetText("")
-					Cryolysis3GemButton.texture:SetDesaturated(1)
-				end
-			end
-		end
-	else
-	
-	end
-	
+		return {
+			[42985]	= 33312,
+			[27101]	= 22044,
+			[10054]	= 8008,
+			[10053]	= 8007,
+			[3552]	= 5513,
+			[759]	= 5514,
+		};
+	end	
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -976,10 +884,10 @@ end
 -- Whenever something changes in our bags
 ------------------------------------------------------------------------------------------------------
 function module:BAG_UPDATE()
-
-	module:UpdateItemCount("food")
-	module:UpdateItemCount("water")
-
+	Cryolysis3:UpdateItemCount("BuffButtonSlowFall",	{[130] = 17056});
+	Cryolysis3:UpdateItemCount("FoodButton",		module:GetLookupTable("food"));
+	Cryolysis3:UpdateItemCount("WaterButton",		module:GetLookupTable("water"));
+	Cryolysis3:UpdateItemCount("GemButton",			module:GetLookupTable("gem"));
 end
 
 ------------------------------------------------------------------------------------------------------
