@@ -4,7 +4,8 @@
 local Cryolysis3 = Cryolysis3;
 local module = Cryolysis3:NewModule("MAGE", Cryolysis3.ModuleCore, "AceEvent-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("Cryolysis3");
-local handle = nil;
+local evocHandle = nil;
+local gemHandle = nil;
 
 
 ------------------------------------------------------------------------------------------------------
@@ -14,26 +15,26 @@ local function UpdateEvocation()
 	-- Get cooldown data
 	local start, duration, enabled = GetSpellCooldown(Cryolysis3.spellCache[12051].name);
 		
-	if duration == 0 then
+	if (duration == 0) then
 		-- Spell is not on cooldown
-		if (handle ~= nil) then
+		if (evocHandle ~= nil) then
 			-- We had a timer enabled, cancel it
-			Cryolysis3:CancelTimer(handle);
-			handle = nil;
+			Cryolysis3:CancelTimer(evocHandle);
+			evocHandle = nil;
 		end
-
+		
 		-- Liven up the button
 		Cryolysis3EvocationButton.texture:SetDesaturated(false);
-
+		
 		-- Remove text from button
-		Cryolysis3EvocationButtonText:SetText("");
-
+		Cryolysis3EvocationButtonText:SetText(nil);
+		
 		-- Insert tooltip data saying its ready
 		Cryolysis3.Private.tooltips["EvocationButton"][2] = L["Ready"];
 	else
 		-- Spell is on cooldown
-		if (handle == nil) then
-			handle = Cryolysis3:ScheduleRepeatingTimer(UpdateEvocation, 1);
+		if (evocHandle == nil) then
+			evocHandle = Cryolysis3:ScheduleRepeatingTimer(UpdateEvocation, 1);
 		end
 		
 		-- Gray out the button
@@ -46,29 +47,91 @@ local function UpdateEvocation()
 			-- Insert tooltip data with minutes
 			Cryolysis3.Private.tooltips["EvocationButton"][2] = timeleft.minutes.." "..L["minutes"]..", "..timeleft.seconds.." "..L["seconds"];
 			
-			--If show cooldown is enabled
-			if Cryolysis3.db.char.buttonText["EvocationButton"]  then
+			-- If show cooldown is enabled
+			if (Cryolysis3.db.char.buttonText["EvocationButton"]) then
 				-- Write remaining time on the button
 				Cryolysis3EvocationButtonText:SetText(timeleft.minutes..":"..timeleft.seconds);
 			else
 				--Blank out the text
-				Cryolysis3EvocationButtonText:SetText("");
+				Cryolysis3EvocationButtonText:SetText(nil);
 			end
 		else
 			-- Insert tooltip data without minutes
 			Cryolysis3.Private.tooltips["EvocationButton"][2] =  timeleft.seconds.." "..L["seconds"];
 			
 			--If show cooldown is enabled
-			if Cryolysis3.db.char.buttonText["EvocationButton"] then
+			if (Cryolysis3.db.char.buttonText["EvocationButton"]) then
 				-- Write remaining time on the button			
 				Cryolysis3EvocationButtonText:SetText(timeleft.seconds);
 			else
 				--Blank out the text
-				Cryolysis3EvocationButtonText:SetText("");
+				Cryolysis3EvocationButtonText:SetText(nil);
 			end
 		end
 	end
 end
+
+------------------------------------------------------------------------------------------------------
+-- Function to update the cooldown on Mana Gem
+------------------------------------------------------------------------------------------------------
+local function UpdateManaGem()
+	local start, duration, enabled = GetItemCooldown(Cryolysis3.Private.manaGem)
+	if (duration == 0) then
+		-- Spell is not on cooldown
+		if (gemHandle ~= nil) then
+			-- We had a timer enabled, cancel it
+			Cryolysis3:CancelTimer(gemHandle);
+			gemHandle = nil;
+		end
+		
+		-- Liven up the button
+		Cryolysis3GemButton.texture:SetDesaturated(false);
+		
+		-- Remove text from button
+		Cryolysis3GemButtonText:SetText(nil);
+		
+		-- Insert tooltip data saying its ready
+		Cryolysis3.Private.tooltips["GemButton"][4] = L["Ready"];
+	else	
+		-- Spell is on cooldown
+		if (evocHandle == nil) then
+			evocHandle = Cryolysis3:ScheduleRepeatingTimer(UpdateManaGem, 1);
+		end
+		
+		-- Gray out the button
+		Cryolysis3GemButton.texture:SetDesaturated(true);
+		
+		-- Get timer data
+		local timeleft = Cryolysis3:TimerData(start, duration);
+		
+		if (timeleft.minutes > 0) then
+			-- Insert tooltip data with minutes
+			Cryolysis3.Private.tooltips["GemButton"][4] = timeleft.minutes.." "..L["minutes"]..", "..timeleft.seconds.." "..L["seconds"];
+			
+			-- If show cooldown is enabled
+			if (Cryolysis3.db.char.buttonText["GemButton"]) then
+				-- Write remaining time on the button
+				Cryolysis3GemButtonText:SetText(timeleft.minutes..":"..timeleft.seconds);
+			else
+				--Blank out the text
+				Cryolysis3GemButtonText:SetText(nil);
+			end
+		else
+			-- Insert tooltip data without minutes
+			Cryolysis3.Private.tooltips["GemButton"][4] =  timeleft.seconds.." "..L["seconds"];
+			
+			--If show cooldown is enabled
+			if (Cryolysis3.db.char.buttonText["GemButton"]) then
+				-- Write remaining time on the button			
+				Cryolysis3GemButtonText:SetText(timeleft.seconds);
+			else
+				--Blank out the text
+				Cryolysis3GemButtonText:SetText(nil);
+			end
+		end
+	end
+end
+
 
 ------------------------------------------------------------------------------------------------------
 -- Function to generate options
@@ -381,6 +444,15 @@ function module:CreateConfigOptions()
 						end,
 						order = 10
 					},
+					showcooldown = {
+						type = "toggle",
+						name = L["Show Cooldown"],
+						desc = L["Display the cooldown timer on this button"],
+						get = function(info) return Cryolysis3.db.char.buttonText["GemButton"] end,
+						set = function(info, v) Cryolysis3.db.char.buttonText["GemButton"] = v end,
+						width = "full",
+						order = 15
+					},
 					movegembutton = {
 						type = "execute",
 						name = L["Move Clockwise"],
@@ -556,8 +628,6 @@ function module:CreateButtons()
 	local gemLookupTable = module:GetLookupTable("gem");
 
 	if (foodID ~= nil) then
-		--Cryolysis3:CacheItem(foodID)
-		
 		Cryolysis3:CreateButton("FoodButton",	UIParent,	select(3, GetSpellInfo(foodID)));
 		Cryolysis3.Private.tooltips["FoodButton"] = {};
 		
@@ -581,8 +651,6 @@ function module:CreateButtons()
 	end
 
 	if (waterID ~= nil) then
-		--Cryolysis3:CacheItem(waterID)
-		
 		Cryolysis3:CreateButton("WaterButton",	UIParent,	select(3, GetSpellInfo(waterID)));
 		Cryolysis3.Private.tooltips["WaterButton"] = {};
 		
@@ -606,8 +674,6 @@ function module:CreateButtons()
 	end
 
 	if (gemID ~= nil) then
-		--Cryolysis3:CacheItem(gemID)
-	
 		Cryolysis3:CreateButton("GemButton",	UIParent,	select(3, GetSpellInfo(gemID)));
 		Cryolysis3.Private.tooltips["GemButton"] = {};
 		
@@ -623,6 +689,9 @@ function module:CreateButtons()
 		Cryolysis3.db.char.buttonFunctions["GemButton"].right = "/cast "..Cryolysis3.spellCache[gemID].name;
 		
 		Cryolysis3:UpdateAllButtonAttributes("GemButton");
+		
+		-- Update Mana Gem cooldown
+		UpdateManaGem();
 	end
 
 
@@ -863,13 +932,13 @@ end
 ------------------------------------------------------------------------------------------------------
 function module:RegisterClassEvents()
 	-- Events relevant to this class
-	module:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+	--module:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 	module:RegisterEvent("BAG_UPDATE");
 	module:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED");
-	module:RegisterEvent("SPELL_UPDATE_COOLDOWN");
-	module:RegisterEvent("UNIT_SPELLCAST_SENT");
-	module:RegisterEvent("TRADE_SHOW");
-	module:RegisterEvent("TRADE_CLOSED");
+	--module:RegisterEvent("SPELL_UPDATE_COOLDOWN");
+	--module:RegisterEvent("UNIT_SPELLCAST_SENT");
+	--module:RegisterEvent("TRADE_SHOW");
+	--module:RegisterEvent("TRADE_CLOSED");
 	module:RegisterEvent("UNIT_MANA");
 end
 
@@ -887,17 +956,25 @@ function module:BAG_UPDATE()
 	Cryolysis3:UpdateItemCount("BuffButtonSlowFall",	{[130] = 17056});
 	Cryolysis3:UpdateItemCount("FoodButton",		module:GetLookupTable("food"));
 	Cryolysis3:UpdateItemCount("WaterButton",		module:GetLookupTable("water"));
-	Cryolysis3:UpdateItemCount("GemButton",			module:GetLookupTable("gem"));
+	
+	if (gemHandle == nil) then
+		Cryolysis3:UpdateItemCount("GemButton",			module:GetLookupTable("gem"));
+	end
 end
 
 ------------------------------------------------------------------------------------------------------
 -- Casting.... casting.... YUS! Done!
 ------------------------------------------------------------------------------------------------------
 function module:UNIT_SPELLCAST_SUCCEEDED(info, unit, name, rank)
+	if (name == GetSpellInfo(5405)) then
+		-- Mana Gem cooldown started
+		gemHandle = Cryolysis3:ScheduleRepeatingTimer(UpdateManaGem, 1);
+	end
+
 	if (Cryolysis3.spellCache[12051] ~= nil) then
 		if (name == Cryolysis3.spellCache[12051].name) then
 			-- Evocation cooldown started
-			handle = Cryolysis3:ScheduleRepeatingTimer(UpdateEvocation, 1);
+			evocHandle = Cryolysis3:ScheduleRepeatingTimer(UpdateEvocation, 1);
 		end
 	end
 
