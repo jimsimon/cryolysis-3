@@ -75,8 +75,8 @@ function Cryolysis3:CreateButton(name, parentFrame, texture, buttonType)
 	Cryolysis3:AddScript(name, "button", "OnLeave");
 	
 	-- Initialize button text if it's nil
-	if Cryolysis3.db.char.buttonText[name] == nil then
-		Cryolysis3.db.char.buttonText[name] = ""
+	if (Cryolysis3.db.char.buttonText[name] == "") then
+		Cryolysis3.db.char.buttonText[name] = nil;
 	end
 	
 end
