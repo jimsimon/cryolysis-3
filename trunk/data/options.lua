@@ -230,7 +230,7 @@ Cryolysis3.options = {
 							get = function(info) return Cryolysis3.db.char.scale.frame["Sphere"] end,
 							set = function(info, v) 
 								Cryolysis3.db.char.scale.frame["Sphere"] = v;
-								Cryolysis3:UpdateScale("Sphere", v)
+								Cryolysis3:UpdateScale("frame", "Sphere", v)
 								--Cryolysis3:UpdateAllButtonPositions();
 								--Cryolysis3:UpdateAllButtonSizes();
 							end,
@@ -396,7 +396,7 @@ Cryolysis3.options = {
 							get = function(info) return Cryolysis3.db.char.scale.button["CustomButton1"]; end,
 							set = function(info, v) 
 								Cryolysis3.db.char.scale.button["CustomButton1"] = v;
-								Cryolysis3:UpdateScale("CustomButton1", v)
+								Cryolysis3:UpdateScale("button", "CustomButton1", v)
 								--Cryolysis3:UpdateAllButtonPositions()
 								--Cryolysis3:UpdateAllButtonSizes()
 							end,
@@ -493,7 +493,7 @@ Cryolysis3.options = {
 							get = function(info) return Cryolysis3.db.char.scale.button["CustomButton2"]; end,
 							set = function(info, v) 
 								Cryolysis3.db.char.scale.button["CustomButton2"] = v;
-								Cryolysis3:UpdateScale("CustomButton2", v)
+								Cryolysis3:UpdateScale("button", "CustomButton2", v)
 								--Cryolysis3:UpdateAllButtonPositions()
 								--Cryolysis3:UpdateAllButtonSizes()
 							end,
@@ -590,7 +590,7 @@ Cryolysis3.options = {
 							get = function(info) return Cryolysis3.db.char.scale.button["CustomButton3"]; end,
 							set = function(info, v) 
 								Cryolysis3.db.char.scale.button["CustomButton3"] = v;
-								Cryolysis3:UpdateScale("CustomButton3", v)
+								Cryolysis3:UpdateScale("button", "CustomButton3", v)
 								--Cryolysis3:UpdateAllButtonPositions()
 								--Cryolysis3:UpdateAllButtonSizes()
 							end,
@@ -689,7 +689,7 @@ Cryolysis3.options = {
 							get = function(info) return Cryolysis3.db.char.scale.button["MountButton"]; end,
 							set = function(info, v) 
 								Cryolysis3.db.char.scale.button["MountButton"] = v;
-								Cryolysis3:UpdateScale("MountButton", v)
+								Cryolysis3:UpdateScale("button", "MountButton", v)
 								--Cryolysis3:UpdateAllButtonPositions()
 								--Cryolysis3:UpdateAllButtonSizes()
 							end,
