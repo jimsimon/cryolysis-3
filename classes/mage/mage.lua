@@ -500,6 +500,8 @@ end
 ------------------------------------------------------------------------------------------------------
 function module:OnEnable()	
 	-- And we're live!
+	-- Set the default skin
+	Cryolysis3:SetDefaultSkin("Blue");
 	
 	-- Create a list of the mage's spells to be cached
 	Cryolysis3.spellList = {};
