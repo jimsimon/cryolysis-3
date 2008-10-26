@@ -196,7 +196,7 @@ function module:CreateConfigOptions()
 						get = function(info) return Cryolysis3.db.char.scale.button["EvocationButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["EvocationButton"] = v;
-							Cryolysis3:UpdateScale("EvocationButton", v)
+							Cryolysis3:UpdateScale("button", "EvocationButton", v)
 						end,
 						min = .5,
 						max = 2,
@@ -251,7 +251,7 @@ function module:CreateConfigOptions()
 						get = function(info) return Cryolysis3.db.char.scale.button["BuffButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["BuffButton"] = v;
-							Cryolysis3:UpdateScale("BuffButton", v)
+							Cryolysis3:UpdateScale("button", "BuffButton", v)
 						end,
 						min = .5,
 						max = 2,
@@ -306,7 +306,7 @@ function module:CreateConfigOptions()
 						get = function(info) return Cryolysis3.db.char.scale.button["PortalButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["PortalButton"] = v;
-							Cryolysis3:UpdateScale("PortalButton", v)
+							Cryolysis3:UpdateScale("button", "PortalButton", v)
 						end,
 						min = .5,
 						max = 2,
@@ -361,7 +361,7 @@ function module:CreateConfigOptions()
 						get = function(info) return Cryolysis3.db.char.scale.button["FoodButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["FoodButton"] = v;
-							Cryolysis3:UpdateScale("FoodButton", v)
+							Cryolysis3:UpdateScale("button", "FoodButton", v)
 						end,
 						min = .5,
 						max = 2,
@@ -416,7 +416,7 @@ function module:CreateConfigOptions()
 						get = function(info) return Cryolysis3.db.char.scale.button["WaterButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["WaterButton"] = v;
-							Cryolysis3:UpdateScale("WaterButton", v)
+							Cryolysis3:UpdateScale("button", "WaterButton", v)
 						end,
 						min = .5,
 						max = 2,
@@ -468,7 +468,7 @@ function module:CreateConfigOptions()
 						get = function(info) return Cryolysis3.db.char.scale.button["GemButton"]; end,
 						set = function(info, v) 
 							Cryolysis3.db.char.scale.button["GemButton"] = v;
-							Cryolysis3:UpdateScale("GemButton", v)
+							Cryolysis3:UpdateScale("button", "GemButton", v)
 						end,
 						min = .5,
 						max = 2,

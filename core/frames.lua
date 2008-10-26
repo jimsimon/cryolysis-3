@@ -71,7 +71,7 @@ function Cryolysis3:CreateFrame(...) -- See Cryolysis3.lua for a demo :)
 		Cryolysis3:LoadAnchorPosition(frameType, name);
 		
 		-- Save this frame's position
-		Cryolysis3:SaveAnchorPosition(frameType, name);
+		--Cryolysis3:SaveAnchorPosition(frameType, name);
 	end
 
 	return frame;
@@ -107,7 +107,8 @@ function Cryolysis3:AddScript(name, frameType, scriptName)
 	elseif scriptName == "OnDragStop" then
 		item:SetScript(scriptName, function(self) 
 			self:StopMovingOrSizing(); 
-			Cryolysis3:SaveAnchorPosition(frameType, name);
+			Cryolysis3:UpdateAllButtonPositions()
+			--Cryolysis3:SaveAnchorPosition(frameType, name);
 		end)
 	elseif scriptName == "OnEnter" then
 		item:SetScript(scriptName, function(self) 

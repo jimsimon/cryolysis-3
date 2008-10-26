@@ -210,8 +210,8 @@ function Cryolysis3:CreateCustomButtons()
 		end
 		
 		-- Set the scale of the newly created button
-		local f = getglobal("Cryolysis3CustomButton"..i);
-		f:SetScale(Cryolysis3.db.char.scale.button["CustomButton"..i]);
+		--local f = getglobal("Cryolysis3CustomButton"..i);
+		--f:SetScale(Cryolysis3.db.char.scale.button["CustomButton"..i]);
 				
 		-- Update all button attributes
 		Cryolysis3:UpdateAllButtonAttributes("CustomButton"..i);
@@ -289,13 +289,20 @@ function Cryolysis3:UpdateAllButtonPositions()
  	end
 	]]
 	
-	Cryolysis3Sphere:SetScale(sphereScale);
-	Cryolysis3:LoadAnchorPosition("frame", "Sphere");
+	Cryolysis3:UpdateScale("frame", "Sphere", sphereScale)
 	
 	for k, v in pairs(Cryolysis3.db.char.buttons) do
 		local f = getglobal("Cryolysis3"..v);
 		if (f ~= nil) then
-			Cryolysis3:LoadAnchorPosition("button", v);
+		
+			-- Set the scale of the buttons if not saved
+			if Cryolysis3.db.char.scale.button[v] == nil then
+				-- Set the scale of the sphere
+				Cryolysis3.db.char.scale.button[v] = 1;
+			end
+			
+			Cryolysis3:UpdateScale("button", v, Cryolysis3.db.char.scale.button[v])
+		
 			if (Cryolysis3.db.char.lockButtons) then
 				f:ClearAllPoints();
 				f:SetPoint(
@@ -303,16 +310,8 @@ function Cryolysis3:UpdateAllButtonPositions()
 					((40 * NBRScale) * cos(Cryolysis3.db.char.angle - indexScale)),
 					((40 * NBRScale) * sin(Cryolysis3.db.char.angle - indexScale))
 				);
-				Cryolysis3:SaveAnchorPosition("button", v)
 			end
 			
-			-- Set the scale of the buttons if not saved
-			if Cryolysis3.db.char.scale.button[v] == nil then
-				-- Set the scale of the sphere
-				Cryolysis3.db.char.scale.button[v] = 1;
-			end
-			
-			f:SetScale(Cryolysis3.db.char.scale.button[v]);
 			indexScale = indexScale + 36;
 		end
 	end
@@ -575,12 +574,11 @@ end
 ------------------------------------------------------------------------------------------------------
 -- Function to update the scale of a button or frame
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:UpdateScale(name, value)
+function Cryolysis3:UpdateScale(frameType, name, value)
 
+	Cryolysis3:SaveAnchorPosition(frameType, name);
 	local f = getglobal("Cryolysis3"..name)
 	f:SetScale(value)
-	if name == "Sphere" then
-		Cryolysis3:LoadAnchorPosition("frame", "Sphere");
-	end
+	Cryolysis3:LoadAnchorPosition(frameType, name);
 
 end
