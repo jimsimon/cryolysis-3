@@ -185,6 +185,11 @@ L["Display the cooldown timer on this button"] = true;
 	L["Water Button"] = true;
 	L["Gem Button"] = true;
 	
+	-- Priest Module Locales
+	L["Fortitude"] = true;
+	L["Spirit"] = true;
+	L["Protection"] = true;
+	
 	-- Message Module Options
 	L["Message"] = true;
 	L["Chat Channel"] = true;

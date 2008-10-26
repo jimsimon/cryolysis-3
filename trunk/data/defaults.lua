@@ -11,7 +11,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Cryolysis3");
 Cryolysis3.defaults = {
 	char = {
 		-- Single values
-		skin			= "Blue",		-- The default skin
 		angle			= 180,			-- The angle of the buttons
 		lockSphere		= false,		-- Lock everything in place
 		lockButtons		= true,			-- Lock the buttons to the main sphere. (Keep them around the outside of the sphere.)

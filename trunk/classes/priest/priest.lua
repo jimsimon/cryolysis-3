@@ -41,6 +41,9 @@ end
 function module:OnInitialize()
 	-- Register our options with the global array
 	--module:RegisterOptions(options);
+	
+	Cryolysis3.Private.cacheList = {17028, 17029}
+	
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -48,6 +51,8 @@ end
 ------------------------------------------------------------------------------------------------------
 function module:OnEnable()
 	-- And we're live!
+	-- Set the default skin
+	Cryolysis3:SetDefaultSkin("Orange");
 	
 	-- Create a list of the paladin's spells to be cached
 	Cryolysis3.spellList = {};
@@ -147,14 +152,119 @@ end
 -- Function for creating all the buttons used by this class
 ------------------------------------------------------------------------------------------------------
 function module:CreateButtons()
-	local showBuffMenu = 
-		Cryolysis3:HasSpell(1243)	-- Power Word: Fortitude
-		or Cryolysis3:HasSpell(588)	-- Inner Fire
 
-	if (showBuffMenu) then
-		-- We have a buff, create and set up the buff menu button
-		Cryolysis3:CreateButton("BuffButton", UIParent, "Interface\\Icons\\Spell_Holy_PrayerOfFortitude")
+	if (Cryolysis3:HasSpell(34433)) then
+		-- We has an Evocation, create and set up the button for it
+		Cryolysis3:CreateButton("ShadowfiendButton", UIParent, Cryolysis3.spellCache[34433].icon);
+		
+		-- Start tooltip data
+		Cryolysis3.Private.tooltips["ShadowfiendButton"] = {};
+
+		-- Start adding tooltip data
+		table.insert(Cryolysis3.Private.tooltips["ShadowfiendButton"], Cryolysis3.spellCache[34433].name);
+		
+		-- Set Evocation button action
+		Cryolysis3.db.char.buttonTypes["ShadowfiendButton"] = "spell";
+		Cryolysis3.db.char.buttonFunctions["ShadowfiendButton"] = {};
+		Cryolysis3.db.char.buttonFunctions["ShadowfiendButton"]["left"] = 34433;
+
+		-- Update all actions
+		Cryolysis3:UpdateButton("ShadowfiendButton", "left");
+
+		-- Update cooldown
+		--UpdateShadowfiend();
 	end
+	
+	if (Cryolysis3:HasSpell(34433)) then
+		-- We has a Resurrection, create and set up the button for it
+		Cryolysis3:CreateButton("ResurrectionButton", UIParent, Cryolysis3.spellCache[2006].icon);
+		
+		-- Start tooltip data
+		Cryolysis3.Private.tooltips["ResurrectionButton"] = {};
+
+		-- Start adding tooltip data
+		table.insert(Cryolysis3.Private.tooltips["ResurrectionButton"], Cryolysis3.spellCache[2006].name);
+		
+		-- Set Evocation button action
+		Cryolysis3.db.char.buttonTypes["ResurrectionButton"] = "spell";
+		Cryolysis3.db.char.buttonFunctions["ResurrectionButton"] = {};
+		Cryolysis3.db.char.buttonFunctions["ResurrectionButton"]["left"] = 2006;
+
+		-- Update all actions
+		Cryolysis3:UpdateButton("ResurrectionButton", "left");
+
+	end
+
+	Cryolysis3.Private.tooltips["BuffButton"] = {};
+
+	-- Start adding tooltip data
+	table.insert(Cryolysis3.Private.tooltips["BuffButton"],		L["Buff Menu"]);
+	table.insert(Cryolysis3.Private.tooltips["BuffButton"],		L["Click to open menu."]);
+	
+	local hasBuff = false
+	local tooltip = {};
+	
+	-- Fortitude Button
+	if (Cryolysis3:HasSpell(1243) or Cryolysis3:HasSpell(21562)) then
+		-- Power Word:/Prayer of Fortitude
+		tooltip = Cryolysis3:PrepareButton("BuffButton", "fortitude", "spell", L["Fortitude"], 1243, 21562);
+		Cryolysis3:AddMenuItem("BuffButton", "fortitude", select(3, GetSpellInfo(1243)), tooltip);
+
+		hasBuff = true;
+	end
+	
+	-- Spirit Button
+	if (Cryolysis3:HasSpell(14752) or Cryolysis3:HasSpell(27681)) then
+		-- Divine/Prayer of Spirit
+		tooltip = Cryolysis3:PrepareButton("BuffButton", "spirit", "spell", L["Spirit"], 14752, 27681);
+		Cryolysis3:AddMenuItem("BuffButton", "spirit", select(3, GetSpellInfo(14752)), tooltip);
+
+		hasBuff = true;
+	end
+	
+	-- Shadow Protection Button
+	if (Cryolysis3:HasSpell(976) or Cryolysis3:HasSpell(27683)) then
+		-- Shadow Protection/Prayer of Shadow Protection
+		tooltip = Cryolysis3:PrepareButton("BuffButton", "shadowprot", "spell", L["Protection"], 976, 27683);
+		Cryolysis3:AddMenuItem("BuffButton", "shadowprot", select(3, GetSpellInfo(976)), tooltip);
+
+		hasBuff = true;
+	end
+	
+	-- Inner Fire Button
+	if (Cryolysis3:HasSpell(588)) then
+		-- Inner Fire
+		tooltip = Cryolysis3:PrepareButton("BuffButton", "innerfire", "spell", 588, 588);
+		Cryolysis3:AddMenuItem("BuffButton", "innerfire", select(3, GetSpellInfo(588)), tooltip);
+
+		hasBuff = true;
+	end
+	
+	-- Fear Ward Button
+	if (Cryolysis3:HasSpell(6346)) then
+		-- Fear Ward
+		tooltip = Cryolysis3:PrepareButton("BuffButton", "fearward", "spell", 6346, 6346);
+		Cryolysis3:AddMenuItem("BuffButton", "fearward", select(3, GetSpellInfo(6346)), tooltip);
+
+		hasBuff = true;
+	end
+	
+	-- Levitate Button
+	if (Cryolysis3:HasSpell(1706)) then
+		-- Levitate
+		tooltip = Cryolysis3:PrepareButton("BuffButton", "levitate", "spell", 1706, 1706);
+		Cryolysis3:AddMenuItem("BuffButton", "levitate", select(3, GetSpellInfo(1706)), tooltip);
+
+		hasBuff = true;
+	end
+	
+	if (hasBuff) then
+		-- We have a buff, create and set up the buff menu button
+		Cryolysis3:CreateButton("BuffButton", UIParent, "Interface\\Icons\\Spell_Holy_PrayerOfFortitude", "menuButton")
+	end
+	
+	
+	
 end
 
 ------------------------------------------------------------------------------------------------------

@@ -36,6 +36,15 @@ function Cryolysis3:substr(string, start, length)
 end
 
 ------------------------------------------------------------------------------------------------------
+-- Function to set the default skin during a class's OnEnable
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:SetDefaultSkin(name)
+	if Cryolysis3.db.char.skin == nil then
+		Cryolysis3.db.char.skin = name;
+	end
+end
+
+------------------------------------------------------------------------------------------------------
 -- Function to quickly determine minutes and seconds remaining of a timer
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:TimerData(start, duration)
