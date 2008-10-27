@@ -36,6 +36,7 @@ L["Mount"] = true;
 	L["Left click to use "] = true;
 	L["Right click to use "] = true;
 	L["You are not in a flyable area and you have no selected ground mount."] = true;
+	L["You have no usable mounts and no hearthstone."] = true;
 	L["Right click to Hearthstone to "] = true;
 	L["Middle click to Hearthstone to "] = true;
 
