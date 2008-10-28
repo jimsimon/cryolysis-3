@@ -634,7 +634,7 @@ function module:CreateButtons()
 		Cryolysis3.Private.tooltips["FoodButton"] = {};
 		
 		local foodName = GetItemInfo(foodLookupTable[foodID]);
-		table.insert(Cryolysis3.Private.tooltips["FoodButton"],	foodName);
+		table.insert(Cryolysis3.Private.tooltips["FoodButton"],	Cryolysis3.spellCache[foodID].name);
 		table.insert(Cryolysis3.Private.tooltips["FoodButton"], string.format(L["%s click to %s: %s"], L["Left"],	L["use"],	foodName));
 		table.insert(Cryolysis3.Private.tooltips["FoodButton"], string.format(L["%s click to %s: %s"], L["Right"],	L["cast"],	Cryolysis3.spellCache[foodID].name));
 		
