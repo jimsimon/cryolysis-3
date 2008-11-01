@@ -615,20 +615,20 @@ function module:CreateButtons()
 		UpdateEvocation();
 	end
 	
+	-- Check for highest rank of food
+	local foodID = Cryolysis3:GetHighestRank({33717, 28612, 10145, 10144, 6129, 990, 597, 587});
+
+	-- Check for highest rank of water
+	local waterID = Cryolysis3:GetHighestRank({27090, 37420, 10140, 10139, 10138, 6127, 5506, 5505, 5504});
+
+	-- Check for highest rank of gem
+	local gemID = Cryolysis3:GetHighestRank({42985, 27101, 10054, 10053, 3552, 759});
+	
 	-- Lookup table for conjure spell id -> item id
 	local foodLookupTable = module:GetLookupTable("food");
 	local waterLookupTable = module:GetLookupTable("water");
 	local gemLookupTable = module:GetLookupTable("gem");
 
-	-- Check for highest rank of food
-	local foodID = Cryolysis3:GetHighestRank(foodLookupTable);
-
-	-- Check for highest rank of water
-	local waterID = Cryolysis3:GetHighestRank(waterLookupTable);
-
-	-- Check for highest rank of gem
-	local gemID = Cryolysis3:GetHighestRank(gemLookupTable);
-	
 	if (foodID ~= nil) then
 		Cryolysis3:CreateButton("FoodButton",	UIParent,	select(3, GetSpellInfo(foodID)));
 		Cryolysis3.Private.tooltips["FoodButton"] = {};

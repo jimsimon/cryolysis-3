@@ -164,9 +164,9 @@ end
 -- Update visibility of things
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:GetHighestRank(spells)
-	for k, v in pairs(spells) do
-		if (Cryolysis3:HasSpell(k)) then
-			return k;
+	for i = 1, #(spells), 1 do
+		if (Cryolysis3:HasSpell(spells[i])) then
+			return spells[i];
 		end
 	end
 
