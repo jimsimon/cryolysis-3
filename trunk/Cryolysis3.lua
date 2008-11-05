@@ -224,7 +224,7 @@ function Cryolysis3:LoadModules()
 		Cryolysis3:startup()
 		
 	else
-		Cryolysis3:ScheduleTimer("LoadModules", .5)
+		Cryolysis3:ScheduleTimer("LoadModules", 1)
 	end
 end
 
