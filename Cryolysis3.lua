@@ -10,49 +10,9 @@ Cryolysis3:SetDefaultModuleState(false);
 
 
 ------------------------------------------------------------------------------------------------------
--- What happens when the addon is first loaded
+-- Initialise the startup
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:OnInitialize()
-	-- Register the database
-	Cryolysis3.db = LibStub("AceDB-3.0"):New("Cryolysis3DB", Cryolysis3.defaults, "char");
-	
-	-- Create the buttons array
-	Cryolysis3.buttons = {};
-	
-	-- Add info to the Options array for the Profile Options
-	Cryolysis3.options.args.profile.args.options = LibStub("AceDBOptions-3.0"):GetOptionsTable(Cryolysis3.db);
-	Cryolysis3.options.args.profile.args.options.name = L["Options profile"];
-	Cryolysis3.options.args.profile.args.options.desc = L["Saved profile for Cryolysis 3 options"];
-	Cryolysis3.options.args.profile.args.options.order = 2;
-
-	-- Create options table and stuff
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("Cryolysis3", Cryolysis3.options);
-	AceConfig:AddToBlizOptions("Cryolysis3", "Cryolysis3");
-end
-
-------------------------------------------------------------------------------------------------------
--- What happens when the addon is enabled
-------------------------------------------------------------------------------------------------------
-function Cryolysis3:OnEnable()
-	-- Store this since we use it so often
-	Cryolysis3.className = select(2, UnitClass("player"));
-
-	-- Register for some common events used by all modules
-	Cryolysis3:RegisterCommonEvents();
-	
-	-- Create the popup dialogue
-	StaticPopupDialogs["ITEM_CACHE_WARNING"] = {
-		text = L["Cryolysis 3 is currently adding items to your game's item cache.  The addon should finish loading and this dialog box should disappear once this is complete."],
-		timeout = 0,
-		whileDead = 1,
-		hideOnEscape = 1
-	}
-	
-	-- Load all enabled modules
-	Cryolysis3:LoadModules();
-end
-
-function Cryolysis3:startup()
+local function InitStartup()
 	--Cryolysis3:RegisterChatCommand("cryo", "ChatCommand")  --See function Cryolysis3:ChatCommand for details
 	--Cryolysis3:RegisterChatCommand("cryolysis", "ChatCommand")
 	Cryolysis3:RegisterChatCommand("cryo3", "ChatCommand")
@@ -83,7 +43,7 @@ function Cryolysis3:startup()
 	-- Handle main sphere tooltip
 	Cryolysis3:AddScript("Sphere", "frame", "OnEnter");
 	Cryolysis3:AddScript("Sphere", "frame", "OnLeave");
-
+	
 	-- Start tooltip data
 	Cryolysis3.Private.tooltips["Sphere"] = {};
 	
@@ -93,22 +53,22 @@ function Cryolysis3:startup()
 	
 	-- Start adding tooltip data
 	table.insert(Cryolysis3.Private.tooltips["Sphere"],		L["Cryolysis"]);
-
+	
 	-- Set mount region thingy
 	Cryolysis3.Private.mountRegion = IsFlyableArea();
 	
 	-- Find our mounts
 	Cryolysis3:FindMounts();
-
+	
 	-- Setup custom buttons
 	Cryolysis3:CreateCustomButtons();
-		
+	
 	-- Setup class-specific buttons
 	Cryolysis3.GetClassModule():CreateButtons();
 	
 	-- Place the buttons where they're supposed to be
 	Cryolysis3:UpdateAllButtonPositions();
-
+	
 	-- Update main sphere
 	Cryolysis3:UpdateSphere("outerSphere");
 	Cryolysis3:UpdateSphere("sphereText");
@@ -117,16 +77,9 @@ function Cryolysis3:startup()
 end
 
 ------------------------------------------------------------------------------------------------------
--- What happens when the addon is disabled
-------------------------------------------------------------------------------------------------------
-function Cryolysis3:OnDisable()
-
-end
-
-------------------------------------------------------------------------------------------------------
 -- Load all enabled modules
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:LoadModule(name)
+local function LoadModule(name)
 	-- Attempt to load the LoD module
 	local loaded, reason = Cryolysis3:EnableModule(name);
 	if not loaded then
@@ -157,17 +110,18 @@ function Cryolysis3:LoadModule(name)
 		
 		-- Display the dialogue
 		StaticPopup_Show("C3_LOD_ADDON_WARNING");
-
+		
 		return false;
 	end
-
+	
 	return true;
 end
+
 
 ------------------------------------------------------------------------------------------------------
 -- Check if items need to be cached and if so, display a warning.
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:CacheItems(itemList)
+local function CacheItems(itemList)
 	
 	local checkAgain = false;
 	
@@ -196,37 +150,87 @@ end
 ------------------------------------------------------------------------------------------------------
 -- Load all enabled modules
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:LoadModules()
-
-	if Cryolysis3:CacheItems(Cryolysis3.Private.cacheList) then
-
+local function LoadModules()
+	
+	if (CacheItems(Cryolysis3.Private.cacheList)) then
+		
 		-- Detect what class we are playing and return English value, then load it
-		local classLoaded = Cryolysis3:LoadModule(Cryolysis3.className);
+		local classLoaded = LoadModule(Cryolysis3.className);
 		
 		if (not Cryolysis3.db.char.silentMode and classLoaded == true) then
 			-- Only print this if we're not in silent mode
 			local classname = gsub(UnitClass("player"), "^.", function(s) return s:upper() end)
 			Cryolysis3:Print(classname.." "..L["Module"].." "..L["Loaded"]);
 		end
-
+		
 		-- Cache here, since before this we don't have a spellList
 		Cryolysis3:CacheSpells();
-
+		
 		-- Create reagent list for the mage
 		Cryolysis3.GetClassModule():CreateReagentList();
 		
 		for k, v in pairs(Cryolysis3.db.char.modules) do
 			if (Cryolysis3.db.char.modules[k]) then
 				-- Load the module if it's enabled in the config
-				Cryolysis3:LoadModule(k);
+				LoadModule(k);
 			end
 		end
 		
-		Cryolysis3:startup()
+		InitStartup()
 		
 	else
 		Cryolysis3:ScheduleTimer("LoadModules", 1)
 	end
+end
+
+------------------------------------------------------------------------------------------------------
+-- What happens when the addon is first loaded
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:OnInitialize()
+	-- Register the database
+	Cryolysis3.db = LibStub("AceDB-3.0"):New("Cryolysis3DB", Cryolysis3.defaults, "char");
+	
+	-- Create the buttons array
+	Cryolysis3.buttons = {};
+	
+	-- Add info to the Options array for the Profile Options
+	Cryolysis3.options.args.profile.args.options = LibStub("AceDBOptions-3.0"):GetOptionsTable(Cryolysis3.db);
+	Cryolysis3.options.args.profile.args.options.name = L["Options profile"];
+	Cryolysis3.options.args.profile.args.options.desc = L["Saved profile for Cryolysis 3 options"];
+	Cryolysis3.options.args.profile.args.options.order = 2;
+	
+	-- Create options table and stuff
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("Cryolysis3", Cryolysis3.options);
+	AceConfig:AddToBlizOptions("Cryolysis3", "Cryolysis3");
+end
+
+------------------------------------------------------------------------------------------------------
+-- What happens when the addon is enabled
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:OnEnable()
+	-- Store this since we use it so often
+	Cryolysis3.className = select(2, UnitClass("player"));
+
+	-- Register for some common events used by all modules
+	Cryolysis3:RegisterCommonEvents();
+	
+	-- Create the popup dialogue
+	StaticPopupDialogs["ITEM_CACHE_WARNING"] = {
+		text = L["Cryolysis 3 is currently adding items to your game's item cache.  The addon should finish loading and this dialog box should disappear once this is complete."],
+		timeout = 0,
+		whileDead = 1,
+		hideOnEscape = 1
+	}
+	
+	-- Load all enabled modules
+	LoadModules();
+end
+
+------------------------------------------------------------------------------------------------------
+-- What happens when the addon is disabled
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:OnDisable()
+
 end
 
 ------------------------------------------------------------------------------------------------------
