@@ -41,6 +41,11 @@ end
 function module:OnInitialize()
 	-- Register our options with the global array
 	--module:RegisterOptions(options);
+	
+	if select(2,UnitClass("player")) == "HUNTER" then
+		Cryolysis3.Private.cacheList = {}
+	end
+	
 end
 
 ------------------------------------------------------------------------------------------------------
