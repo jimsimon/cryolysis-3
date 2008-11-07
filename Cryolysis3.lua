@@ -171,15 +171,17 @@ function Cryolysis3:CacheItems(itemList)
 	
 	local checkAgain = false;
 	
-	for  i = 1, #(itemList), 1 do
-		if (GetItemInfo(itemList[i]) == nil or GetItemInfo(itemList[i]) == "") then
-			StaticPopup_Show("ITEM_CACHE_WARNING");
-			GameTooltip:SetOwner(UIParent, "CENTER")
-			GameTooltip:SetHyperlink("item:"..itemList[i]..":0:0:0:0:0:0:0:70")
-			GameTooltip:Hide()
-			checkAgain = true;
+	if itemList ~= nil then
+		for  i = 1, #(itemList), 1 do
+			if (GetItemInfo(itemList[i]) == nil or GetItemInfo(itemList[i]) == "") then
+				StaticPopup_Show("ITEM_CACHE_WARNING");
+				GameTooltip:SetOwner(UIParent, "CENTER")
+				GameTooltip:SetHyperlink("item:"..itemList[i]..":0:0:0:0:0:0:0:70")
+				GameTooltip:Hide()
+				checkAgain = true;
+			end
+			
 		end
-		
 	end
 	
 	if checkAgain then
