@@ -43,7 +43,7 @@ function module:OnInitialize()
 	--module:RegisterOptions(options);
 	
 	if select(2,UnitClass("player")) == "PALADIN" then
-		Cryolysis3.Private.cacheList = {}
+		Cryolysis3.Private.cacheList = {21177, 17033}
 	end
 	
 end
