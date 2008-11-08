@@ -121,7 +121,7 @@ end
 ------------------------------------------------------------------------------------------------------
 -- Check if items need to be cached and if so, display a warning.
 ------------------------------------------------------------------------------------------------------
-local function CacheItems(itemList)
+function Cryolysis3:CacheItems(itemList)
 	
 	local checkAgain = false;
 	
@@ -138,7 +138,7 @@ local function CacheItems(itemList)
 		end
 	end
 	
-	if checkAgain then
+	if (checkAgain) then
 		return false
 	else
 		StaticPopup_Hide("ITEM_CACHE_WARNING");
@@ -150,9 +150,9 @@ end
 ------------------------------------------------------------------------------------------------------
 -- Load all enabled modules
 ------------------------------------------------------------------------------------------------------
-local function LoadModules()
+function Cryolysis3:LoadModules()
 	
-	if (CacheItems(Cryolysis3.Private.cacheList)) then
+	if (Cryolysis3:CacheItems(Cryolysis3.Private.cacheList)) then
 		
 		-- Detect what class we are playing and return English value, then load it
 		local classLoaded = LoadModule(Cryolysis3.className);
@@ -223,7 +223,7 @@ function Cryolysis3:OnEnable()
 	}
 	
 	-- Load all enabled modules
-	LoadModules();
+	Cryolysis3:LoadModules();
 end
 
 ------------------------------------------------------------------------------------------------------
