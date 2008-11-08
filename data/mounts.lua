@@ -153,7 +153,7 @@ function Cryolysis3:UpdateMountButtonMacro()
 
 	if (GetMacroIndexByName(Cryolysis3.Private.macroName) ~= 0) then
 		EditMacro(Cryolysis3.Private.macroName, unpack(MacroParameters));
-	elseif ((GetNumMacros()) < 18) then
+	elseif ((GetNumMacros()) < 36) then
 		CreateMacro(unpack(MacroParameters));
 	else
 		Cryolysis3:Print("Too many macros exist, Cryolysis cannot create its macro");
@@ -165,11 +165,15 @@ function Cryolysis3:UpdateMountButtonMacro()
 	if (Cryolysis3.db.char.mountBehavior == 1) then
 		Cryolysis3.db.char.buttonFunctions["MountButton"].right = macro;
 	else
-		Cryolysis3.db.char.buttonFunctions["MountButton"].right = "/cast "..hs;
+		if hs ~= nil then
+			Cryolysis3.db.char.buttonFunctions["MountButton"].right = "/cast "..hs;
+		end
 	end
 
 	-- Set the default right button to the Hearthstone
-	Cryolysis3.db.char.buttonFunctions["MountButton"].middle = "/cast "..hs;
+	if hs ~= nil then
+		Cryolysis3.db.char.buttonFunctions["MountButton"].middle = "/cast "..hs;
+	end
 	
 	-- Now update all attributes
 	Cryolysis3:UpdateAllButtonAttributes("MountButton");

@@ -189,12 +189,12 @@ function Cryolysis3:UpdateItemCount(buttonName, lookupTable)
 				if (Cryolysis3.db.char.buttonText[buttonName] ~= nil) then
 					buttonText:SetText(temp);
 				else
-					buttonText:SetText(nil);
+					buttonText:SetText("");
 				end
 
 				return
 			else
-				buttonText:SetText(nil);
+				buttonText:SetText("");
 				button.texture:SetDesaturated(true);
 			end
 		end
