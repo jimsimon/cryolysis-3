@@ -71,8 +71,8 @@ function module:CreateConfigOptions()
 			name = GetItemInfo(i),
 			desc = L["Adjust the amount of "]..GetItemInfo(i)..L[" to restock to."],
 			width = "full",
-			get = function(info) return Cryolysis3.db.char.RestockQuantity[k] end,
-			set = function(info, v) Cryolysis3.db.char.RestockQuantity[k] = v end,
+			get = function(info) return Cryolysis3.db.char.RestockQuantity[GetItemInfo(i)] end,
+			set = function(info, v) Cryolysis3.db.char.RestockQuantity[GetItemInfo(i)] = v end,
 			min = 0,
 			max = 200,
 			step = 1,
@@ -86,8 +86,8 @@ function module:CreateConfigOptions()
 			name = GetItemInfo(i),
 			desc = L["Adjust the amount of "]..GetItemInfo(i)..L[" to restock to."],
 			width = "full",
-			get = function(info) return Cryolysis3.db.char.RestockQuantity[k] end,
-			set = function(info, v) Cryolysis3.db.char.RestockQuantity[k] = v end,
+			get = function(info) return Cryolysis3.db.char.RestockQuantity[GetItemInfo(i)] end,
+			set = function(info, v) Cryolysis3.db.char.RestockQuantity[GetItemInfo(i)] = v end,
 			min = 0,
 			max = 200,
 			step = 1,
@@ -205,8 +205,8 @@ function module:MERCHANT_SHOW(hasConfirmed)
 	for k, v in pairs(Cryolysis3.Private.classReagents) do
 		-- Store the "real" name of the reagents in a table
 		tmpReagents[GetItemInfo(v)] = true;
-
-		if (GetItemCount(GetItemInfo(v)) < Cryolysis3.db.char.RestockQuantity[k]) then
+		
+		if (GetItemCount(GetItemInfo(v)) < Cryolysis3.db.char.RestockQuantity[GetItemInfo(v)]) then
 			-- Our owned items is less than the expected number
 			ReagentsMissing = true;
 			shoppingList[GetItemInfo(v)] = true;
