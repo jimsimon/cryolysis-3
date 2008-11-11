@@ -80,21 +80,6 @@ function module:CreateConfigOptions()
 		configOptions.args[gsub(k, " ", "")] = reagentamount  --remove the spaces!
 	end
 	
-	for k, i in pairs(Cryolysis3.Private.classReagents) do
-		reagentamount = {
-			type = "range",
-			name = GetItemInfo(i),
-			desc = L["Adjust the amount of "]..GetItemInfo(i)..L[" to restock to."],
-			width = "full",
-			get = function(info) return Cryolysis3.db.char.RestockQuantity[GetItemInfo(i)] end,
-			set = function(info, v) Cryolysis3.db.char.RestockQuantity[GetItemInfo(i)] = v end,
-			min = 0,
-			max = 200,
-			step = 1,
-		}
-		configOptions.args[gsub(k, " ", "")] = reagentamount  --remove the spaces!
-	end
-	
 	return configOptions;
 end
 
