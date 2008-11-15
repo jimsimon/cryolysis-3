@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <!-- Load Class Files -->
+<Script file="classes\deathknight\deathknight.lua"/>
 <Script file="classes\mage\mage.lua"/>
 <Script file="classes\priest\priest.lua"/>
 <Script file="classes\paladin\paladin.lua"/>
