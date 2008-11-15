@@ -826,7 +826,15 @@ function module:CreateButtons()
 			-- Shattrath
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "ShattrathCity", "spell", 33690, 33690, 33691);
 			Cryolysis3:AddMenuItem("PortalButton", "ShattrathCity", select(3, GetSpellInfo(33690)), tooltip);
-
+			
+			hasTelePort = true;
+		end
+		
+		if (Cryolysis3:HasSpell(53140) or Cryolysis3:HasSpell(53142)) then
+			-- Dalaran
+			tooltip = Cryolysis3:PrepareButton("PortalButton", "Dalaran", "spell", 53140, 53140, 53142);
+			Cryolysis3:AddMenuItem("PortalButton", "Dalaran", select(3, GetSpellInfo(53140)), tooltip);
+			
 			hasTelePort = true;
 		end
 	else
@@ -876,6 +884,14 @@ function module:CreateButtons()
 			tooltip = Cryolysis3:PrepareButton("PortalButton", "ShattrathCity", "spell", 35715, 35715, 35717);
 			Cryolysis3:AddMenuItem("PortalButton", "ShattrathCity", select(3, GetSpellInfo(35715)), tooltip);
 
+			hasTelePort = true;
+		end
+		
+		if (Cryolysis3:HasSpell(53140) or Cryolysis3:HasSpell(53142)) then
+			-- Dalaran
+			tooltip = Cryolysis3:PrepareButton("PortalButton", "Dalaran", "spell", 53140, 53140, 53142);
+			Cryolysis3:AddMenuItem("PortalButton", "Dalaran", select(3, GetSpellInfo(53140)), tooltip);
+			
 			hasTelePort = true;
 		end
 	end
