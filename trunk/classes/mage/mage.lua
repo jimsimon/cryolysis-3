@@ -618,10 +618,10 @@ function module:CreateButtons()
 	end
 	
 	-- Check for highest rank of food
-	local foodID = Cryolysis3:GetHighestRank({33717, 28612, 10145, 10144, 6129, 990, 597, 587});
+	local foodID = Cryolysis3:GetHighestRank({42956, 42955, 33717, 28612, 10145, 10144, 6129, 990, 597, 587});
 
 	-- Check for highest rank of water
-	local waterID = Cryolysis3:GetHighestRank({27090, 37420, 10140, 10139, 10138, 6127, 5506, 5505, 5504});
+	local waterID = Cryolysis3:GetHighestRank({42956, 42955, 27090, 37420, 10140, 10139, 10138, 6127, 5506, 5505, 5504});
 
 	-- Check for highest rank of gem
 	local gemID = Cryolysis3:GetHighestRank({42985, 27101, 10054, 10053, 3552, 759});
@@ -732,7 +732,16 @@ function module:CreateButtons()
 		-- Arcane Intellect/Brilliance
 		tooltip = Cryolysis3:PrepareButton("BuffButton", "Intellect", "spell", L["Intellect"], 1459, 23028);
 		Cryolysis3:AddMenuItem("BuffButton", "Intellect", select(3, GetSpellInfo(1459)), tooltip);
+		
+		hasBuff = true;
+	end
 
+	-- Dalaran Intellect buttons, included in case people like both
+	if (Cryolysis3:HasSpell(61024) or Cryolysis3:HasSpell(61316)) then
+		-- Arcane Intellect/Brilliance
+		tooltip = Cryolysis3:PrepareButton("BuffButton2", "Intellect", "spell", L["Intellect"], 61024, 61316);
+		Cryolysis3:AddMenuItem("BuffButton2", "Intellect", select(3, GetSpellInfo(61024)), tooltip);
+		
 		hasBuff = true;
 	end
 
@@ -914,6 +923,8 @@ function module:GetLookupTable(name)
 	
 	if name == "water" then
 		return {
+			[42956] = 43523,
+			[42955] = 43518,
 			[27090]	= 22018,
 			[37420]	= 30703,
 			[10140]	= 8079,
@@ -926,6 +937,8 @@ function module:GetLookupTable(name)
 		};
 	elseif name == "food" then
 		return {
+			[42956] = 43523,
+			[42955] = 43518,
 			[33717]	= 22019,
 			[28612]	= 22895,
 			[10145]	= 8076,
