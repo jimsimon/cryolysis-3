@@ -181,12 +181,12 @@ function Cryolysis3:UpdateItemCount(buttonName, lookupTable)
 	local buttonText = getglobal("Cryolysis3"..buttonName.."Text");
 
 	for k, v in pairs(lookupTable) do
-		if Cryolysis3:HasSpell(k) then
+		if (Cryolysis3:HasSpell(k)) then
 			local temp = GetItemCount(v);
-			if temp > 0 then
+			if (temp > 0) then
 				button.texture:SetDesaturated(nil);
 
-				if (Cryolysis3.db.char.buttonText[buttonName] ~= nil) then
+				if (Cryolysis3.db.char.buttonText[buttonName]) then
 					buttonText:SetText(temp);
 				else
 					buttonText:SetText("");
