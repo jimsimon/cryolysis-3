@@ -678,6 +678,8 @@ function module:CreateButtons()
 	end
 
 	if (gemID ~= nil) then
+		Cryolysis3.Private.manaGem = gemLookupTable[gemID];
+
 		Cryolysis3:CreateButton("GemButton",	UIParent,	select(3, GetSpellInfo(gemID)));
 		Cryolysis3.Private.tooltips["GemButton"] = {};
 		
@@ -924,6 +926,7 @@ function module:GetLookupTable(name)
 	
 	if name == "water" then
 		return {
+			-- Normal ranks of Water
 			[42956] = 43523,
 			[42955] = 43518,
 			[27090]	= 22018,
@@ -937,7 +940,8 @@ function module:GetLookupTable(name)
 			[5504]	= 5350,
 		};
 	elseif name == "food" then
-		return {
+		return {			
+			-- Normal ranks of Food
 			[42956] = 43523,
 			[42955] = 43518,
 			[33717]	= 22019,
@@ -987,13 +991,22 @@ end
 -- Whenever something changes in our bags
 ------------------------------------------------------------------------------------------------------
 function module:BAG_UPDATE()
+	-- Start checking for Mana Gem cooldown
+	UpdateManaGem();
+
+	-- Update Item Count on buttons
 	Cryolysis3:UpdateItemCount("BuffButtonSlowFall",	{[130] = 17056});
 	Cryolysis3:UpdateItemCount("FoodButton",		module:GetLookupTable("food"));
 	Cryolysis3:UpdateItemCount("WaterButton",		module:GetLookupTable("water"));
-	
-	if (gemHandle == nil) then
-		Cryolysis3:UpdateItemCount("GemButton",			module:GetLookupTable("gem"));
-	end
+	Cryolysis3:UpdateItemCount("GemButton",			module:GetLookupTable("gem"), false);
+
+	-- Update Sphere tooltip
+	Cryolysis3.Private.tooltips["Sphere"][2] = L["Conjured Food"]..": "..(Cryolysis3FoodButtonText:GetText() or 0);
+	Cryolysis3.Private.tooltips["Sphere"][3] = L["Conjured Water"]..": "..(Cryolysis3WaterButtonText:GetText() or 0);
+	Cryolysis3.Private.tooltips["Sphere"][4] = select(1, GetItemInfo(17020))..": "..(GetItemCount(17020) or 0);
+	Cryolysis3.Private.tooltips["Sphere"][5] = select(1, GetItemInfo(17056))..": "..(GetItemCount(17056) or 0);
+	Cryolysis3.Private.tooltips["Sphere"][6] = select(1, GetItemInfo(17031))..": "..(GetItemCount(17031) or 0);
+	Cryolysis3.Private.tooltips["Sphere"][7] = select(1, GetItemInfo(17032))..": "..(GetItemCount(17032) or 0);
 end
 
 ------------------------------------------------------------------------------------------------------

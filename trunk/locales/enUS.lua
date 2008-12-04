@@ -186,11 +186,17 @@ L["Display the cooldown timer on this button"] = true;
 	L["Water Button"] = true;
 	L["Gem Button"] = true;
 	
+	-- Main Sphere: Mage locales
+	L["Conjured Food"] = true;
+	L["Conjured Water"] = true;
+	
+	
 	-- Priest Module Locales
 	L["Fortitude"] = true;
 	L["Spirit"] = true;
 	L["Protection"] = true;
 	
+
 	-- Message Module Options
 	L["Message"] = true;
 	L["Chat Channel"] = true;
@@ -202,8 +208,10 @@ L["Display the cooldown timer on this button"] = true;
 	L["Group"] = true;
 	L["World"] = true;
 
+
 	-- Warning Module Options
 	L["Warning"] = true;
+
 
 	-- Reagent Restocking Module Options
 	L["Reagent Restocking"] = true;
