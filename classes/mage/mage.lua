@@ -786,6 +786,7 @@ function module:CreateButtons()
 		-- Slow Fall
 		tooltip = Cryolysis3:PrepareButton("BuffButton", "SlowFall", "spell", 130, 130);
 		Cryolysis3:AddMenuItem("BuffButton", "SlowFall", select(3, GetSpellInfo(130)), tooltip);
+		Cryolysis3.db.char.buttonText["BuffButtonSlowFall"] = true;
 
 		hasBuff = true;
 	end
