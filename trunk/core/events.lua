@@ -66,12 +66,16 @@ end
 -- We learned a new ability/spell
 ------------------------------------------------------------------------------------------------------
 function Cryolysis3:LEARNED_SPELL_IN_TAB()
-
+	-- We learned a new spell
+	Cryolysis3:CacheSpells();
 end
 
 ------------------------------------------------------------------------------------------------------
 -- Talents updated (or?)
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:CHARACTER_POINTS_CHANGED()
-
+function Cryolysis3:CHARACTER_POINTS_CHANGED(arg1)
+	if (arg1 == -1) then
+		-- We learned a talent
+		Cryolysis3:CacheSpells();
+	end
 end
