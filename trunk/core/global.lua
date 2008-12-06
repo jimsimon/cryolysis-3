@@ -97,7 +97,7 @@ function Cryolysis3:LoadAnchorPosition(frameType, name)
 	-- Get the item we are using
 	local item = getglobal(frameName);
 	
-	if not item then
+	if (not item) then
 		return false;
 	end
 	
@@ -105,19 +105,19 @@ function Cryolysis3:LoadAnchorPosition(frameType, name)
 	local scale = item:GetEffectiveScale();
 	
 	-- Begin tons of nil checks to deal with a clear DB
-	if Cryolysis3.db.char.positions[frameType] == nil then
+	if (Cryolysis3.db.char.positions[frameType] == nil) then
 		return false;
 	end
 	
-	if Cryolysis3.db.char.positions[frameType][name] == nil then
+	if (Cryolysis3.db.char.positions[frameType][name] == nil) then
 		return false;
 	end
 	
-	if Cryolysis3.db.char.positions[frameType][name]["x"] == nil then
+	if (Cryolysis3.db.char.positions[frameType][name]["x"] == nil) then
 		return false;
 	end
 	
-	if Cryolysis3.db.char.positions[frameType][name]["y"] == nil then
+	if (Cryolysis3.db.char.positions[frameType][name]["y"] == nil) then
 		return false;
 	end
 

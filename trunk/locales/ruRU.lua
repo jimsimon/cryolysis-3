@@ -6,7 +6,7 @@
 -- Setup the locale library
 ------------------------------------------------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):NewLocale("Cryolysis3", "ruRU");
-
+if not L then return end
 
 ------------------------------------------------------------------------------------------------------
 -- LoD (Load on Demand) error strings

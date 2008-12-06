@@ -6,4 +6,5 @@
 ------------------------------------------------------------------------------------------------------
 -- Setup the locale library
 ------------------------------------------------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):NewLocale("Cryolysis3", "esES", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Cryolysis3", "esES")
+if not L then return end

@@ -132,6 +132,28 @@ local function UpdateManaGem()
 	end
 end
 
+------------------------------------------------------------------------------------------------------
+-- Update buttons
+------------------------------------------------------------------------------------------------------
+local function UpdateItemCount()
+	Cryolysis3:UpdateItemCount("BuffButtonSlowFall",	{[130] = 17056});
+	Cryolysis3:UpdateItemCount("FoodButton",		module:GetLookupTable("food"));
+	Cryolysis3:UpdateItemCount("WaterButton",		module:GetLookupTable("water"));
+	Cryolysis3:UpdateItemCount("GemButton",			module:GetLookupTable("gem"), false);
+end
+
+------------------------------------------------------------------------------------------------------
+-- Update sphere
+------------------------------------------------------------------------------------------------------
+local function UpdateSphereTooltip()
+	Cryolysis3.Private.tooltips["Sphere"][2] = L["Conjured Food"]..": "..(Cryolysis3FoodButtonText:GetText() or 0);
+	Cryolysis3.Private.tooltips["Sphere"][3] = L["Conjured Water"]..": "..(Cryolysis3WaterButtonText:GetText() or 0);
+	Cryolysis3.Private.tooltips["Sphere"][4] = select(1, GetItemInfo(17020))..": "..(GetItemCount(17020) or 0);
+	Cryolysis3.Private.tooltips["Sphere"][5] = select(1, GetItemInfo(17056))..": "..(GetItemCount(17056) or 0);
+	Cryolysis3.Private.tooltips["Sphere"][6] = select(1, GetItemInfo(17031))..": "..(GetItemCount(17031) or 0);
+	Cryolysis3.Private.tooltips["Sphere"][7] = select(1, GetItemInfo(17032))..": "..(GetItemCount(17032) or 0);
+end
+
 
 ------------------------------------------------------------------------------------------------------
 -- Function to generate options
@@ -491,10 +513,9 @@ function module:OnInitialize()
 	-- Register our options with the global array
 	--module:RegisterOptions(options);
 	
-	if select(2,UnitClass("player")) == "MAGE" then
+	if (select(2,UnitClass("player")) == "MAGE") then
 		Cryolysis3.Private.cacheList = {17020, 17031, 17032, 22019, 22895, 8076, 8075, 1487, 1114, 1113, 5349, 22018, 30703, 8079, 8078, 8077, 3772, 2136, 2288, 5350, 33312, 22044, 8008, 8007, 5513, 5514}
 	end
-	
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -636,6 +657,9 @@ function module:CreateButtons()
 		Cryolysis3.Private.tooltips["FoodButton"] = {};
 		
 		local foodName = GetItemInfo(foodLookupTable[foodID]);
+		if (foodName == nil) then
+			foodName = Cryolysis3.spellCache[foodID].name;
+		end
 		table.insert(Cryolysis3.Private.tooltips["FoodButton"],	Cryolysis3.spellCache[foodID].name);
 		table.insert(Cryolysis3.Private.tooltips["FoodButton"], string.format(L["%s click to %s: %s"], L["Left"],	L["use"],	foodName));
 		table.insert(Cryolysis3.Private.tooltips["FoodButton"], string.format(L["%s click to %s: %s"], L["Right"],	L["cast"],	Cryolysis3.spellCache[foodID].name));
@@ -652,6 +676,8 @@ function module:CreateButtons()
 		end
 		
 		Cryolysis3:UpdateAllButtonAttributes("FoodButton");
+	else
+		Cryolysis3:Print("food id is nil");
 	end
 
 	if (waterID ~= nil) then
@@ -659,6 +685,9 @@ function module:CreateButtons()
 		Cryolysis3.Private.tooltips["WaterButton"] = {};
 		
 		local waterName = GetItemInfo(waterLookupTable[waterID]);
+		if (waterName == nil) then
+			waterName = Cryolysis3.spellCache[waterID].name;
+		end
 		table.insert(Cryolysis3.Private.tooltips["WaterButton"], Cryolysis3.spellCache[waterID].name);
 		table.insert(Cryolysis3.Private.tooltips["WaterButton"], string.format(L["%s click to %s: %s"], L["Left"],	L["use"],	waterName));
 		table.insert(Cryolysis3.Private.tooltips["WaterButton"], string.format(L["%s click to %s: %s"], L["Right"],	L["cast"],	Cryolysis3.spellCache[waterID].name));
@@ -684,6 +713,9 @@ function module:CreateButtons()
 		Cryolysis3.Private.tooltips["GemButton"] = {};
 		
 		local gemName = GetItemInfo(gemLookupTable[gemID]);
+		if (gemName == nil) then
+			gemName = Cryolysis3.spellCache[gemID].name;
+		end
 		table.insert(Cryolysis3.Private.tooltips["GemButton"], Cryolysis3.spellCache[gemID].name);
 		table.insert(Cryolysis3.Private.tooltips["GemButton"], string.format(L["%s click to %s: %s"], L["Left"],	L["use"],	gemName));
 		table.insert(Cryolysis3.Private.tooltips["GemButton"], string.format(L["%s click to %s: %s"], L["Right"],	L["cast"],	Cryolysis3.spellCache[gemID].name));
@@ -912,9 +944,16 @@ function module:CreateButtons()
 	if (hasBuff) then
 		Cryolysis3:CreateButton("BuffButton",	UIParent,	"Interface\\Icons\\INV_Staff_13", "menuButton");
 	end
+
 	if (hasTelePort) then
 		Cryolysis3:CreateButton("PortalButton", UIParent,	"Interface\\Icons\\Spell_Nature_AstralRecalGroup", "menuButton");
 	end
+
+	-- Update Item Count on buttons
+	UpdateItemCount();
+	
+	-- Update Sphere tooltip
+	UpdateSphereTooltip();
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -991,22 +1030,16 @@ end
 -- Whenever something changes in our bags
 ------------------------------------------------------------------------------------------------------
 function module:BAG_UPDATE()
-	-- Start checking for Mana Gem cooldown
-	UpdateManaGem();
-
-	-- Update Item Count on buttons
-	Cryolysis3:UpdateItemCount("BuffButtonSlowFall",	{[130] = 17056});
-	Cryolysis3:UpdateItemCount("FoodButton",		module:GetLookupTable("food"));
-	Cryolysis3:UpdateItemCount("WaterButton",		module:GetLookupTable("water"));
-	Cryolysis3:UpdateItemCount("GemButton",			module:GetLookupTable("gem"), false);
-
-	-- Update Sphere tooltip
-	Cryolysis3.Private.tooltips["Sphere"][2] = L["Conjured Food"]..": "..(Cryolysis3FoodButtonText:GetText() or 0);
-	Cryolysis3.Private.tooltips["Sphere"][3] = L["Conjured Water"]..": "..(Cryolysis3WaterButtonText:GetText() or 0);
-	Cryolysis3.Private.tooltips["Sphere"][4] = select(1, GetItemInfo(17020))..": "..(GetItemCount(17020) or 0);
-	Cryolysis3.Private.tooltips["Sphere"][5] = select(1, GetItemInfo(17056))..": "..(GetItemCount(17056) or 0);
-	Cryolysis3.Private.tooltips["Sphere"][6] = select(1, GetItemInfo(17031))..": "..(GetItemCount(17031) or 0);
-	Cryolysis3.Private.tooltips["Sphere"][7] = select(1, GetItemInfo(17032))..": "..(GetItemCount(17032) or 0);
+	if (Cryolysis3GemButton ~= nil) then
+		-- Start checking for Mana Gem cooldown
+		UpdateManaGem();
+		
+		-- Update Item Count on buttons
+		UpdateItemCount();
+		
+		-- Update Sphere tooltip
+		UpdateSphereTooltip();
+	end
 end
 
 ------------------------------------------------------------------------------------------------------
