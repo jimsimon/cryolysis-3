@@ -148,24 +148,29 @@ function Cryolysis3:CacheItems(itemList)
 end
 
 ------------------------------------------------------------------------------------------------------
--- Load all enabled modules
+-- Load class module
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:LoadModules()
+local function LoadClassModule()
+	-- Detect what class we are playing and return English value, then load it
+	local classLoaded = LoadModule(Cryolysis3.className);
 	
-	if (Cryolysis3:CacheItems(Cryolysis3.Private.cacheList)) then
-		
-		-- Detect what class we are playing and return English value, then load it
-		local classLoaded = LoadModule(Cryolysis3.className);
-		
-		if (not Cryolysis3.db.char.silentMode and classLoaded == true) then
+	if (classLoaded == true) then
+		if (not Cryolysis3.db.char.silentMode) then
 			-- Only print this if we're not in silent mode
 			local classname = gsub(UnitClass("player"), "^.", function(s) return s:upper() end)
 			Cryolysis3:Print(classname.." "..L["Module"].." "..L["Loaded"]);
 		end
-		
+	
 		-- Cache here, since before this we don't have a spellList
-		Cryolysis3:CacheSpells();
-		
+		Cryolysis3:CacheSpells();	
+	end
+end
+
+------------------------------------------------------------------------------------------------------
+-- Load all enabled modules
+------------------------------------------------------------------------------------------------------
+function Cryolysis3:LoadModules()
+	if (Cryolysis3:CacheItems(Cryolysis3.Private.cacheList)) then
 		-- Create reagent list for the mage
 		Cryolysis3.GetClassModule():CreateReagentList();
 		
@@ -176,7 +181,7 @@ function Cryolysis3:LoadModules()
 			end
 		end
 		
-		InitStartup()
+		InitStartup();
 		
 	else
 		Cryolysis3:ScheduleTimer("LoadModules", 1)
@@ -221,6 +226,9 @@ function Cryolysis3:OnEnable()
 		whileDead = 1,
 		hideOnEscape = 1
 	}
+	
+	-- Load the module for our class
+	LoadClassModule();
 	
 	-- Load all enabled modules
 	Cryolysis3:LoadModules();
