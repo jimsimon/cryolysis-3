@@ -786,8 +786,8 @@ function module:CreateButtons()
 	-- Dalaran Intellect buttons, included in case people like both
 	if (Cryolysis3:HasSpell(61024) or Cryolysis3:HasSpell(61316)) then
 		-- Arcane Intellect/Brilliance
-		tooltip = Cryolysis3:PrepareButton("BuffButton2", "Intellect", "spell", L["Intellect"], 61024, 61316);
-		Cryolysis3:AddMenuItem("BuffButton2", "Intellect", select(3, GetSpellInfo(61024)), tooltip);
+		tooltip = Cryolysis3:PrepareButton("BuffButton2", "Intellect2", "spell", L["Intellect"], 61024, 61316);
+		Cryolysis3:AddMenuItem("BuffButton2", "Intellect2", select(3, GetSpellInfo(61024)), tooltip);
 		
 		hasBuff = true;
 	end
