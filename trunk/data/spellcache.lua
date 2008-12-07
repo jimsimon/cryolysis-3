@@ -114,14 +114,6 @@ function Cryolysis3:HasSpell(spellID)
 				
 			end
 
-			for i = 1, #(ID), 1 do
-				if (Cryolysis3:HasSpell(ID[i])) then
-					return true;
-				end
-			end
-
-			return false;
-
 		elseif (spellID == "Portal") then
 			if (Cryolysis3.Private.englishFaction == "Alliance") then
 				ID = {
@@ -145,13 +137,6 @@ function Cryolysis3:HasSpell(spellID)
 				
 			end
 
-			for i = 1, #(ID), 1 do
-				if (Cryolysis3:HasSpell(ID[i])) then
-					return true;
-				end
-			end
-			return false;
-
 		elseif (spellID == "Blessing") then
 			ID = {
 				19740, -- Blessing of Might
@@ -159,14 +144,6 @@ function Cryolysis3:HasSpell(spellID)
 				20217, -- Blessing of Kings
 				20911  -- Blessing of Sanctuary
 			};
-			
-			for i = 1, #(ID), 1 do
-				if (Cryolysis3:HasSpell(ID[i])) then
-					return true;
-				end
-			end
-			
-			return false;
 
 		elseif (spellID == "Greater Blessing") then
 			ID = {
@@ -175,15 +152,16 @@ function Cryolysis3:HasSpell(spellID)
 				25898, -- Greater Blessing of Kings
 				25899  -- Greater Blessing of Sanctuary
 			};
-			
-			for i = 1, #(ID), 1 do
-				if (Cryolysis3:HasSpell(ID[i])) then
-					return true;
-				end
-			end
-			
-			return false;
 		end
+		
+		-- Check if we have the spells in our ID table
+		for i = 1, #(ID), 1 do
+			if (Cryolysis3:HasSpell(ID[i])) then
+				return true;
+			end
+		end
+		
+		return false;
 	else
 		if (Cryolysis3.spellCache[spellID] == nil) then
 			-- This spell was not in our cache, ergo we don't have it
