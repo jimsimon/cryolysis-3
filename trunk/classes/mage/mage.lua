@@ -133,13 +133,61 @@ local function UpdateManaGem()
 end
 
 ------------------------------------------------------------------------------------------------------
+-- Function to fetch lookup table to be used in :UpdateItemCount
+------------------------------------------------------------------------------------------------------
+local function GetLookupTable(name)
+	
+	-- Lookup table for conjure spell id -> item id
+	if (name == "water") then
+		return {
+			-- Normal ranks of Water
+			[42956] = 43523,
+			[42955] = 43518,
+			[27090]	= 22018,
+			[37420]	= 30703,
+			[10140]	= 8079,
+			[10139]	= 8078,
+			[10138]	= 8077,
+			[6127]	= 3772,
+			[5506]	= 2136,
+			[5505]	= 2288,
+			[5504]	= 5350,
+		};
+		
+	elseif (name == "food") then
+		return {			
+			-- Normal ranks of Food
+			[42956] = 43523,
+			[42955] = 43518,
+			[33717]	= 22019,
+			[28612]	= 22895,
+			[10145]	= 8076,
+			[10144]	= 8075,
+			[6129]	= 1487,
+			[990]	= 1114,
+			[597]	= 1113,
+			[587]	= 5349,
+		};
+	elseif (name == "gem") then  --This should be changed to show the number of charges available for mana emerald, but we have to wait for Blizz to add the ItemChargeCount function...:(
+		return {
+			[42985]	= 33312,
+			[27101]	= 22044,
+			[10054]	= 8008,
+			[10053]	= 8007,
+			[3552]	= 5513,
+			[759]	= 5514,
+		};
+	end	
+end
+
+------------------------------------------------------------------------------------------------------
 -- Update buttons
 ------------------------------------------------------------------------------------------------------
 local function UpdateItemCount()
 	Cryolysis3:UpdateItemCount("BuffButtonSlowFall",	{[130] = 17056});
-	Cryolysis3:UpdateItemCount("FoodButton",		module:GetLookupTable("food"));
-	Cryolysis3:UpdateItemCount("WaterButton",		module:GetLookupTable("water"));
-	Cryolysis3:UpdateItemCount("GemButton",			module:GetLookupTable("gem"), false);
+	Cryolysis3:UpdateItemCount("FoodButton",		GetLookupTable("food"));
+	Cryolysis3:UpdateItemCount("WaterButton",		GetLookupTable("water"));
+	Cryolysis3:UpdateItemCount("GemButton",			GetLookupTable("gem"), false);
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -363,7 +411,7 @@ function module:CreateConfigOptions()
 						get = function(info) return Cryolysis3.db.char.buttonText["FoodButton"] end,
 						set = function(info, v) 
 							Cryolysis3.db.char.buttonText["FoodButton"] = v;
-							Cryolysis3:UpdateItemCount("FoodButton",	module:GetLookupTable("food"));
+							Cryolysis3:UpdateItemCount("FoodButton",	GetLookupTable("food"));
 						end,
 						width = "full",
 						order = 15
@@ -418,7 +466,7 @@ function module:CreateConfigOptions()
 						get = function(info) return Cryolysis3.db.char.buttonText["WaterButton"] end,
 						set = function(info, v) 
 							Cryolysis3.db.char.buttonText["WaterButton"] = v;
-							Cryolysis3:UpdateItemCount("WaterButton",	module:GetLookupTable("water"));
+							Cryolysis3:UpdateItemCount("WaterButton",	GetLookupTable("water"));
 						end,
 						width = "full",
 						order = 15
@@ -514,7 +562,38 @@ function module:OnInitialize()
 	--module:RegisterOptions(options);
 	
 	if (select(2,UnitClass("player")) == "MAGE") then
-		Cryolysis3.Private.cacheList = {17020, 17031, 17032, 22019, 22895, 8076, 8075, 1487, 1114, 1113, 5349, 22018, 30703, 8079, 8078, 8077, 3772, 2136, 2288, 5350, 33312, 22044, 8008, 8007, 5513, 5514}
+		-- Start table counter
+		local i = 1;
+
+		for k, v in pairs(GetLookupTable("water")) do
+			-- Add Water items to cache
+			Cryolysis3.Private.cacheList[i] = v;
+			
+			-- Increment our table counter
+			i = i + 1;
+		end
+
+		for k, v in pairs(GetLookupTable("food")) do
+			-- Add Food items to cache
+			Cryolysis3.Private.cacheList[i] = v;
+			
+			-- Increment our table counter
+			i = i + 1;
+		end
+
+		for k, v in pairs(GetLookupTable("gem")) do
+			-- Add Gem items to cache
+			Cryolysis3.Private.cacheList[i] = v;
+			
+			-- Increment our table counter
+			i = i + 1;
+		end
+		
+		-- Add static items to the cache
+		Cryolysis3.Private.cacheList[i] = 17020; i = i + 1; -- Arcane Powder
+		Cryolysis3.Private.cacheList[i] = 17031; i = i + 1; -- Rune of Teleportation
+		Cryolysis3.Private.cacheList[i] = 17032; i = i + 1; -- Rune of Portals
+		Cryolysis3.Private.cacheList[i] = 17056; i = i + 1; -- Light Feather
 	end
 end
 
@@ -653,19 +732,19 @@ function module:CreateButtons()
 		UpdateEvocation();
 	end
 	
+	-- Lookup table for conjure spell id -> item id
+	local foodLookupTable = GetLookupTable("food");
+	local waterLookupTable = GetLookupTable("water");
+	local gemLookupTable = GetLookupTable("gem");
+	
 	-- Check for highest rank of food
-	local foodID = Cryolysis3:GetHighestRank({42956, 42955, 33717, 28612, 10145, 10144, 6129, 990, 597, 587});
+	local foodID = Cryolysis3:GetHighestRank(foodLookupTable);
 
 	-- Check for highest rank of water
-	local waterID = Cryolysis3:GetHighestRank({42956, 42955, 27090, 37420, 10140, 10139, 10138, 6127, 5506, 5505, 5504});
+	local waterID = Cryolysis3:GetHighestRank(waterLookupTable, "water");
 
 	-- Check for highest rank of gem
-	local gemID = Cryolysis3:GetHighestRank({42985, 27101, 10054, 10053, 3552, 759});
-	
-	-- Lookup table for conjure spell id -> item id
-	local foodLookupTable = module:GetLookupTable("food");
-	local waterLookupTable = module:GetLookupTable("water");
-	local gemLookupTable = module:GetLookupTable("gem");
+	local gemID = Cryolysis3:GetHighestRank(gemLookupTable);
 
 	if (foodID ~= nil) then
 		Cryolysis3:CreateButton("FoodButton",	UIParent,	select(3, GetSpellInfo(foodID)));
@@ -691,8 +770,6 @@ function module:CreateButtons()
 		end
 		
 		Cryolysis3:UpdateAllButtonAttributes("FoodButton");
-	else
-		Cryolysis3:Print("food id is nil");
 	end
 
 	if (waterID ~= nil) then
@@ -969,54 +1046,6 @@ function module:CreateButtons()
 	
 	-- Update Sphere tooltip
 	UpdateSphereTooltip();
-end
-
-------------------------------------------------------------------------------------------------------
--- Function to fetch lookup table to be used in :UpdateItemCount
-------------------------------------------------------------------------------------------------------
-function module:GetLookupTable(name)
-	
-	-- Lookup table for conjure spell id -> item id
-	
-	if name == "water" then
-		return {
-			-- Normal ranks of Water
-			[42956] = 43523,
-			[42955] = 43518,
-			[27090]	= 22018,
-			[37420]	= 30703,
-			[10140]	= 8079,
-			[10139]	= 8078,
-			[10138]	= 8077,
-			[6127]	= 3772,
-			[5506]	= 2136,
-			[5505]	= 2288,
-			[5504]	= 5350,
-		};
-	elseif name == "food" then
-		return {			
-			-- Normal ranks of Food
-			[42956] = 43523,
-			[42955] = 43518,
-			[33717]	= 22019,
-			[28612]	= 22895,
-			[10145]	= 8076,
-			[10144]	= 8075,
-			[6129]	= 1487,
-			[990]	= 1114,
-			[597]	= 1113,
-			[587]	= 5349,
-		};
-	elseif name == "gem" then  --This should be changed to show the number of charges available for mana emerald, but we have to wait for Blizz to add the ItemChargeCount function...:(
-		return {
-			[42985]	= 33312,
-			[27101]	= 22044,
-			[10054]	= 8008,
-			[10053]	= 8007,
-			[3552]	= 5513,
-			[759]	= 5514,
-		};
-	end	
 end
 
 ------------------------------------------------------------------------------------------------------

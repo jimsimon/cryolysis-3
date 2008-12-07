@@ -16,6 +16,7 @@ Cryolysis3.Private = {
 	-- Arrays
 	RegisteredModules	= {},
 	classReagents		= {},
+	cacheList		= {},
 	tooltips		= {},
 	mounts			= {
 		["normal"]		= {},
