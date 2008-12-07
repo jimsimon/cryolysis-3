@@ -99,6 +99,7 @@ function Cryolysis3:HasSpell(spellID)
 					3565,	-- Darnassus
 					32271,	-- The Exodar
 					33690,	-- Shattrath City
+					53140,	-- Dalaran
 				};
 				
 			else
@@ -108,6 +109,7 @@ function Cryolysis3:HasSpell(spellID)
 					3566,	-- Thunder Bluff
 					32272,	-- Silvermoon City
 					35715,	-- Shattrath City
+					53140,	-- Dalaran
 				};
 				
 			end
@@ -128,6 +130,7 @@ function Cryolysis3:HasSpell(spellID)
 					11419,	-- Darnassus
 					32266,	-- The Exodar
 					33691,	-- Shattrath City
+					53142,	-- Dalaran
 				};
 				
 			else
@@ -137,6 +140,7 @@ function Cryolysis3:HasSpell(spellID)
 					11420,	-- Thunder Bluff
 					32267,	-- Silvermoon City
 					35717,	-- Shattrath City
+					53142,	-- Dalaran
 				};
 				
 			end
@@ -149,24 +153,35 @@ function Cryolysis3:HasSpell(spellID)
 			return false;
 
 		elseif (spellID == "Blessing") then
-			-- fill this in when I'm less lazy
+			ID = {
+				19740, -- Blessing of Might
+				19742, -- Blessing of Wisdom
+				20217, -- Blessing of Kings
+				20911  -- Blessing of Sanctuary
+			};
+			
+			for i = 1, #(ID), 1 do
+				if (Cryolysis3:HasSpell(ID[i])) then
+					return true;
+				end
+			end
+			
+			return false;
 
 		elseif (spellID == "Greater Blessing") then
 			ID = {
 				25782, -- Greater Blessing of Might
 				25894, -- Greater Blessing of Wisdom
 				25898, -- Greater Blessing of Kings
-				25890, -- Greater Blessing of Light
-				25895, -- Greater Blessing of Salvation
 				25899  -- Greater Blessing of Sanctuary
 			};
-
+			
 			for i = 1, #(ID), 1 do
 				if (Cryolysis3:HasSpell(ID[i])) then
 					return true;
 				end
 			end
-
+			
 			return false;
 		end
 	else
