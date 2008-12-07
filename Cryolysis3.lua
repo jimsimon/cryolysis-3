@@ -86,15 +86,15 @@ local function LoadModule(name)
 		-- We couldn't load it :(
 		local dialogueText = L["Cryolysis 3 cannot load the module:"].." Cryolysis3_"..name.."\n";
 		
-		if reason == "DISABLED" then
+		if (reason == "DISABLED") then
 			-- The class module was disabled
 			dialogueText = dialogueText.." "..L["The module is flagged as Disabled in the Blizzard AddOn interface."];
 		
-		elseif reason == "MISSING" then
+		elseif (reason == "MISSING") then
 			-- The class module isn't there (most likely not installed)
 			dialogueText = dialogueText.." "..L["The module is missing. Please close the game and install it."];
 		
-		elseif reason == "INCOMPATIBLE" then
+		elseif (reason == "INCOMPATIBLE") then
 			-- The class module is too old (most likely not updated)
 			dialogueText = dialogueText.." "..L["The module is too old. Please close the game and update it."];
 		end
@@ -125,13 +125,13 @@ function Cryolysis3:CacheItems(itemList)
 	
 	local checkAgain = false;
 	
-	if itemList ~= nil then
-		for  i = 1, #(itemList), 1 do
+	if (itemList ~= nil) then
+		for i = 1, #(itemList), 1 do
 			if (GetItemInfo(itemList[i]) == nil or GetItemInfo(itemList[i]) == "") then
 				StaticPopup_Show("ITEM_CACHE_WARNING");
-				GameTooltip:SetOwner(UIParent, "CENTER")
-				GameTooltip:SetHyperlink("item:"..itemList[i]..":0:0:0:0:0:0:0:70")
-				GameTooltip:Hide()
+				GameTooltip:SetOwner(UIParent, "CENTER");
+				GameTooltip:SetHyperlink("item:"..itemList[i]..":0:0:0:0:0:0:0:0");
+				GameTooltip:Hide();
 				checkAgain = true;
 			end
 			
