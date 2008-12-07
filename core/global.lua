@@ -163,14 +163,24 @@ end
 ------------------------------------------------------------------------------------------------------
 -- Update visibility of things
 ------------------------------------------------------------------------------------------------------
-function Cryolysis3:GetHighestRank(spells)
-	for i = 1, #(spells), 1 do
-		if (Cryolysis3:HasSpell(spells[i])) then
-			return spells[i];
+function Cryolysis3:GetHighestRank(spells, override)
+	-- Highest spellId we're working with
+	local highest = 0;
+
+	for k, v in pairs(spells) do
+		if (Cryolysis3:HasSpell(k) and k > highest) then
+			-- This is a higher rank spell
+			highest = k;
 		end
 	end
+	
+	if (override == "water" and highest == 37420 and Cryolysis3:HasSpell(27090)) then
+		-- Workaround Blizzard fuckup with water ranks
+		highest = 27090;
+	end
 
-	return nil;
+	-- Return highest rank
+	return highest;
 end
 
 ------------------------------------------------------------------------------------------------------
