@@ -542,6 +542,8 @@ function module:OnEnable()
 	-- Add talent spellds
 	table.insert(Cryolysis3.spellList, 44425); -- Arcane Barrage
 	table.insert(Cryolysis3.spellList, 11113); -- Blast Wave
+	table.insert(Cryolysis3.spellList, 11958); -- Cold Snap
+	table.insert(Cryolysis3.spellList, 11129); -- Combustion
 	table.insert(Cryolysis3.spellList, 44572); -- Deep Freeze
 	table.insert(Cryolysis3.spellList, 31661); -- Dragon's Breath
 	table.insert(Cryolysis3.spellList, 54646); -- Focus Magic
