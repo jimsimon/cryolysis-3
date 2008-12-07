@@ -538,6 +538,19 @@ function module:OnEnable()
 	
 	-- Create spellList
 	Cryolysis3:PopulateSpellList(t);
+
+	-- Add talent spellds
+	table.insert(Cryolysis3.spellList, 44425); -- Arcane Barrage
+	table.insert(Cryolysis3.spellList, 11113); -- Blast Wave
+	table.insert(Cryolysis3.spellList, 44572); -- Deep Freeze
+	table.insert(Cryolysis3.spellList, 31661); -- Dragon's Breath
+	table.insert(Cryolysis3.spellList, 54646); -- Focus Magic
+	table.insert(Cryolysis3.spellList, 11426); -- Ice Barrier
+	table.insert(Cryolysis3.spellList, 12472); -- Icy Veins
+	table.insert(Cryolysis3.spellList, 44457); -- Living Bomb
+	table.insert(Cryolysis3.spellList, 11366); -- Pyroblast
+	table.insert(Cryolysis3.spellList, 31589); -- Slow
+	table.insert(Cryolysis3.spellList, 31687); -- Summon Water Elemental
 	
 	-- Insert our config options
 	module:RegisterConfigOptions(module:CreateConfigOptions());
