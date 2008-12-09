@@ -186,6 +186,10 @@ L["Display the cooldown timer on this button"] = "Отображать тайм�
 	L["Water Button"] = "Кнопка воды";
 	L["Gem Button"] = "Кнопка камней";
 	
+	-- Main Sphere: Mage locales
+	L["Conjured Food"] = "Сотворенная еда";
+	L["Conjured Water"] = "Сотворенная вода";
+	
 	-- Priest Module Locales
 	L["Fortitude"] = "Стойкость";
 	L["Spirit"] = "Дух";
