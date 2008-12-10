@@ -172,11 +172,11 @@ L["minutes"] = true; -- Mind the capitalisation!
 L["seconds"] = true; -- Mind the capitalisation!
 L["Show Cooldown"] = true;
 L["Display the cooldown timer on this button"] = true;
+L["Click to open menu."] = true;
 
 	-- Mage Module Locales
 	L["Buff Menu"] = true;
 	L["Teleport/Portal"] = true;
-	L["Click to open menu."] = true;
 	L["Armor"] = true;
 	L["Intellect"] = true;
 	L["Magic"] = true;
@@ -189,6 +189,11 @@ L["Display the cooldown timer on this button"] = true;
 	-- Main Sphere: Mage locales
 	L["Conjured Food"] = true;
 	L["Conjured Water"] = true;
+	
+	
+	-- Paladin Module Locales
+	L["Blessings Menu"] = true;
+	L["Seal Menu"] = true;
 	
 	
 	-- Priest Module Locales
