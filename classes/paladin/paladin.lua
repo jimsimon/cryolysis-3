@@ -7,6 +7,15 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Cryolysis3");
 
 
 ------------------------------------------------------------------------------------------------------
+-- Update sphere
+------------------------------------------------------------------------------------------------------
+local function UpdateSphereTooltip()
+	Cryolysis3.Private.tooltips["Sphere"][2] = select(1, GetItemInfo(17033))..": "..(GetItemCount(17033) or 0);
+	Cryolysis3.Private.tooltips["Sphere"][3] = select(1, GetItemInfo(21177))..": "..(GetItemCount(21177) or 0);
+end
+
+
+------------------------------------------------------------------------------------------------------
 -- Function to generate options
 ------------------------------------------------------------------------------------------------------
 function module:CreateOptions()
@@ -126,7 +135,9 @@ end
 -- Function for creating all the buttons used by this class
 ------------------------------------------------------------------------------------------------------
 function module:CreateButtons()
-
+	
+	-- Update Sphere tooltip
+	UpdateSphereTooltip();
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -135,6 +146,7 @@ end
 function module:RegisterClassEvents()
 	-- Events relevant to this class
 	module:RegisterEvent("UNIT_MANA");
+	module:RegisterEvent("BAG_UPDATE");
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -144,4 +156,12 @@ function module:UNIT_MANA(event, unitId)
 	if (tonumber(Cryolysis3.db.char.outerSphere) == 3 and unitId == "player") then
 		Cryolysis3:UpdateSphere("outerSphere");
 	end
+end
+
+------------------------------------------------------------------------------------------------------
+-- Whenever something changes in our bags
+------------------------------------------------------------------------------------------------------
+function module:BAG_UPDATE()
+	-- Update Sphere tooltip
+	UpdateSphereTooltip();
 end
