@@ -172,11 +172,11 @@ L["minutes"] = "мин"; -- Mind the capitalisation!
 L["seconds"] = "сек"; -- Mind the capitalisation!
 L["Show Cooldown"] = "Показ перезарядки";
 L["Display the cooldown timer on this button"] = "Отображать таймер перезарядки на данной кнопке";
+L["Click to open menu."] = "Кликните для открытия";
 
 	-- Mage Module Locales
 	L["Buff Menu"] = "Меню эффектов";
 	L["Teleport/Portal"] = "Телепорт/Портал";
-	L["Click to open menu."] = "Кликните для открытия";
 	L["Armor"] = "Броня";
 	L["Intellect"] = "Интеллект";
 	L["Magic"] = "Магия";
@@ -189,6 +189,10 @@ L["Display the cooldown timer on this button"] = "Отображать тайм�
 	-- Main Sphere: Mage locales
 	L["Conjured Food"] = "Сотворенная еда";
 	L["Conjured Water"] = "Сотворенная вода";
+	
+		-- Paladin Module Locales
+	L["Blessings Menu"] = "Меню благословений";
+	L["Seal Menu"] = "Меню печатей";
 	
 	-- Priest Module Locales
 	L["Fortitude"] = "Стойкость";
